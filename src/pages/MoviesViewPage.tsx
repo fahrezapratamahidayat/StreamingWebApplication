@@ -4,30 +4,6 @@ import axios from "axios";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import { useEffect, useState,useContext } from "react";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-inter",
-});
-
-const moul = Moul({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-moul",
-});
-
-const monstserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-monstserrat",
-});
-
 const getPlayingMoviesList = {
   method: "GET",
   url: `${process.env.NEXT_PUBLIC_MOVIE_BASE_URL}/movie/now_playing`,

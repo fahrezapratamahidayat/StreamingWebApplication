@@ -2,7 +2,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import Homeviews from "@/pages/MoviesViewPage";
 
-export default function Home() {
+export default  function Home() {
   const movieSidebaritem = [
     {
       id: 28,
