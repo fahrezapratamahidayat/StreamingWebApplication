@@ -2,7 +2,7 @@ import CardPosterMovies from "@/components/card/CardPosterMovies";
 import { ApiOptions } from "@/services/DataApi";
 import axios from "axios";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 const getPlayingMoviesList = {
   method: "GET",
@@ -10,8 +10,7 @@ const getPlayingMoviesList = {
   params: { language: "en-US", page: "1" },
   headers: {
     accept: "application/json",
-    Authorization:
-      `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
   },
 };
 
@@ -21,8 +20,7 @@ const getPopularMoviesList = {
   params: { language: "en-US", page: "1" },
   headers: {
     accept: "application/json",
-    Authorization:
-      `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
   },
 };
 
@@ -32,8 +30,7 @@ const getTopRatedMoviesList = {
   params: { language: "en-US", page: "1" },
   headers: {
     accept: "application/json",
-    Authorization:
-      `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
   },
 };
 
@@ -43,10 +40,9 @@ const getUpComingMovieList = {
   params: { language: "en-US", page: "1" },
   headers: {
     accept: "application/json",
-    Authorization:
-      `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
   },
-}
+};
 
 type Movie = {
   id: number;
@@ -113,7 +109,6 @@ export default function Home() {
     fetchDataTopRatedMovies();
     fetchDataUpComingMovies();
   }, []);
-
 
   return (
     <>
@@ -189,10 +184,19 @@ export default function Home() {
             </div>
           </div> */}
         </div>
-        <CardPosterMovies title={`Now Playing`} data={playing}/>
-        <CardPosterMovies title={`Popular`} data={popularMovies} />
-        {CardPosterMovies({title:`Top Rated`, data: topRatedMovies.filter((movie: Movie) => movie.vote_average > 8.5)})}
-        <CardPosterMovies title={`Upcoming`} data={upComingMovies} />
+        {playing && upComingMovies && topRatedMovies && popularMovies && (
+          <>
+            <CardPosterMovies title={`Now Playing`} data={playing} />
+            <CardPosterMovies title={`Popular`} data={popularMovies} />
+            {CardPosterMovies({
+              title: `Top Rated`,
+              data: topRatedMovies.filter(
+                (movie: Movie) => movie.vote_average > 8.5
+              ),
+            })}
+            <CardPosterMovies title={`Upcoming`} data={upComingMovies} />
+          </>
+        )}
       </div>
     </>
   );

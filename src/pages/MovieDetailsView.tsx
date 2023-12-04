@@ -43,17 +43,19 @@ export default function MovieDetailView({
 }: any) {
   return (
     <>
-      <div className="flex flex-col  ml-[21rem] pb-[5rem]">
+      <div className="flex flex-col  ml-[20rem] pb-[5rem]">
         <div className="mt-[5rem]">
-          <div className="relative h-[27.5rem] w-[67rem]  rounded-[0.65rem]">
+          <div className="relative rounded-[0.65rem] ">
+            <div className="max-w-full h-auto">
             <Image
               width={1072}
               height={440}
               priority={true}
-              className="backdrop-blur-sm h-[27.5rem] w-[67rem] object-cover rounded-[0.65rem]"
+              className="backdrop-blur-sm h-[27.5rem] w-[70rem]  object-cover rounded-[0.65rem]"
               src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
               alt=""
             />
+            </div>
             <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
             <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
               <div className="ml-[2.31rem] mt-[2.75rem]">
@@ -80,8 +82,10 @@ export default function MovieDetailView({
                     {vote_average}
                   </p>
                   <p className="text-white text-[1rem] font-semibold">
-                    {runtime}m
-                  </p>
+                      {runtime && runtime.length > 0
+                        ? runtime
+                        : "N/A"}
+                    </p>
                   <p className="text-white text-[1rem] font-semibold">
                     {release_date}
                   </p>
@@ -95,7 +99,7 @@ export default function MovieDetailView({
                 {/* <p className="w-[30.75rem] h-[7.75rem] flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify">
                   {overview}
                 </p> */}
-                <div className="flex items-center mt-[1.25rem]">
+                <div className="flex items-center mt-[2.25rem]">
                   <Link href={`/movies/${id}/watch?=${encodeURIComponent(title)}`}>
                   <button
                     type="button"
@@ -132,16 +136,16 @@ export default function MovieDetailView({
                       <path
                         d="M12 5V19"
                         stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M5 12H19"
                         stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     WatchList
@@ -156,7 +160,7 @@ export default function MovieDetailView({
                 <h2 className="text-white font-semibold text-[1rem]">
                   {crew && crew.length > 0 ? "Director" : ""}
                 </h2>
-                <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
+                <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap">
                   {crew}
                 </div>
               </div>
@@ -166,7 +170,7 @@ export default function MovieDetailView({
                 <h2 className="text-white font-semibold text-[1rem]">
                   {credits && credits.length > 0 ? "Staring" : ""}
                 </h2>
-                <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
+                <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {credits}
                 </div>
               </div>
@@ -174,7 +178,7 @@ export default function MovieDetailView({
             <h2 className="text-white  font-semibold text-[1rem] mt-[5.12rem]">
               Trailer And Clips
             </h2>
-            <div className="mt-[1.69rem] w-[64.25rem] flex items-center gap-[2.44rem] overflow-x-auto scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
+            <div className="mt-[1.69rem] w-[66.5rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
               {video}
             </div>
             {/* <div className="mt-[3.12rem] flex">

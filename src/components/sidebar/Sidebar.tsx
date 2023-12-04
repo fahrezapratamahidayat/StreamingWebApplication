@@ -83,7 +83,7 @@ const Sidebar = ({ items }: any) => {
               <li key={genre.id} className={`border-l border-slate-800 ${DropDown ? "" : "hidden"} transition-all duration-500 ease-out`} >
                 <Link
                   className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3 `}
-                  href={`/genre/${genre.id}?name=${encodeURIComponent(
+                  href={`/movies/genre/${genre.id}?name=${encodeURIComponent(
                     genre.name
                   )}`}
                   scroll={false}

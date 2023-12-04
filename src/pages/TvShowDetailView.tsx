@@ -45,15 +45,17 @@ export default function TvShowDetailView({
     <>
       <div className="flex flex-col  ml-[21rem] pb-[5rem]">
         <div className="mt-[5rem]">
-          <div className="relative h-[27.5rem] w-[67rem]  rounded-[0.65rem]">
+          <div className="relative rounded-[0.65rem]">
+          <div className="max-w-full h-auto">
             <Image
               width={1072}
               height={440}
               priority={true}
-              className=" h-[27.5rem] w-[67rem] object-cover rounded-[0.65rem]"
+              className="backdrop-blur-sm h-[27.5rem] w-[70rem]  object-cover rounded-[0.65rem]"
               src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
               alt=""
             />
+            </div>
             <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
             <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
               {/* <div className="pl-[3.5rem] mt-[2.90rem] rounded-[0.65rem] ">
@@ -89,19 +91,16 @@ export default function TvShowDetailView({
                     </svg>
                     {vote_average}
                   </p>
-                  {/* {episode_run_time.length < 0 && (
                     <p className="text-white text-[1rem] font-semibold">
-                      {episode_run_time}m
-                    </p>
-                  )} */}
-                    <p className="text-white text-[1rem] font-semibold">
-                      {episode_run_time}m
+                      {episode_run_time && episode_run_time.length > 0
+                        ? episode_run_time
+                        : "N/A"}
                     </p>
                   <p className="text-white text-[1rem] font-semibold ">
                     {first_air_date}
                   </p>
                   <p className="text-white text-[1rem] font-semibold ">
-                    {season_number} Seasons
+                    {season_number}{" "}Seasons
                   </p>
                 </div>
                 <p className="text-white text-[1rem] font-semibold mt-[1.88rem]">
@@ -110,7 +109,7 @@ export default function TvShowDetailView({
                 <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white/90 text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                   {overview}
                 </p>
-                <div className="flex items-center mt-[1.25rem]">
+                <div className="flex items-center mt-[2.25rem]">
                   <Link
                     href={`/tv/${id}/watch?=${encodeURIComponent(
                       original_name
@@ -171,12 +170,11 @@ export default function TvShowDetailView({
           </div>
           <div className="flex flex-col ml-[3.5rem]">
             <div className="mt-[3.12rem]  flex">
-              <div className="flex">
+              <div className="flex ">
                 <h2 className="text-white font-semibold text-[1rem]">
-                   {/* {crew && crew.length > 0 ? "Director" : ""} */}
-                   director
+                   {crew && crew.length > 0 ? "Director" : ""}
                 </h2>
-                <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
+                <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap">
                   {crew}
                 </div>
               </div>
@@ -184,10 +182,9 @@ export default function TvShowDetailView({
             <div className="mt-[3.12rem] flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                {/* {cast && cast.length > 0 ? "Staring" : ""} */}
-                Staring
+                {cast && cast.length > 0 ? "Staring" : ""}
                 </h2>
-                <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
+                <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {cast}
                 </div>
               </div>
