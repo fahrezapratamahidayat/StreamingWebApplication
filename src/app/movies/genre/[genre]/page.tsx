@@ -25,7 +25,7 @@ type Movies = {
 
 export default function GenrePage(props: genrePageProps) {
   const { params } = props;
-  const [movies,setMovies] = useState<Movies[]>([]);
+  const [movies,setMovies] = useState<any>([]);
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params.genre}`);
