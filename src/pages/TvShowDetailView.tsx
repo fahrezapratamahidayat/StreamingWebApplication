@@ -89,11 +89,14 @@ export default function TvShowDetailView({
                     </svg>
                     {vote_average}
                   </p>
-                  {episode_run_time.length < 0 && (
+                  {/* {episode_run_time.length < 0 && (
                     <p className="text-white text-[1rem] font-semibold">
                       {episode_run_time}m
                     </p>
-                  )}
+                  )} */}
+                    <p className="text-white text-[1rem] font-semibold">
+                      {episode_run_time}m
+                    </p>
                   <p className="text-white text-[1rem] font-semibold ">
                     {first_air_date}
                   </p>
