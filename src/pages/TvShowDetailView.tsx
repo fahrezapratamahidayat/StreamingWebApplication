@@ -170,7 +170,8 @@ export default function TvShowDetailView({
             <div className="mt-[3.12rem]  flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                   {crew && crew.length > 0 ? "Director" : ""}
+                   {/* {crew && crew.length > 0 ? "Director" : ""} */}
+                   director
                 </h2>
                 <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
                   {crew}
@@ -180,7 +181,8 @@ export default function TvShowDetailView({
             <div className="mt-[3.12rem] flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                {cast && cast.length > 0 ? "Staring" : ""}
+                {/* {cast && cast.length > 0 ? "Staring" : ""} */}
+                Staring
                 </h2>
                 <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {cast}
