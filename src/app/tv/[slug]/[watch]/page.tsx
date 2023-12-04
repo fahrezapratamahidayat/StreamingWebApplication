@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { fetchData } from "@/services/DataApi";
@@ -55,19 +55,22 @@ export default function WatchTvPage(props: dataPageProps) {
   const fetchDataVideo = async () => {
     const snapshot = await fetchData(`tv/${params.slug}/season/1`);
     setData(snapshot);
-  }
+  };
+
+  const fetchDataAsync = async () => {
+    const data = await fetchData(`tv/${params.slug}`);
+    console.log(data);
+  };
 
   useEffect(() => {
-    fetchDataVideo()
-  },[])
-
+    fetchDataVideo();
+    fetchDataAsync();
+  }, []);
 
   return (
     <>
       <Sidebar items={tvShowsSidebarItem} />
-      <div className="ml-[21rem] mt-[5rem]">
-
-      </div>
+      <div className="ml-[21rem] mt-[5rem]"></div>
     </>
   );
 }
