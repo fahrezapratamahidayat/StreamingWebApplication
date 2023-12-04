@@ -1,3 +1,4 @@
+"use client"
 import axios from "axios";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Link from "next/link";
@@ -27,102 +28,61 @@ const monstserrat = Montserrat({
   variable: "--font-monstserrat",
 });
 
-const movieSidebaritem = [
-  {
-    id: 28,
-    name: "Action",
-  },
-  {
-    id: 12,
-    name: "Adventure",
-  },
-  {
-    id: 16,
-    name: "Animation",
-  },
-  {
-    id: 35,
-    name: "Comedy",
-  },
-  {
-    id: 80,
-    name: "Crime",
-  },
-  {
-    id: 99,
-    name: "Documentary",
-  },
-  {
-    id: 18,
-    name: "Drama",
-  },
-  {
-    id: 10751,
-    name: "Family",
-  },
-  {
-    id: 14,
-    name: "Fantasy",
-  },
-  {
-    id: 36,
-    name: "History",
-  },
-  {
-    id: 27,
-    name: "Horror",
-  },
-  {
-    id: 10402,
-    name: "Music",
-  },
-  {
-    id: 9648,
-    name: "Mystery",
-  },
-  {
-    id: 10749,
-    name: "Romance",
-  },
-  {
-    id: 878,
-    name: "Science Fiction",
-  },
-  {
-    id: 10770,
-    name: "TV Movie",
-  },
-  {
-    id: 53,
-    name: "Thriller",
-  },
-  {
-    id: 10752,
-    name: "War",
-  },
-  {
-    id: 37,
-    name: "Western",
-  },
-];
-
 const Sidebar = ({ items }: any) => {
+  const [DropDown, setDropDown] = useState(true);
   return (
     <>
-      <div className="pt-[5rem] fixed w-[285px]  h-full">
-        <div className="pb-[1rem] flex flex-col items ml-[3.44rem] hover:overflow-y-auto h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900">
+      <div className="pt-[5rem] fixed w-[285px] h-full">
+        <div className="pb-[1rem] flex flex-col items ml-[3.44rem] hover:overflow-y-auto h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
           <h2
-            className={`${monstserrat.variable} font-monstserrat text-white font-semibold text-[1.125rem]`}
+            className={`${monstserrat.variable} font-monstserrat text-white font-semibold text-[1.125rem] cursor-pointer flex items-center`}
           >
             Genre
+            {DropDown ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="8"
+                viewBox="0 0 14 8"
+                fill="none"
+                className="ml-[0.5rem] cursor-pointer transition-all"
+                onClick={() => setDropDown(!DropDown)}
+              >
+                <path
+                  d="M1 1L7 7L13 1"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="8"
+                viewBox="0 0 14 8"
+                fill="none"
+                className="ml-[0.5rem] cursor-pointer transition-all"
+                onClick={() => setDropDown(!DropDown)}
+              >
+                <path
+                  d="M13 7L7 1L1 7"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
           </h2>
           <ul
-            className={`${monstserrat.variable} font-monstserrat font-semibold mt-[0.8rem] text-[#828486] `}
+            className={`${monstserrat.variable} font-monstserrat font-semibold mt-[0.8rem] text-[#828486] transition-all`}
           >
             {items.map((genre: any) => (
-              <li key={genre.id}>
+              <li key={genre.id} className={`border-l border-slate-800 ${DropDown ? "" : "hidden"} transition-all duration-500 ease-out`} >
                 <Link
-                  className={`hover:text-white mt-[0.75rem] text-[1rem]`}
+                  className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3 `}
                   href={`/genre/${genre.id}?name=${encodeURIComponent(
                     genre.name
                   )}`}

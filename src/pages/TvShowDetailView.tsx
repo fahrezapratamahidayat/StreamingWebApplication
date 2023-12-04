@@ -89,9 +89,11 @@ export default function TvShowDetailView({
                     </svg>
                     {vote_average}
                   </p>
-                  <p className="text-white text-[1rem] font-semibold ">
-                    {episode_run_time ? `${episode_run_time.join(" ")}}` : ""}
-                  </p>
+                  {episode_run_time.length < 0 && (
+                    <p className="text-white text-[1rem] font-semibold">
+                      {episode_run_time}m
+                    </p>
+                  )}
                   <p className="text-white text-[1rem] font-semibold ">
                     {first_air_date}
                   </p>
@@ -102,12 +104,12 @@ export default function TvShowDetailView({
                 <p className="text-white text-[1rem] font-semibold mt-[1.88rem]">
                   {genres}
                 </p>
-                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
+                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white/90 text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                   {overview}
                 </p>
                 <div className="flex items-center mt-[1.25rem]">
                   <Link
-                    href={`/movies/${id}/watch=${encodeURIComponent(
+                    href={`/tv/${id}/watch?=${encodeURIComponent(
                       original_name
                     )}`}
                   >
@@ -168,7 +170,7 @@ export default function TvShowDetailView({
             <div className="mt-[3.12rem]  flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                  Director
+                  {crew.length > 0 ? "Director" : ""}
                 </h2>
                 <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
                   {crew}
@@ -178,7 +180,7 @@ export default function TvShowDetailView({
             <div className="mt-[3.12rem] flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                  Staring
+                  {cast.length > 0 ? "Staring" : ""}
                 </h2>
                 <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {cast}

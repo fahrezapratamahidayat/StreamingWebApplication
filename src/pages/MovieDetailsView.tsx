@@ -89,11 +89,14 @@ export default function MovieDetailView({
                 <p className="text-white text-[1rem] font-semibold mt-[1.88rem]">
                   {genres}
                 </p>
-                <p className="w-[30.75rem] h-[7.75rem] flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify">
+                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white/90 text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                   {overview}
                 </p>
+                {/* <p className="w-[30.75rem] h-[7.75rem] flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify">
+                  {overview}
+                </p> */}
                 <div className="flex items-center mt-[1.25rem]">
-                  <Link href={`/movies/${id}/watch=${encodeURIComponent(title)}`}>
+                  <Link href={`/movies/${id}/watch?=${encodeURIComponent(title)}`}>
                   <button
                     type="button"
                     className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
@@ -151,7 +154,7 @@ export default function MovieDetailView({
             <div className="mt-[3.12rem]  flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                  Director
+                  {crew.length > 0 ? "Director" : ""}
                 </h2>
                 <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
                   {crew}
@@ -161,7 +164,7 @@ export default function MovieDetailView({
             <div className="mt-[3.12rem] flex">
               <div className="flex">
                 <h2 className="text-white font-semibold text-[1rem]">
-                  Director
+                  {credits.length > 0 ? "Staring" : ""}
                 </h2>
                 <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {credits}

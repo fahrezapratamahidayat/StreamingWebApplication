@@ -2,6 +2,7 @@
 import CardPoster from "@/components/card/CardPosterMovies";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { MovieContext } from "@/context/DataMovies";
+import { movieSidebaritem } from "@/utils/ItemSidebar";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 
@@ -45,7 +46,6 @@ export default function GenrePage(props: genrePageProps) {
   const { params } = props;
   const [genre, setGenre] = useState([]);
   const [movies, setMovies] = useState<any>([]);
-  const { dataMovies, setDataMovies } = useContext(MovieContext);
 
   const fetchData = async () => {
     const snapshot = await axios.request(movieList);
@@ -116,16 +116,10 @@ export default function GenrePage(props: genrePageProps) {
   
   return (
     <>
-      <Sidebar />
+      <Sidebar items={movieSidebaritem}/>
       <div className="flex flex-col ml-[21rem] w-auto h-auto">
         <div className="mt-[5rem]">
-          {/* <CardPoster data={movies} title={`Genre : ${title}`} /> */}
-          {CardPoster({
-            title: `Genre : ${title}`,
-            data: dataMovies.filter((movie: Movie) =>
-              movie.genre_ids.includes(Number(params.slug))
-            ),
-          })}
+          <CardPoster data={movies} title={`Genre : ${title}`} />
         </div>
       </div>
     </>

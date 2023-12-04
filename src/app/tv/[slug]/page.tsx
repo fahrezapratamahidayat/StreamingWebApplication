@@ -31,8 +31,8 @@ type TvShowProps = {
   number_of_seasons: number;
   video: string;
   results: { id: string; name: string; key: string }[];
-  cast: { id: number; name: string; job: string; character: string }[];
-  crew: { id: number; name: string; job: string }[];
+  cast: { id: number; name: string; job: string; character: string,known_for_department:string }[];
+  crew: { id: number; name: string; job: string,known_for_department:string }[];
 };
 export default function TvShowDetailPage(props: TvShowDetailPageProps) {
   const [data, setData] = useState<TvShowProps | null>( null );
@@ -52,7 +52,6 @@ export default function TvShowDetailPage(props: TvShowDetailPageProps) {
 
   const fetchCredits = async () => {
     const data = await fetchData(`tv/${params.slug}/credits`);
-    console.log(data);
     setCredits(data);
   };
 
@@ -75,7 +74,9 @@ export default function TvShowDetailPage(props: TvShowDetailPageProps) {
     (actor) =>
       actor.job === "Novel" ||
       actor.job === "Director" ||
-      actor.job === "Writer"
+      actor.job === "Writer" ||
+      actor.job === "Writing" ||
+      actor.known_for_department === "Writing"
   )
   .map((actor, index) => (
     <ListDirector
@@ -84,9 +85,6 @@ export default function TvShowDetailPage(props: TvShowDetailPageProps) {
       jobDirector={actor.job}
     />
   ));
-
-
-
   useEffect(() => {
     fetchDataAsync();
     fetchDataVideo()
@@ -95,8 +93,9 @@ export default function TvShowDetailPage(props: TvShowDetailPageProps) {
   return (
     <>
       <Sidebar items={tvShowsSidebarItem} />
-      {data && data.backdrop_path && data.poster_path ? (
+      {data && dataVideos && credits &&    (
         <TvShowDetailView
+        id={data?.id}
         backdrop_path={data?.backdrop_path}
         poster_path={data?.poster_path}
         original_name={data?.name}
@@ -113,8 +112,6 @@ export default function TvShowDetailPage(props: TvShowDetailPageProps) {
           (genre: { id: number; name: string }) => genre.name
         ).join(", ")}
         />
-      ) : (
-        <div className="">Objek kosong atau terjadi kesalahan</div>
       )}
     </>
   );
