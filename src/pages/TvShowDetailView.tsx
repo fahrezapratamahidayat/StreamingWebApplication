@@ -169,9 +169,14 @@ export default function TvShowDetailView({
           <div className="flex flex-col ml-[3.5rem]">
             <div className="mt-[3.12rem]  flex">
               <div className="flex">
-                <h2 className="text-white font-semibold text-[1rem]">
+                {crew && (
+                  <h2 className="text-white font-semibold text-[1rem]">
+                    {crew.length > 0 ? "Director" : ""}
+                  </h2>
+                )}
+                {/* <h2 className="text-white font-semibold text-[1rem]">
                   {crew && crew.length > 0 ? "Director" : ""}
-                </h2>
+                </h2> */}
                 <div className="flex items-center ml-[5.81rem] gap-[2.44rem]">
                   {crew}
                 </div>
@@ -179,9 +184,14 @@ export default function TvShowDetailView({
             </div>
             <div className="mt-[3.12rem] flex">
               <div className="flex">
-                <h2 className="text-white font-semibold text-[1rem]">
+                {crew && (
+                  <h2 className="text-white font-semibold text-[1rem]">
+                    {cast.length > 0 ? "Staring" : ""}
+                  </h2>
+                )}
+                {/* <h2 className="text-white font-semibold text-[1rem]">
                   {crew && cast.length > 0 ? "Staring" : ""}
-                </h2>
+                </h2> */}
                 <div className="grid grid-cols-4 grid-rows-3 ml-[5.81rem] gap-[2.44rem] flex-wrap">
                   {cast}
                 </div>
