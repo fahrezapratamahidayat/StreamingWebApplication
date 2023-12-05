@@ -1,7 +1,7 @@
-"use client"
-import axios from "axios";
+"use client";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const poppins = Poppins({
@@ -30,6 +30,7 @@ const monstserrat = Montserrat({
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
+  const pathname = usePathname();
   return (
     <>
       <div className="pt-[5rem] fixed w-[285px] h-full">
@@ -80,12 +81,24 @@ const Sidebar = ({ items }: any) => {
             className={`${monstserrat.variable} font-monstserrat font-semibold mt-[0.8rem] text-[#828486] transition-all`}
           >
             {items.map((genre: any) => (
-              <li key={genre.id} className={`border-l border-slate-800 ${DropDown ? "" : "hidden"} transition-all duration-500 ease-out`} >
+              <li
+                key={genre.id}
+                className={`border-l border-slate-800 ${
+                  DropDown ? "" : "hidden"
+                } transition-all duration-500 ease-out`}
+              >
                 <Link
-                  className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3 `}
-                  href={`/movies/genre/${genre.id}?name=${encodeURIComponent(
-                    genre.name
-                  )}`}
+                  className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3
+                  }`}
+                  href={
+                    pathname === "/tv"
+                      ? `/tv/genre/${genre.id}?name=${encodeURIComponent(
+                          genre.name
+                        )}`
+                      : `/movies/genre/${genre.id}?name=${encodeURIComponent(
+                          genre.name
+                        )}`
+                  }
                   scroll={false}
                 >
                   {genre.name}
