@@ -75,7 +75,7 @@ export default function NavbarFixed() {
             <Link
               className={`${monstserrat.variable} font-monstserrat text-[1.25rem] text-white font-bold hover:text-white cursor-pointer`}
               href="/search/movies"
-            ></Link>
+            >Search</Link>
           </div>
         </div>
       </div>
