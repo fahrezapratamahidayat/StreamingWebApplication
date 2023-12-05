@@ -91,7 +91,7 @@ const Sidebar = ({ items }: any) => {
                   className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3
                   }`}
                   href={
-                    pathname === "/tv"
+                    pathname?.startsWith("/tv")
                       ? `/tv/genre/${genre.id}?name=${encodeURIComponent(
                           genre.name
                         )}`

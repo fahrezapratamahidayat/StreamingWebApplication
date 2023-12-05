@@ -6,13 +6,12 @@ import { fetchData } from "@/services/DataApi";
 import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { useEffect, useState } from "react";
 
-type tvGenrePageProps = {
+type genrePageProps = {
   params: {
     genre: string;
   };
-  genre: string;
 };
-export default function tvGenrePage(props: tvGenrePageProps) {
+export default function tvGenrePage(props: genrePageProps) {
   const { params } = props;
   const [movie, setMovies] = useState<any>([]);
 
