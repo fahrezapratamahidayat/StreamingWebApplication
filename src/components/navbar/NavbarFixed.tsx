@@ -27,7 +27,7 @@ const monstserrat = Montserrat({
   variable: "--font-monstserrat",
 });
 export default function NavbarFixed() {
-  const pathname = usePathname();
+  const pathname : any = usePathname();
   return (
     <>
       <div
@@ -41,7 +41,7 @@ export default function NavbarFixed() {
           >
             Movie.Z
           </h1>
-          <ul className="flex items-center gap-[1.62rem] ml-[10.6rem]">
+          <ul className="flex items-center gap-[1.62rem] ml-[11.5rem]">
             <li
               className={`${inter.variable} font-inter ${
                 pathname === "/" ? "text-white" : "text-[#939393]"
@@ -51,14 +51,14 @@ export default function NavbarFixed() {
             </li>
             <li
               className={`${inter.variable} font-inter ${
-                pathname === "/movies" ? "text-white" : "text-[#939393]"
+                pathname.startsWith("/movies") ? "text-white" : "text-[#939393]"
               } font-bold text-[1.25rem] hover:text-white cursor-pointer `}
             >
               <Link href="/movies">Movies</Link>
             </li>
             <li
               className={`${inter.variable} font-inter ${
-                pathname === "/tv"  ? "text-white" : "text-[#939393]"
+                pathname.startsWith("/tv") ? "text-white" : "text-[#939393]"
               } font-bold text-[1.25rem] hover:text-white cursor-pointer`}
             >
               <Link href="/tv">Tv Shows</Link>
