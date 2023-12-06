@@ -29,6 +29,16 @@ const monstserrat = Montserrat({
 });
 export default function NavbarFixed() {
   const pathname = usePathname();
+  const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
+
+  const handleSearchForm = (event: any) => {
+    event.preventDefault();
+    setSearchValue(event.target.value);
+
+    router.push(`/search?query=${searchValue}`);
+    setSearchValue("");
+  };
   return (
     <>
       <div
@@ -53,14 +63,15 @@ export default function NavbarFixed() {
             <li
               className={`${inter.variable} font-inter ${
                 pathname === "/movies" ? "text-white" : "text-[#939393]"
-              } font-bold text-[1.25rem] hover:text-white cursor-pointer `}
+              } font-bold text-base hover:text-white cursor-pointer `}
+
             >
               <Link href="/movies">Movies</Link>
             </li>
             <li
               className={`${inter.variable} font-inter ${
-                pathname === "/tv"  ? "text-white" : "text-[#939393]"
-              } font-bold text-[1.25rem] hover:text-white cursor-pointer`}
+                pathname === "/tv" ? "text-white" : "text-[#939393]"
+              } font-bold text-base hover:text-white cursor-pointer`}
             >
               <Link href="/tv">Tv Shows</Link>
             </li>
