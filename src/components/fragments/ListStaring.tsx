@@ -14,7 +14,7 @@ export default function ListStaring({ nameCast, jobCast }: ListStaringProps) {
         </div>
       </div> */}
       <div className="">
-        <p className="text-white text-[1rem] font-semibold">{nameCast}</p>
+        <p className="text-white text-base font-semibold">{nameCast}</p>
         <p className="text-gray-400 text-[0.85rem] font-semibold">{jobCast}</p>
       </div>
     </>

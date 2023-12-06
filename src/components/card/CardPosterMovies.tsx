@@ -37,9 +37,9 @@ interface CardProps {
 export default function CardPosterMovies({ title, data }: CardProps) {
   return (
     <>
-      <div className="mt-[16px] mr-[5.6rem]">
-        <h2 className="text-white font-semibold text-[1.5rem]">{title}</h2>
-        <div className="flex flex-wrap gap-[26px] mt-[18px]">
+      <div className="mr-[5.6rem]">
+        <h2 className="text-white font-semibold text-base">{title}</h2>
+        <div className="grid grid-cols-6 gap-[26px] mt-[18px]">
           {data.map((movie: Movie) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px]"
@@ -59,21 +59,21 @@ export default function CardPosterMovies({ title, data }: CardProps) {
                   alt={movie.title}
                 />
               </Link>
-              <p className="text-white">
+              <p className="text-white text-sm">
                 {movie.title.length > 14
                   ? movie.title.substr(0, 14) + "..."
                   : movie.title}
               </p>
               <div className="flex items-center justify-between w-full ">
                 <p
-                  className={`${monstserrat.variable} px-[1px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-[16px] text-slate-400`}
+                  className={`${monstserrat.variable} px-[2px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-sm text-slate-400`}
                 >
                   {movie.release_date.substr(0, 4)}
                 </p>
                 <div className="flex items-center rounded-[0.1875rem]">
                   <svg
-                    width="15"
-                    height="15"
+                    width="12"
+                    height="12"
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ export default function CardPosterMovies({ title, data }: CardProps) {
                     />
                   </svg>
                   <p
-                    className={`${monstserrat.variable} font-monstserrat text-[16px] text-slate-400`}
+                    className={`${monstserrat.variable} font-monstserrat text-sm text-slate-400`}
                   >
                     {movie.vote_average.toFixed(1)}
                   </p>

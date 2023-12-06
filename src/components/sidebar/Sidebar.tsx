@@ -33,10 +33,10 @@ const Sidebar = ({ items }: any) => {
   const pathname = usePathname();
   return (
     <>
-      <div className="pt-[5rem] fixed w-[285px] h-full">
-        <div className="pb-[1rem] flex flex-col items ml-[3.44rem] hover:overflow-y-auto h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
+      <nav className="pt-[5rem] fixed w-[250px] h-full ">
+        <div className="pb-[1rem] flex flex-col items px-5 hover:overflow-y-auto h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
           <h2
-            className={`${monstserrat.variable} font-monstserrat text-white font-semibold text-[1.125rem] cursor-pointer flex items-center`}
+            className={`${monstserrat.variable} font-monstserrat text-white font-semibold text-base cursor-pointer flex items-center`}
           >
             Genre
             {DropDown ? (
@@ -88,7 +88,7 @@ const Sidebar = ({ items }: any) => {
                 } transition-all duration-500 ease-out`}
               >
                 <Link
-                  className={`hover:text-white mt-[0.75rem] text-[1rem] ml-3
+                  className={`hover:text-white mt-[0.75rem] text-sm ml-3
                   }`}
                   href={
                     pathname?.startsWith("/tv")
@@ -106,27 +106,35 @@ const Sidebar = ({ items }: any) => {
               </li>
             ))}
           </ul>
-          <h2 className="mt-[1.56rem] text-white font-semibold text-[1.125rem]">
+          <h2 className="mt-[1.56rem] text-white font-semibold text-base">
             Libary
           </h2>
           <ul>
-            <li className="mt-[0.75rem] text-[#828486] text-[1rem]">Recent</li>
-            <li className="mt-[0.75rem] text-[#828486] text-[1rem]">
+            <li
+              className="mt-[0.75rem] text-[#828486] text-sm 
+      "
+            >
+              Recent
+            </li>
+            <li
+              className="mt-[0.75rem] text-[#828486]  text-sm
+                  "
+            >
               Top Rated
             </li>
-            <li className="mt-[0.75rem] text-[#828486] text-[1rem]">Likes</li>
+            <li className="mt-[0.75rem] text-[#828486] text-sm">Likes</li>
           </ul>
-          <h2 className="mt-[1.81rem] text-white font-semibold text-[1.125rem]">
+          <h2 className="mt-[1.81rem] text-white font-semibold text-base">
             General
           </h2>
           <ul>
-            <li className="mt-[0.75rem] text-[#828486] text-[1rem]">Logout</li>
-            <li className="mt-[0.75rem] text-[#828486] text-[1rem]">
+            <li className="mt-[0.75rem] text-[#828486] text-sm">Logout</li>
+            <li className="mt-[0.75rem] text-[#828486] text-sm">
               Dark Mode
             </li>
           </ul>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

@@ -43,7 +43,7 @@ export default function MovieDetailView({
 }: any) {
   return (
     <>
-      <div className="flex flex-col  ml-[20rem] pb-[5rem]">
+      <div className="flex flex-col ml-[19rem] pb-[5rem]">
         <div className="mt-[5rem]">
           <div className="relative rounded-[0.65rem] ">
             <div className="max-w-full h-auto">
@@ -51,7 +51,7 @@ export default function MovieDetailView({
               width={1072}
               height={440}
               priority={true}
-              className="backdrop-blur-sm h-[27.5rem] w-[70rem]  object-cover rounded-[0.65rem]"
+              className="backdrop-blur-sm h-[27.5rem] w-[63rem]  object-cover rounded-[0.65rem]"
               src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
               alt=""
             />
@@ -65,11 +65,11 @@ export default function MovieDetailView({
                   {title}
                 </h1>
                 <div className="flex items-center gap-[1.31rem]">
-                  <p className="text-white text-[1rem] font-semibold flex items-center ml-[0.2rem] gap-[0.4rem]">
+                  <p className="text-white text-sm font-semibold flex items-center ml-[0.2rem] gap-[0.4rem]">
                     {" "}
                     <svg
-                      width="20"
-                      height="20"
+                      width="19"
+                      height="19"
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -81,24 +81,21 @@ export default function MovieDetailView({
                     </svg>
                     {vote_average}
                   </p>
-                  <p className="text-white text-[1rem] font-semibold">
+                  <p className="text-white text-sm font-semibold">
                       {runtime && runtime.length > 0
                         ? runtime
                         : "N/A"}
                     </p>
-                  <p className="text-white text-[1rem] font-semibold">
+                  <p className="text-white text-sm font-semibold">
                     {release_date}
                   </p>
                 </div>
-                <p className="text-white text-[1rem] font-semibold mt-[1.88rem]">
+                <p className="text-white text-sm font-semibold mt-[1.88rem]">
                   {genres}
                 </p>
-                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white/90 text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
+                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                   {overview}
                 </p>
-                {/* <p className="w-[30.75rem] h-[7.75rem] flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify">
-                  {overview}
-                </p> */}
                 <div className="flex items-center mt-[2.25rem]">
                   <Link href={`/movies/${id}/watch?=${encodeURIComponent(title)}`}>
                   <button
@@ -154,10 +151,10 @@ export default function MovieDetailView({
               </div>
             </div>
           </div>
-          <div className="flex flex-col ml-[3.5rem]">
+          <div className="flex flex-col ml-[3rem]">
             <div className="mt-[3.12rem]  flex">
               <div className="flex">
-                <h2 className="text-white font-semibold text-[1rem]">
+                <h2 className="text-white font-semibold text-base">
                   {crew && crew.length > 0 ? "Director" : ""}
                 </h2>
                 <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap">
@@ -167,7 +164,7 @@ export default function MovieDetailView({
             </div>
             <div className="mt-[3.12rem] flex">
               <div className="flex">
-                <h2 className="text-white font-semibold text-[1rem]">
+                <h2 className="text-white font-semibold text-base">
                   {credits && credits.length > 0 ? "Staring" : ""}
                 </h2>
                 <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap">
@@ -178,16 +175,9 @@ export default function MovieDetailView({
             <h2 className="text-white  font-semibold text-[1rem] mt-[5.12rem]">
               Trailer And Clips
             </h2>
-            <div className="mt-[1.69rem] w-[66.5rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
+            <div className="mt-[1.69rem] w-[60rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
               {video}
             </div>
-            {/* <div className="mt-[3.12rem] flex">
-              <div className="flex">
-                <Link className="" href={`/movies/${id}/watch=${encodeURIComponent(title)}`}>
-                  <button className="w-[13.75rem] h-[3.75rem] bg-[#FFCE31] text-[1rem] text-black font-semibold rounded-[0.65rem] hover:bg-[#f7c32d]"></button>
-                </Link>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

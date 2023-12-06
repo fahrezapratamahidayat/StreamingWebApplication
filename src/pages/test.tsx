@@ -27,31 +27,31 @@ const monstserrat = Montserrat({
   variable: "--font-monstserrat",
 });
 
-export default function TvShowDetailView({
+export default function MovieDetailView({
+  poster_path,
   backdrop_path,
-  original_name,
-  overview,
-  first_air_date,
+  title,
+  runtime,
   vote_average,
-  episode_run_time,
+  release_date,
+  overview,
   genres,
-  crew,
-  cast,
   video,
+  credits,
+  crew,
   id,
-  season_number,
 }: any) {
   return (
     <>
-      <div className="flex flex-col ml-[19rem] pb-[5rem]">
+      <div className="flex flex-col  ml-[20rem] pb-[5rem]">
         <div className="mt-[5rem]">
-          <div className="relative rounded-[0.65rem]">
-          <div className="max-w-full h-auto">
+          <div className="relative rounded-[0.65rem] ">
+            <div className="max-w-full h-auto">
             <Image
               width={1072}
               height={440}
               priority={true}
-              className="backdrop-blur-sm h-[27.5rem] w-[63rem]  object-cover rounded-[0.65rem]"
+              className="backdrop-blur-sm h-[27.5rem] w-[70rem]  object-cover rounded-[0.65rem]"
               src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
               alt=""
             />
@@ -62,14 +62,14 @@ export default function TvShowDetailView({
                 <h1
                   className={`${poppins.variable} text-white text-[2.25rem] font-semibold`}
                 >
-                  {original_name}
+                  {title}
                 </h1>
                 <div className="flex items-center gap-[1.31rem]">
-                  <p className="text-white text-sm font-semibold flex items-center ml-[0.2rem] gap-[0.4rem] ">
+                  <p className="text-white text-[1rem] font-semibold flex items-center ml-[0.2rem] gap-[0.4rem]">
                     {" "}
                     <svg
-                      width="16"
-                      height="16"
+                      width="20"
+                      height="20"
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -81,49 +81,45 @@ export default function TvShowDetailView({
                     </svg>
                     {vote_average}
                   </p>
-                    <p className="text-white text-sm font-semibold">
-                      {episode_run_time && episode_run_time.length > 0
-                        ? episode_run_time
+                  <p className="text-white text-[1rem] font-semibold">
+                      {runtime && runtime.length > 0
+                        ? runtime
                         : "N/A"}
                     </p>
-                  <p className="text-white text-smfont-semibold ">
-                    {first_air_date}
-                  </p>
-                  <p className="text-white text-sm font-semibold ">
-                    {season_number}{" "}Seasons
+                  <p className="text-white text-[1rem] font-semibold">
+                    {release_date}
                   </p>
                 </div>
-                <p className="text-white text-sm font-semibold mt-[1.88rem]">
+                <p className="text-white text-[1rem] font-semibold mt-[1.88rem]">
                   {genres}
                 </p>
-                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
+                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-white/90 text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                   {overview}
                 </p>
+                {/* <p className="w-[30.75rem] h-[7.75rem] flex-shrink-0 text-white text-[1rem] font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify">
+                  {overview}
+                </p> */}
                 <div className="flex items-center mt-[2.25rem]">
-                  <Link
-                    href={`/tv/${id}/watch?=${encodeURIComponent(
-                      original_name
-                    )}`}
+                  <Link href={`/movies/${id}/watch?=${encodeURIComponent(title)}`}>
+                  <button
+                    type="button"
+                    className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
                   >
-                    <button
-                      type="button"
-                      className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                    <svg
+                      className="me-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="24"
+                      viewBox="0 0 18 20"
+                      fill="none"
                     >
-                      <svg
-                        className="me-2"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="24"
-                        viewBox="0 0 18 20"
-                        fill="none"
-                      >
-                        <path
-                          d="M16.5775 8.38513L2.82801 0.25655C1.71087 -0.40358 0 0.23702 0 1.86977V18.123C0 19.5878 1.58978 20.4706 2.82801 19.7362L16.5775 11.6116C17.804 10.8889 17.8079 9.10775 16.5775 8.38513Z"
-                          fill="black"
-                        />
-                      </svg>
-                      Watch Now
-                    </button>
+                      <path
+                        d="M16.5775 8.38513L2.82801 0.25655C1.71087 -0.40358 0 0.23702 0 1.86977V18.123C0 19.5878 1.58978 20.4706 2.82801 19.7362L16.5775 11.6116C17.804 10.8889 17.8079 9.10775 16.5775 8.38513Z"
+                        fill="black"
+                      />
+                    </svg>
+                    Watch Now
+                  </button>
                   </Link>
                   <button
                     type="button"
@@ -160,31 +156,38 @@ export default function TvShowDetailView({
           </div>
           <div className="flex flex-col ml-[3.5rem]">
             <div className="mt-[3.12rem]  flex">
-              <div className="flex ">
-                <h2 className="text-white font-semibold text-base">
-                   {crew && crew.length > 0 ? "Director" : ""}
+              <div className="flex">
+                <h2 className="text-white font-semibold text-[1rem]">
+                  {crew && crew.length > 0 ? "Director" : ""}
                 </h2>
-                <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap ">
+                <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap">
                   {crew}
                 </div>
               </div>
             </div>
             <div className="mt-[3.12rem] flex">
               <div className="flex">
-                <h2 className="text-white font-semibold text-base">
-                {cast && cast.length > 0 ? "Staring" : ""}
+                <h2 className="text-white font-semibold text-[1rem]">
+                  {credits && credits.length > 0 ? "Staring" : ""}
                 </h2>
-                <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap ">
-                  {cast}
+                <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap">
+                  {credits}
                 </div>
               </div>
             </div>
-            <h2 className="text-white  font-semibold text-base mt-[5.12rem]">
+            <h2 className="text-white  font-semibold text-[1rem] mt-[5.12rem]">
               Trailer And Clips
             </h2>
-            <div className="mt-[1.69rem] w-[60rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
+            <div className="mt-[1.69rem] w-[66.5rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
               {video}
             </div>
+            {/* <div className="mt-[3.12rem] flex">
+              <div className="flex">
+                <Link className="" href={`/movies/${id}/watch=${encodeURIComponent(title)}`}>
+                  <button className="w-[13.75rem] h-[3.75rem] bg-[#FFCE31] text-[1rem] text-black font-semibold rounded-[0.65rem] hover:bg-[#f7c32d]"></button>
+                </Link>
+              </div>
+            </div> */}
           </div>
         </div>
       </div>

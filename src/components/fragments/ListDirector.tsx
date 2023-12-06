@@ -18,7 +18,7 @@ const ListDirector = ({
         </div>
       </div> */}
       <div className="">
-        <p className="text-white text-[1rem] font-semibold">{nameDirector}</p>
+        <p className="text-white text-base font-semibold">{nameDirector}</p>
         <p className="text-gray-400 text-[0.85rem] font-semibold">{jobDirector}</p>
       </div>
     </>

@@ -5,7 +5,7 @@ export default function PageLayouts({
 }) {
   return (
     <>
-      <div className="flex flex-col ml-[21rem] w-auto h-auto">
+      <div className="flex flex-col ml-[19rem] w-auto h-auto">
         <div className="mt-[5rem]">
             {children}
         </div>

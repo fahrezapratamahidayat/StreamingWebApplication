@@ -112,7 +112,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col ml-[21rem] w-auto h-auto">
+      <div className="flex flex-col ml-[20rem]">
         <div className="mt-[5rem]">
           {/* <div className="relative ">
             <Image

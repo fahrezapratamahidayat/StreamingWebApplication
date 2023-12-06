@@ -7,7 +7,7 @@ export default function MainLayouts({
 }) {
   return (
     <>
-      <div className="min-h-screen bg-black ">
+      <div className="min-h-screen bg-black">
         <div className="flex">
           {children}</div>
       </div>

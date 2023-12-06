@@ -19,33 +19,37 @@ const monstserrat = Montserrat({
   variable: "--font-monstserrat",
 });
 
-type TvShows = {
+type CardSearchProps = {
     id:number;
+    title: string
     original_name:string;
+    original_title:string
     name:string
     overview:string;
     poster_path:string
     vote_average:number
     first_air_date:string
+    release_date:string
+    media_type:string
 };
 
 interface CardProps {
   title: string;
-  data: TvShows[];
+  data: CardSearchProps[];
 }
-export default function CardPosterTvShows({ title, data }: CardProps) {
+export default function CardPosterSearch({ title, data }: CardProps) {
   return (
     <>
-      <div className=" mr-[5.6rem]">
+      <div className="">
         <h2 className="text-white font-semibold text-base">{title}</h2>
-        <div className="grid grid-cols-6 gap-[26px] mt-[18px]">
-          {data.map((movie: TvShows) => (
+        <div className="grid grid-cols-8 gap-[26px] mt-[18px]">
+          {data.map((movie: CardSearchProps) => (
             <div
-              className="flex flex-col justify-center items-start gap-[5px]"
+              className="flex flex-col justify-center items-start  gap-[5px] "
               key={movie.id}
             >
               <Link
-                href={`/tv/${movie.id}`}
+                href={movie.media_type === "tv" ? `/tv/${movie.id}` : `/movies/${movie.id}`}
                 scroll={false}
                 className="cursor-pointer transition hover:scale-105 w-auto h-auto"
               >
@@ -55,11 +59,16 @@ export default function CardPosterTvShows({ title, data }: CardProps) {
                   className="rounded-xl "
                   priority
                   src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
-                  alt={movie.name}
+                  alt={movie.original_title && movie.original_title || movie.original_name && movie.original_name}
                 />
               </Link>
-              <p className="text-white text-sm">
-                {movie.name.length > 14
+              <p className="text-sm text-white">
+                {movie.title && movie.title.length > 14
+                  ? movie.title.substr(0, 14) + "..."
+                  : movie.title}
+              </p>
+              <p text-sm text-white>
+                {movie.name && movie.name.length > 14
                   ? movie.name.substr(0, 14) + "..."
                   : movie.name}
               </p>
@@ -67,7 +76,7 @@ export default function CardPosterTvShows({ title, data }: CardProps) {
                 <p
                   className={`${monstserrat.variable} px-[2px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-sm text-slate-400`}
                 >
-                  {movie.first_air_date.substr(0, 4)}
+                  {movie.first_air_date && movie.first_air_date.substr(0, 4) || movie.release_date && movie.release_date.substr(0, 4)}
                 </p>
                 <div className="flex items-center rounded-[0.1875rem]">
                   <svg
@@ -85,7 +94,7 @@ export default function CardPosterTvShows({ title, data }: CardProps) {
                   <p
                     className={`${monstserrat.variable} font-monstserrat text-sm text-slate-400`}
                   >
-                    {movie.vote_average.toFixed(1)}
+                    {movie.vote_average && movie.vote_average !== 0 ? movie.vote_average.toFixed(1) : "NR"}
                   </p>
                 </div>
               </div>
