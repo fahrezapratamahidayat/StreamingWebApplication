@@ -21,7 +21,10 @@ const config: Config = {
       },
       transitionProperty: {
         'height': 'height',
-      }
+      },
+      screens: {
+        'sm-md' : "1366px"
+      },
     },
   },
   plugins: [
