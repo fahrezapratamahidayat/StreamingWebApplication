@@ -5,10 +5,11 @@ import { fetchData } from "@/services/DataApi";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { watch } from "fs";
 
 type dataPageProps = {
   params: {
-    watch: string;
+    watch: string[];
     slug: string;
   };
 };
@@ -44,7 +45,6 @@ type SeasonData = {
 
 export default function WatchTvPage(props: dataPageProps) {
   const { params } = props;
-  const searchParamps : any = useSearchParams();
   const [seasonData, setSeasonData] = useState<SeasonData>({ episodes: [] });
 
   const fetchDataSeason = async () => {
@@ -71,6 +71,7 @@ export default function WatchTvPage(props: dataPageProps) {
                 alt={episode.name}
                 width={500}
                 height={500}
+                priority
                 className="rounded-md"
               />
               <div className="flex gap-2 mt-1">
