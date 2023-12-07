@@ -33,13 +33,14 @@ type Movie = {
 interface CardProps {
   title: string;
   data: Movie[];
+  className?: string;
 }
-export default function CardPosterMovies({ title, data }: CardProps) {
+export default function CardPosterMovies({ title, data,className }: CardProps) {
   return (
     <>
-      <div className="mr-[5.6rem]">
-        <h2 className="text-white font-semibold text-base">{title}</h2>
-        <div className="grid grid-cols-6 gap-[26px] mt-[18px]">
+      <div className={`${className} pb-[2.5rem]`}>
+        <h2 className="text-white font-semibold text-2xl">{title}</h2>
+        <div className="flex flex-wrap gap-[26px] mt-[18px]">
           {data.map((movie: Movie) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px]"
@@ -48,11 +49,11 @@ export default function CardPosterMovies({ title, data }: CardProps) {
               <Link
                 href={`/movies/${movie.id}`}
                 scroll={false}
-                className="cursor-pointer w-auto h-auto"
+                className="cursor-pointer hover:scale-105 w-auto h-auto"
               >
                 <Image
-                  width={157}
-                  height={308}
+                  width={122}
+                  height={170}
                   priority
                   className="rounded-xl "
                   src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -60,7 +61,7 @@ export default function CardPosterMovies({ title, data }: CardProps) {
                 />
               </Link>
               <p className="text-white text-sm">
-                {movie.title.length > 14
+                {movie.title && movie.title.length > 14
                   ? movie.title.substr(0, 14) + "..."
                   : movie.title}
               </p>
@@ -68,7 +69,7 @@ export default function CardPosterMovies({ title, data }: CardProps) {
                 <p
                   className={`${monstserrat.variable} px-[2px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-sm text-slate-400`}
                 >
-                  {movie.release_date.substr(0, 4)}
+                  {movie.release_date && movie.release_date.substr(0, 4)}
                 </p>
                 <div className="flex items-center rounded-[0.1875rem]">
                   <svg
@@ -86,7 +87,7 @@ export default function CardPosterMovies({ title, data }: CardProps) {
                   <p
                     className={`${monstserrat.variable} font-monstserrat text-sm text-slate-400`}
                   >
-                    {movie.vote_average.toFixed(1)}
+                    {movie.vote_average && movie.vote_average.toFixed(1)}
                   </p>
                 </div>
               </div>

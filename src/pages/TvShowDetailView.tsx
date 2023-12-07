@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,6 +42,10 @@ export default function TvShowDetailView({
   id,
   season_number,
 }: any) {
+  const router = useRouter();
+  const handleWatchNow = () => {
+    router.push(`/tv/${id}/watch?=${original_name.replace(/\s+/g, '+')}/season/1`);
+  }
   return (
     <>
       <div className="flex flex-col ml-[19rem] pb-[5rem]">
@@ -83,7 +88,7 @@ export default function TvShowDetailView({
                   </p>
                     <p className="text-white text-sm font-semibold">
                       {episode_run_time && episode_run_time.length > 0
-                        ? episode_run_time
+                        ? episode_run_time + "m"
                         : "N/A"}
                     </p>
                   <p className="text-white text-smfont-semibold ">
@@ -100,14 +105,10 @@ export default function TvShowDetailView({
                   {overview}
                 </p>
                 <div className="flex items-center mt-[2.25rem]">
-                  <Link
-                    href={`/tv/${id}/watch?=${encodeURIComponent(
-                      original_name
-                    )}`}
-                  >
                     <button
                       type="button"
                       className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                      onClick={handleWatchNow}
                     >
                       <svg
                         className="me-2"
@@ -124,7 +125,6 @@ export default function TvShowDetailView({
                       </svg>
                       Watch Now
                     </button>
-                  </Link>
                   <button
                     type="button"
                     className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"

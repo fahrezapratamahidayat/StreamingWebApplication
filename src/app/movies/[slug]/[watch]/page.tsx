@@ -12,11 +12,10 @@ export default function watchMovie(props: watchMovieProps) {
     const { params } = props;
     return (
         <>
-        <Sidebar items={movieSidebaritem}/>
-        <div className="ml-[21rem] mt-[5rem]">
+        <div className=" mt-[5rem] mx-5">
             <iframe 
             src={`https://www.2embed.cc/embed/${params.slug}`} 
-            className="h-[27.5rem] w-[67rem]"
+            className="h-[27.5rem] w-[60rem]"
             allowFullScreen
             >
             </iframe>

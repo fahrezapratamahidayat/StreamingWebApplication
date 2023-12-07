@@ -77,12 +77,10 @@ export default function GenrePage(props: genrePageProps) {
     title = "Adventure";
   } else title = "";
   
-
-  
   return (
     <>
       <Sidebar items={movieSidebaritem}/>
-      <div className="flex flex-col ml-[21rem] w-auto h-auto">
+      <div className="flex flex-col ml-[20rem]">
         <div className="mt-[5rem]">
         {movies && (
             <CardPoster data={movies} title={`Genre : ${title}`} />

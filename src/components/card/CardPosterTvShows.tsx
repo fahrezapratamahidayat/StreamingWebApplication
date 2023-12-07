@@ -32,13 +32,14 @@ type TvShows = {
 interface CardProps {
   title: string;
   data: TvShows[];
+  className?: string;
 }
-export default function CardPosterTvShows({ title, data }: CardProps) {
+export default function CardPosterTvShows({ title, data,className }: CardProps) {
   return (
     <>
-      <div className=" mr-[5.6rem]">
-        <h2 className="text-white font-semibold text-base">{title}</h2>
-        <div className="grid grid-cols-6 gap-[26px] mt-[18px]">
+      <div className={`${className}`}>
+        <h2 className="text-white font-semibold text-2xl">{title}</h2>
+        <div className="flex flex-wrap gap-[26px] mt-[18px]">
           {data.map((movie: TvShows) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px]"
@@ -50,8 +51,8 @@ export default function CardPosterTvShows({ title, data }: CardProps) {
                 className="cursor-pointer transition hover:scale-105 w-auto h-auto"
               >
                 <Image
-                  width={157}
-                  height={308}
+                  width={124} // default 157
+                  height={170} // default 308
                   className="rounded-xl "
                   priority
                   src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}

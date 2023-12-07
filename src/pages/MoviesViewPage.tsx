@@ -187,14 +187,15 @@ export default function Home() {
         {playing && upComingMovies && topRatedMovies && popularMovies && (
           <>
             <CardPosterMovies title={`Now Playing`} data={playing} />
-            <CardPosterMovies title={`Popular`} data={popularMovies} />
+            <CardPosterMovies title={`Popular`} data={popularMovies} className="mt-[3.5rem]"/>
             {CardPosterMovies({
               title: `Top Rated`,
+              className: "mt-[3.5rem]",
               data: topRatedMovies.filter(
                 (movie: Movie) => movie.vote_average > 8.5
               ),
             })}
-            <CardPosterMovies title={`Upcoming`} data={upComingMovies} />
+            <CardPosterMovies title={`Upcoming`} data={upComingMovies} className="mt-[3.5rem]"/>
           </>
         )}
       </div>

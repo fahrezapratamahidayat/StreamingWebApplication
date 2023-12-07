@@ -36,7 +36,7 @@ export default function NavbarFixed() {
     event.preventDefault();
     setSearchValue(event.target.value);
 
-    router.push(`/search?query=${searchValue}`);
+    router.push(`/search?query=${searchValue.replace(/\s+/g, '+')}`);
     setSearchValue("");
   };
   return (
@@ -62,7 +62,7 @@ export default function NavbarFixed() {
             </li>
             <li
               className={`${inter.variable} font-inter ${
-                pathname === "/movies" ? "text-white" : "text-[#939393]"
+                pathname?.startsWith("/movies") ? "text-white" : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer `}
 
             >
@@ -70,7 +70,7 @@ export default function NavbarFixed() {
             </li>
             <li
               className={`${inter.variable} font-inter ${
-                pathname === "/tv" ? "text-white" : "text-[#939393]"
+                pathname?.startsWith("/tv") ? "text-white" : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer`}
             >
               <Link href="/tv">Tv Shows</Link>
@@ -87,7 +87,7 @@ export default function NavbarFixed() {
             <form onSubmit={handleSearchForm}>
               <div className="relative w-full">
                 <input
-                  className="block p-2 w-full z-20 text-sm rounded-md text-gray-900 bg-gray-50  border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                  className="block p-2 w-[13rem] z-20 text-sm rounded-md text-gray-900 bg-gray-50  border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                   placeholder="Search Movie and tv"
                   value={searchValue}
                   type="text"
@@ -96,7 +96,7 @@ export default function NavbarFixed() {
                 />
                 <button
                   type="submit"
-                  className="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white"
+                  className="absolute top-0 end-0 h-full p-2.5  text-sm font-medium text-white"
                 >
                   <svg
                     className="w-4 h-4"
@@ -107,9 +107,9 @@ export default function NavbarFixed() {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                     />
                   </svg>

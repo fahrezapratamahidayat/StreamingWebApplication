@@ -4,6 +4,7 @@ import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { fetchData } from "@/services/DataApi";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type dataPageProps = {
   params: {
@@ -13,14 +14,6 @@ type dataPageProps = {
 };
 
 type SeasonData = {
-  _id: string;
-  air_data: string;
-  name: string;
-  id: number;
-  overview: string;
-  season_number: number;
-  vote_average: number;
-  poster_path: string;
   episodes: {
     air_date: string;
     episode_number: number;
@@ -51,26 +44,44 @@ type SeasonData = {
 
 export default function WatchTvPage(props: dataPageProps) {
   const { params } = props;
-  const [data, setData] = useState<SeasonData>([] as any);
-  const fetchDataVideo = async () => {
-    const snapshot = await fetchData(`tv/${params.slug}/season/1`);
-    setData(snapshot);
-  };
+  const searchParamps : any = useSearchParams();
+  const [seasonData, setSeasonData] = useState<SeasonData>({ episodes: [] });
 
-  const fetchDataAsync = async () => {
-    const data = await fetchData(`tv/${params.slug}`);
-    console.log(data);
+  const fetchDataSeason = async () => {
+    try {
+      const data = await fetchData(`tv/${params.slug}/season/1`);
+      setSeasonData(data);
+    } catch (error) {
+      console.error('Error fetching season data:', error);
+    }
   };
 
   useEffect(() => {
-    fetchDataVideo();
-    fetchDataAsync();
-  }, []);
+    fetchDataSeason();
+  }, [params.slug]);
 
   return (
     <>
-      <Sidebar items={tvShowsSidebarItem} />
-      <div className="ml-[21rem] mt-[5rem]"></div>
+      <div className="mx-5 mt-[5rem]">
+        <div className="grid grid-cols-4 grid-rows-4 gap-5">
+          {seasonData.episodes.map((episode, index) => (
+            <div key={episode.id} className="flex flex-col">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${episode.still_path}`}
+                alt={episode.name}
+                width={500}
+                height={500}
+                className="rounded-md"
+              />
+              <div className="flex gap-2 mt-1">
+                <p className="text-white text-base">{episode.episode_number}.</p>
+                <p className="text-white text-base">{episode.name}</p>
+              </div>
+              <p className="text-gray-400 text-sm flex-shrink-0">{episode.overview}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

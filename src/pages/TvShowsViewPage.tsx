@@ -18,8 +18,7 @@ export default function TvShowsView() {
   useEffect(() => {
     fetchDataAsync();
   }, []);
-  console.log(data)
-
+  
   return (
     <>
       <PageLayouts>
