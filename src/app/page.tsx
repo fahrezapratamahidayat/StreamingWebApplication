@@ -65,38 +65,9 @@ export default function Home() {
                       priority
                       className="rounded-xl "
                       src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                      alt={movie.title}
+                      alt={movie.title || movie.original_name}
                     />
                   </Link>
-                  {/* <p className="text-white">
-                  {movie.title || movie.original_name || movie.original_title || movie.name}
-                  </p>
-                  <div className="flex items-center justify-between w-full ">
-                    <p
-                      className={`${monstserrat.variable} px-[1px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-[16px] text-slate-400`}
-                    >
-                      {movie.release_date || ""}
-                    </p>
-                    <div className="flex items-center rounded-[0.1875rem]">
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M20 7.4H12.3667L10 0L7.63333 7.4H0L6.16667 11.9667L3.83333 19.3333L10 14.7667L16.1667 19.3333L13.8 11.9333L20 7.4Z"
-                          fill="#FFCE31"
-                        />
-                      </svg>
-                      <p
-                        className={`${monstserrat.variable} font-monstserrat text-[16px] text-slate-400`}
-                      >
-                        {movie.vote_average.toFixed(1)}
-                      </p>
-                    </div>
-                  </div> */}
                 </div>
               ))}
             </div>

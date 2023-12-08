@@ -89,7 +89,7 @@ export default function WatchTvPage(props: dataPageProps) {
   };
 
   const renderOptions = () => {
-    if (tvData) {
+    if (tvData?.number_of_seasons) {
       const options = [];
       for (let i = 1; i <= tvData.number_of_seasons; i++) {
         options.push(
@@ -125,12 +125,14 @@ export default function WatchTvPage(props: dataPageProps) {
           <h1 className="text-white text-4xl font-bold">
             {tvData?.name} - Season {selectedSeason}
           </h1>
-          <select
-            value={selectedSeason}
-            onChange={SelectSeason}
-          >
-            {renderOptions()}
-          </select>
+          {tvData?.number_of_seasons && (
+            <select
+              onChange={SelectSeason}
+              defaultValue={selectedSeason}
+            >
+              {renderOptions()}
+            </select>
+          )}
         </div>
         <div className="grid grid-cols-4 grid-rows-4 gap-5">
           {seasonData.episodes.map((episode, index) => (

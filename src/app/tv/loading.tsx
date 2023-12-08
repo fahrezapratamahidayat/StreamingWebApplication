@@ -5,7 +5,8 @@ export default function Loading() {
   return (
     <>
       <PageLayouts>
-        <div className={`pb-[2.5rem]`}>
+        <div className={`animate-pulse `}>
+          <div className="w-[150px] h-5 bg-slate-800"></div>
           <div className="flex flex-wrap gap-[26px] mt-[18px]">
             {data.map((movie: any) => (
               <div

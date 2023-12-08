@@ -1,8 +1,12 @@
+'use client';
 import Image from "next/image";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
-import Sidebar from "@/components/sidebar/Sidebar";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ListDirector from "@/components/fragments/ListDirector";
+import ListStaring from "@/components/fragments/ListStaring";
+import CardVideo from "@/components/card/cardVideo";
+import { fetchData } from "@/services/DataApi";
+import { useEffect, useState } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,166 +32,249 @@ const monstserrat = Montserrat({
   variable: "--font-monstserrat",
 });
 
+type TvShowProps = {
+  id: number;
+  original_name: string;
+  name: string;
+  backdrop_path: string;
+  poster_path: string;
+  overview: string;
+  popularity: number;
+  first_air_date: string;
+  episode_run_time: number[];
+  vote_average: number;
+  vote_count: number;
+  genre_ids: number[];
+  genres: { id: number; name: string }[];
+  number_of_seasons: number;
+  video: string;
+  results: { id: string; name: string; key: string }[];
+  cast: {
+    id: number;
+    name: string;
+    job: string;
+    character: string;
+    known_for_department: string;
+  }[];
+  crew: {
+    id: number;
+    name: string;
+    job: string;
+    known_for_department: string;
+  }[];
+};
+
 export default function TvShowDetailView({
-  backdrop_path,
   original_name,
-  overview,
-  first_air_date,
-  vote_average,
-  episode_run_time,
-  genres,
-  crew,
-  cast,
-  video,
   id,
-  season_number,
+  slug,
 }: any) {
   const router = useRouter();
+  const [data, setData] = useState<TvShowProps | null>(null);
+  const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
+  const [credits, setCredits] = useState<TvShowProps | null>(null);
+
+  const fetchDataAsync = async () => {
+    const data = await fetchData(`tv/${slug}`);
+    setData(data);
+  };
+
+  const fetchDataVideo = async () => {
+    const data = await fetchData(`tv/${slug}/videos`);
+    setDataVideos(data);
+  };
+
+  const fetchCredits = async () => {
+    const data = await fetchData(`tv/${slug}/credits`);
+    setCredits(data);
+  };
+
+  const videoList = dataVideos?.results.map((video) => (
+    <CardVideo key={video.id} keyVideo={video.key} title={video.name} />
+  ));
+
+  const castList = credits?.cast
+    .slice(0, 12)
+    .map((cast, index) => (
+      <ListStaring key={index} nameCast={cast.name} jobCast={cast.character} />
+    ));
+
+  const crewList = credits?.crew
+    .filter(
+      (actor) =>
+        actor.job === "Novel" ||
+        actor.job === "Director" ||
+        actor.job === "Writer" ||
+        actor.job === "Writing" ||
+        actor.known_for_department === "Writing"
+    )
+    .map((actor, index) => (
+      <ListDirector
+        key={index}
+        nameDirector={actor.name}
+        jobDirector={actor.job}
+      />
+    ));
+
+  useEffect(() => {
+    fetchDataAsync();
+    fetchDataVideo();
+    fetchCredits();
+  }, []);
+
   const handleWatchNow = () => {
-    router.push(`/tv/${id}/watch?=${original_name.replace(/\s+/g, '+')}/season/1`);
-  }
+    router.push(
+      `/tv/${slug}/watch?=${data?.name.replace(/\s+/g, "+")}/season/1`
+    );
+  };
   return (
     <>
-      <div className="flex flex-col ml-[19rem] pb-[5rem]">
-        <div className="mt-[5rem]">
-          <div className="relative rounded-[0.65rem]">
-          <div className="max-w-full h-auto">
-            <Image
-              width={1072}
-              height={440}
-              priority={true}
-              className="backdrop-blur-sm h-[27.5rem] w-[63rem]  object-cover rounded-[0.65rem]"
-              src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-              alt=""
-            />
-            </div>
-            <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
-            <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
-              <div className="ml-[2.31rem] mt-[2.75rem]">
-                <h1
-                  className={`${poppins.variable} text-white text-[2.25rem] font-semibold`}
-                >
-                  {original_name}
-                </h1>
-                <div className="flex items-center gap-[1.31rem]">
-                  <p className="text-white text-sm font-semibold flex items-center ml-[0.2rem] gap-[0.4rem] ">
-                    {" "}
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+    {data && dataVideos && credits &&   (
+            <div className="flex flex-col ml-[19rem] pb-[5rem]">
+            <div className="mt-[5rem]">
+              <div className="relative rounded-[0.65rem]">
+                <div className="max-w-full h-auto">
+                  <Image
+                    width={1072}
+                    height={440}
+                    priority={true}
+                    className="backdrop-blur-sm h-[27.5rem] w-[63rem]  object-cover rounded-[0.65rem]"
+                    src={`https://image.tmdb.org/t/p/original/${
+                      data && data?.backdrop_path
+                    }`}
+                    alt=""
+                  />
+                </div>
+                <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
+                <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
+                  <div className="ml-[2.31rem] mt-[2.75rem]">
+                    <h1
+                      className={`${poppins.variable} text-white text-[2.25rem] font-semibold`}
                     >
-                      <path
-                        d="M20 7.4H12.3667L10 0L7.63333 7.4H0L6.16667 11.9667L3.83333 19.3333L10 14.7667L16.1667 19.3333L13.8 11.9333L20 7.4Z"
-                        fill="#FFCE31"
-                      />
-                    </svg>
-                    {vote_average}
-                  </p>
-                    <p className="text-white text-sm font-semibold">
-                      {episode_run_time && episode_run_time.length > 0
-                        ? episode_run_time + "m"
-                        : "N/A"}
+                      {data && data?.name}
+                    </h1>
+                    <div className="flex items-center gap-[1.31rem]">
+                      <p className="text-white text-sm font-semibold flex items-center ml-[0.2rem] gap-[0.4rem] ">
+                        {" "}
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M20 7.4H12.3667L10 0L7.63333 7.4H0L6.16667 11.9667L3.83333 19.3333L10 14.7667L16.1667 19.3333L13.8 11.9333L20 7.4Z"
+                            fill="#FFCE31"
+                          />
+                        </svg>
+                        {data && data?.vote_average.toFixed(1)}
+                      </p>
+                      <p className="text-white text-sm font-semibold">
+                        {data &&
+                        data?.episode_run_time &&
+                        data.episode_run_time.length > 0
+                          ? data.episode_run_time + "m"
+                          : "N/A"}
+                      </p>
+                      <p className="text-white text-smfont-semibold ">
+                        {data && data?.first_air_date.substr(0, 4)}
+                      </p>
+                      <p className="text-white text-sm font-semibold ">
+                        {data && data?.number_of_seasons} Seasons
+                      </p>
+                    </div>
+                    <p className="text-white text-sm font-semibold mt-[1.88rem]">
+                      {data && data?.genres.map((genre) => genre.name).join(", ")}
                     </p>
-                  <p className="text-white text-smfont-semibold ">
-                    {first_air_date}
-                  </p>
-                  <p className="text-white text-sm font-semibold ">
-                    {season_number}{" "}Seasons
-                  </p>
-                </div>
-                <p className="text-white text-sm font-semibold mt-[1.88rem]">
-                  {genres}
-                </p>
-                <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
-                  {overview}
-                </p>
-                <div className="flex items-center mt-[2.25rem]">
-                    <button
-                      type="button"
-                      className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
-                      onClick={handleWatchNow}
-                    >
-                      <svg
-                        className="me-2"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="24"
-                        viewBox="0 0 18 20"
-                        fill="none"
+                    <p className="overflow-y-auto overflow-overview pr-2 w-[30.75rem] h-[7.75rem]  flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
+                      {data && data?.overview}
+                    </p>
+                    <div className="flex items-center mt-[2.25rem]">
+                      <button
+                        type="button"
+                        className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                        onClick={handleWatchNow}
                       >
-                        <path
-                          d="M16.5775 8.38513L2.82801 0.25655C1.71087 -0.40358 0 0.23702 0 1.86977V18.123C0 19.5878 1.58978 20.4706 2.82801 19.7362L16.5775 11.6116C17.804 10.8889 17.8079 9.10775 16.5775 8.38513Z"
-                          fill="black"
-                        />
-                      </svg>
-                      Watch Now
-                    </button>
-                  <button
-                    type="button"
-                    className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      className="me-2"
-                    >
-                      <path
-                        d="M12 5V19"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M5 12H19"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    WatchList
-                  </button>
+                        <svg
+                          className="me-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="24"
+                          viewBox="0 0 18 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M16.5775 8.38513L2.82801 0.25655C1.71087 -0.40358 0 0.23702 0 1.86977V18.123C0 19.5878 1.58978 20.4706 2.82801 19.7362L16.5775 11.6116C17.804 10.8889 17.8079 9.10775 16.5775 8.38513Z"
+                            fill="black"
+                          />
+                        </svg>
+                        Watch Now
+                      </button>
+                      <button
+                        type="button"
+                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          className="me-2"
+                        >
+                          <path
+                            d="M12 5V19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M5 12H19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        WatchList
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col ml-[3.5rem]">
+                <div className="mt-[3.12rem]  flex">
+                  <div className="flex ">
+                    <h2 className="text-white font-semibold text-base">
+                      {credits?.crew && credits.crew.length > 0 ? "Director" : ""}
+                    </h2>
+                    <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap ">
+                      {crewList}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-[3.12rem] flex">
+                  <div className="flex">
+                    <h2 className="text-white font-semibold text-base">
+                      {credits?.cast && credits.cast.length > 0 ? "Staring" : ""}
+                    </h2>
+                    <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap ">
+                      {castList}
+                    </div>
+                  </div>
+                </div>
+                <h2 className="text-white  font-semibold text-base mt-[5.12rem]">
+                  Trailer And Clips
+                </h2>
+                <div className="mt-[1.69rem] w-[60rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
+                  {videoList}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col ml-[3.5rem]">
-            <div className="mt-[3.12rem]  flex">
-              <div className="flex ">
-                <h2 className="text-white font-semibold text-base">
-                   {crew && crew.length > 0 ? "Director" : ""}
-                </h2>
-                <div className="flex items-center ml-[5.41rem] gap-[2.44rem] flex-wrap ">
-                  {crew}
-                </div>
-              </div>
-            </div>
-            <div className="mt-[3.12rem] flex">
-              <div className="flex">
-                <h2 className="text-white font-semibold text-base">
-                {cast && cast.length > 0 ? "Staring" : ""}
-                </h2>
-                <div className="grid grid-cols-4  ml-[5.81rem] gap-[2.44rem] flex-wrap ">
-                  {cast}
-                </div>
-              </div>
-            </div>
-            <h2 className="text-white  font-semibold text-base mt-[5.12rem]">
-              Trailer And Clips
-            </h2>
-            <div className="mt-[1.69rem] w-[60rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
-              {video}
-            </div>
-          </div>
-        </div>
-      </div>
+    )}
     </>
   );
 }

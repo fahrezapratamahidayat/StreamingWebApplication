@@ -67,7 +67,7 @@ export default function CardPosterSearch({ title, data }: CardProps) {
                   ? movie.title.substr(0, 14) + "..."
                   : movie.title}
               </p>
-              <p text-sm text-white>
+              <p className="text-sm text-white">
                 {movie.name && movie.name.length > 14
                   ? movie.name.substr(0, 14) + "..."
                   : movie.name}

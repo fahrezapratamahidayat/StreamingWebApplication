@@ -2,7 +2,6 @@
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
 import PageLayouts from "@/layouts/PageLayouts";
 import { fetchData } from "@/services/DataApi";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function TvShowsView() {
