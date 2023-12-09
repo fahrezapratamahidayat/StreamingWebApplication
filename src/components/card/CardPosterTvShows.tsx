@@ -39,7 +39,7 @@ export default function CardPosterTvShows({ title, data,className }: CardProps) 
     <>
       <div className={`${className}`}>
         <h2 className="text-white font-semibold text-2xl">{title}</h2>
-        <div className="flex flex-wrap gap-[26px] mt-[18px]">
+        <div className="flex flex-wrap lg:grid lg:grid-cols-7 gap-2 lg:gap-[26px] mt-[18px]">
           {data.map((movie: TvShows) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px]"

@@ -1,12 +1,9 @@
-"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MainLayouts from "@/layouts/MainLayouts";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
-import Sidebar from "@/components/sidebar/Sidebar";
 import MovieContextProvider from "@/context/DataMovies";
-import { usePathname } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -14,7 +11,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathName: any = usePathname();
+
   return (
     <html lang="en" className="">
       <meta charSet="utf-8" />

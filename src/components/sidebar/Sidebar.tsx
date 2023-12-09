@@ -33,7 +33,7 @@ const Sidebar = ({ items }: any) => {
   const pathname = usePathname();
   return (
     <>
-      <nav className="pt-[5rem] fixed w-[250px] h-full ">
+      <nav className="pt-[5rem] fixed w-[250px] h-full hidden lg:block">
         <div className="pb-[1rem] flex flex-col items px-5 hover:overflow-y-auto h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
           <h2
             className={`text-white font-semibold text-base cursor-pointer flex items-center`}

@@ -53,6 +53,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
   const [tvData, setTvData] = useState<TvShowSubset | null>(null);
   const selected = useSearchParams()?.get("season") || "1";
   const [selectedSeason, setSelectedSeason] = useState(selected);
+  const [selectedEpisode, setSelectedEpisode] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -127,6 +128,11 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
     setShowModal(false);
   };
 
+  const selectEpisode = (episodeNumber: number) => {
+    setSelectedEpisode(episodeNumber);
+    openModal();
+  };
+
   return (
     <>
       <div className="mx-5 mt-[5rem] ">
@@ -150,7 +156,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
                 height={500}
                 priority
                 className="rounded-md"
-                onClick={() => setShowModal(true)}
+                onClick={() => selectEpisode(episode.episode_number)}
               />
               <div className="flex gap-2 mt-1">
                 <p className="text-white text-base">
@@ -163,14 +169,11 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
               </p>
               {showModal && (
                 <Modal
-                  slug={slug}
-                  title={tvData?.name}
-                  season={selectedSeason}
-                  episodes={episode.episode_number}
+
                   onClose={closeModal}
                 >
                   <iframe
-                    src={`https://www.2embed.cc/embedtv/${slug}&s=${selectedSeason}&e=${episode.episode_number}`}
+                    src={`https://multiembed.mov/?video_id=${slug}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`}
                     allowFullScreen
                     width="100%"
                     height="100%"

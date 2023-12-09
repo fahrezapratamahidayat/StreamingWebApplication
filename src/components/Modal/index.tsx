@@ -2,17 +2,9 @@ import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 export default function Modal({
   children,
-  slug,
-  title,
-  season,
-  episodes,
   onClose,
 }: {
   children: React.ReactNode;
-  slug: string;
-  title: string | undefined;
-  season: string;
-  episodes: number;
   onClose: () => void;
 }) {
   const [modalOpen, setModalOpen] = useState(true);
