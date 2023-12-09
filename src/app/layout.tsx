@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -9,19 +9,21 @@ import MovieContextProvider from "@/context/DataMovies";
 import { usePathname } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
-const disableOriginalSidebar = ["/search/movies", "/search/tvshow"];
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathName : any = usePathname();
+  const pathName: any = usePathname();
   return (
     <html lang="en" className="">
-      <body className={`${inter.className} scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900`}>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <body
+        className={`${inter.className} scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900`}
+      >
         <MainLayouts>
-          {!disableOriginalSidebar.includes(pathName) && <NavbarFixed />}
+          <NavbarFixed />
           <MovieContextProvider>{children}</MovieContextProvider>
         </MainLayouts>
       </body>

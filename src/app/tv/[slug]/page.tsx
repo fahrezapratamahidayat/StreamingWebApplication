@@ -14,11 +14,14 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = params.slug
-  const data = await fetchData(`tv/${id}`)
-  const product = data
+  const snapshot = await fetchData(`tv/${id}`)
+  const data = {
+    name: snapshot.name,
+    overview: snapshot.overview
+  }
   return {
-    title: product.name,
-    description: product.overview,
+    title: `${data.name} | Tv Show Details`,
+    description: data.overview,
   }
 }
 

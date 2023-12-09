@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
@@ -32,11 +32,7 @@ type MovieData = {
   results: { id: string; name: string; key: string }[];
 };
 
-export default function MovieDetailView({
-  slug,
-}: {
-  slug: string;
-}) {
+export default function MovieDetailView({ slug }: { slug: string }) {
   const [data, setData] = useState<MovieData | null>(null);
   const [dataVideos, setDataVideos] = useState<MovieData | null>(null);
   const [credits, setCredits] = useState<MovieData | null>(null);
@@ -108,7 +104,7 @@ export default function MovieDetailView({
                   alt=""
                 />
               </div>
-              <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
+              <div className="absolute top-0 left-0 h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black dark:bg-gradient-to-b dark:from-transparent dark:to-black"></div>
               <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
                 <div className="ml-[2.31rem] mt-[2.75rem]">
                   <h1
@@ -134,9 +130,7 @@ export default function MovieDetailView({
                       {data && data?.vote_average.toFixed(1)}
                     </p>
                     <p className="text-white text-sm font-semibold">
-                      {data && data?.runtime
-                        ? data.runtime + "m"
-                        : "N/A"}
+                      {data && data?.runtime ? data.runtime + "m" : "N/A"}
                     </p>
                     <p className="text-white text-sm font-semibold">
                       {data && data?.release_date.substr(0, 4)}

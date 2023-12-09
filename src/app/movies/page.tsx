@@ -1,6 +1,11 @@
-"use client";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Homeviews from "@/pages/MoviesViewPage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Movies',
+  description: '...',
+}
 
 export default  function Home() {
   const movieSidebaritem = [

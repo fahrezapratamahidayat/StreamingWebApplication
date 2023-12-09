@@ -67,7 +67,7 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
               </p>
               <div className="flex items-center justify-between w-full ">
                 <p
-                  className={`${monstserrat.variable} px-[2px] py-[1px] bg-[#0b111f] rounded-[0.1875rem] font-monstserrat text-sm text-slate-400`}
+                  className={`${monstserrat.variable} px-[2px] py-[1px]  rounded-[0.1875rem] font-monstserrat text-sm text-slate-400 `}
                 >
                   {movie.release_date && movie.release_date.substr(0, 4)}
                 </p>
@@ -85,7 +85,7 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
                     />
                   </svg>
                   <p
-                    className={`${monstserrat.variable} font-monstserrat text-sm text-slate-400`}
+                    className={`${monstserrat.variable} font-monstserrat text-sm text-slate-400 `}
                   >
                     {movie.vote_average && movie.vote_average.toFixed(1)}
                   </p>

@@ -1,8 +1,8 @@
+'use client'
 import CardPosterMovies from "@/components/card/CardPosterMovies";
 import { ApiOptions } from "@/services/DataApi";
 import axios from "axios";
-import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState,  } from "react";
 
 const getPlayingMoviesList = {
   method: "GET",

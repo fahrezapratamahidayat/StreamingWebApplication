@@ -17,15 +17,15 @@ export async function generateMetadata(
   // read route params
   const id = params.slug
 
-  const data = await fetchData(`movie/${id}`)
-  const product = {
-    title : data.title,
-    overview : data.overview
+  const snapshot = await fetchData(`movie/${id}`)
+  const data = {
+    title : snapshot.title,
+    overview : snapshot.overview
   }
  
   return {
-    title: `${product.title} | Movie Details`,
-    description: product.overview
+    title: `${data.title} | Movie Details`,
+    description: data.overview
   }
 }
 

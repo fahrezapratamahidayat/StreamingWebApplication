@@ -2,7 +2,7 @@
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,17 +16,6 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const moul = Moul({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-moul",
-});
-
-const monstserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-monstserrat",
-});
 export default function NavbarFixed() {
   const pathname = usePathname();
   const [searchValue, setSearchValue] = useState("");
@@ -36,58 +25,60 @@ export default function NavbarFixed() {
     event.preventDefault();
     setSearchValue(event.target.value);
 
-    router.push(`/search?query=${searchValue.replace(/\s+/g, '+')}`);
+    router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`);
     setSearchValue("");
   };
+
   return (
     <>
       <div
         className="fixed z-40 w-full backdrop-blur flex-none 
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
-        dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent"
+        dark:border-slate-50/[0.06]  supports-backdrop-blur:bg-white/60 bg-transparent"
       >
         <div className="flex items-center px-5 py-3 justify-between">
           <h1
-            className={`${poppins.variable} font-moul font-bold text-white text-2xl`}
+            className={`font-bold text-white text-2xl`}
           >
             Santai
           </h1>
           <ul className="flex items-center gap-[1.62rem] ml-[11.5rem]">
             <li
-              className={`${inter.variable} font-inter ${
+              className={`${
                 pathname === "/" ? "text-white" : "text-[#939393]"
-              } font-bold text-base hover:text-white cursor-pointer `}
+              } font-bold text-base hover:text-white  cursor-pointer `}
             >
               <Link href="/">Home</Link>
             </li>
             <li
-              className={`${inter.variable} font-inter ${
-                pathname?.startsWith("/movies") ? "text-white" : "text-[#939393]"
+              className={`${
+                pathname?.startsWith("/movies")
+                  ? "text-white"
+                  : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer `}
-
             >
               <Link href="/movies">Movies</Link>
             </li>
             <li
-              className={`${inter.variable} font-inter ${
+              className={`${
                 pathname?.startsWith("/tv") ? "text-white" : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer`}
             >
               <Link href="/tv">Tv Shows</Link>
             </li>
             <li
-              className={`${inter.variable} font-inter ${
+              className={`${
                 pathname === "/animes" ? "text-white" : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer`}
             >
               Animes
             </li>
           </ul>
-          <div className="">
+          <div className="relative flex items-center">
             <form onSubmit={handleSearchForm}>
               <div className="relative w-full">
                 <input
-                  className="block p-2 w-[13rem] z-20 text-sm rounded-md text-gray-900 bg-gray-50  border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                  className="block p-2 w-[13rem] z-20 text-sm rounded-md border-[1px] focus:ring-blue-500  bg-gray-700 border-s-gray-700  border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
                   placeholder="Search Movie and tv"
                   value={searchValue}
                   type="text"

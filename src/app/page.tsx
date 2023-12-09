@@ -44,7 +44,7 @@ export default function Home() {
   
   return (
     <>
-      <div className="min-h-screen bg-black ">
+      <div className="min-h-screen bg-black">
         <div className="flex">
           <div className="mt-[16px] mr-[5.6rem]">
             <h2 className="text-white font-semibold text-[1.5rem]">trending</h2>
