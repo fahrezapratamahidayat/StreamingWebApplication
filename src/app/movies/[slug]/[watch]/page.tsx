@@ -12,10 +12,10 @@ export default function watchMovie(props: watchMovieProps) {
     const { params } = props;
     return (
         <>
-        <div className=" mt-[5rem] mx-5">
+        <div className=" mt-[5rem] mx-5 w-full pt-[4rem] lg:pt-0">
             <iframe 
             src={`https://www.2embed.cc/embed/${params.slug}`} 
-            className="h-[27.5rem] w-[60rem]"
+            className="lg:h-[27.5rem] lg:w-[63rem] w-full h-full"
             allowFullScreen
             >
             </iframe>

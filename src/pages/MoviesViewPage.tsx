@@ -112,7 +112,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col lg:ml-[19.8rem]">
+      <div className="flex flex-col lg:ml-[19.8rem] pt-[4rem] lg:pt-0">
         <div className="mt-[5rem]">
         </div>
         {playing && upComingMovies && topRatedMovies && popularMovies && (

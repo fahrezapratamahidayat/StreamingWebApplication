@@ -44,7 +44,7 @@ export default function HomePageView() {
 
   return (
     <>
-      <div className="min-h-screen bg-black mx-5">
+      <div className="min-h-screen bg-black mx-5 pt-[2rem] lg:pt-0">
         <div className="flex">
           <div className="mt-[16px] ">
             <h2 className="text-white font-semibold text-[1.5rem]">trending</h2>

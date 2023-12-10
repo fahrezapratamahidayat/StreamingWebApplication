@@ -89,9 +89,9 @@ export default function MovieDetailView({ slug }: { slug: string }) {
   return (
     <>
       {data && credits && dataVideos && (
-        <div className="flex flex-col lg:ml-[19rem] pb-[5rem]">
+        <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
           <div className="mt-[5rem] ">
-            <div className="relative rounded-[0.65rem] mx-1 lg:mx-0">
+            <div className="relative rounded-[0.65rem] mx-1.5 lg:mx-0">
               <div className="max-w-full h-auto">
                 <Image
                   width={1072}
@@ -139,10 +139,10 @@ export default function MovieDetailView({ slug }: { slug: string }) {
                   <p className="text-white text-sm font-semibold mt-[1.88rem]">
                     {data && data?.genres.map((genre) => genre.name).join(", ")}
                   </p>
-                  <p className="overflow-y-auto overflow-overview pr-2 lg:w-[30.75rem] w-[23rem] h-[7.75rem]  flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
+                  <p className="overflow-y-auto overflow-overview pr-2 lg:w-[30.75rem] w-[23rem] lg:h-[7.75rem] h-[12.75rem]   flex-shrink-0 text-slate-300 text-sm font-semibold mt-[2.21rem] tracking-[-0.01em] text-justify ">
                     {data && data?.overview}
                   </p>
-                  <div className="flex items-center lg:mt-[2.25rem] mt-[5.5rem]">
+                  <div className="flex items-center lg:mt-[2.25rem] mt-[1.25rem]">
                     <Link
                       href={`/movies/${slug}/watch?=${encodeURIComponent(
                         data.title
@@ -201,10 +201,10 @@ export default function MovieDetailView({ slug }: { slug: string }) {
                 </div>
               </div>
             </div>
-            <div className="lg:flex lg:flex-col lg:ml-[3rem]">
+            <div className="lg:flex lg:flex-col lg:ml-[3rem] lg:mx-0 mx-3">
               <div className="lg:mt-[3.12rem] mt-[5.69rem] flex">
                 <div className="flex lg:flex-row flex-col lg:items-baseline">
-                  <h2 className="text-white font-semibold text-base">
+                  <h2 className="text-white font-semibold text-[1.25rem]">
                     {credits?.crew && credits.crew.length > 0 ? "Director" : ""}
                   </h2>
                   <div className="flex items-center lg:ml-[5.41rem] ml-11 lg:mt-0 mt-5 gap-[2.44rem] flex-wrap">
@@ -214,7 +214,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
               </div>
               <div className="mt-[3.12rem] flex">
                 <div className="flex lg:flex-row flex-col lg:items-baseline">
-                  <h2 className="text-white font-semibold text-base">
+                  <h2 className="text-white font-semibold text-[1.25rem]">
                     {credits?.cast && credits.cast.length > 0 ? "Staring" : ""}
                   </h2>
                   <div className="grid lg:grid-cols-4  grid-cols-2 ml-11 lg:ml-[5.81rem] mt-5 gap-[2.44rem] flex-wrap">
@@ -225,7 +225,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
               <h2 className="text-white  font-semibold text-[1rem] mt-[5.12rem]">
                 Trailer And Clips
               </h2>
-              <div className="mt-[1.69rem] lg:w-[60rem] w-[23rem]  flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
+              <div className="mt-[1.69rem] lg:w-[60rem] w-[22rem]  flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
                 {videoList}
               </div>
             </div>

@@ -135,7 +135,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
 
   return (
     <>
-      <div className="mx-5 mt-[5rem] ">
+      <div className="mx-5 mt-[4rem] pt-[4rem] lg:pt-0">
         <div className="flex justify-between my-5">
           <h1 className="text-white text-4xl font-bold">
             {tvData?.name} - Season {selectedSeason}
@@ -175,8 +175,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
                   <iframe
                     src={`https://multiembed.mov/?video_id=${slug}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`}
                     allowFullScreen
-                    width="100%"
-                    height="100%"
+                    className="lg:w-full lg:h-full "
                     frameBorder="0"
                   ></iframe>
                 </Modal>
