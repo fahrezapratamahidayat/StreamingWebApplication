@@ -39,8 +39,8 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
   return (
     <>
       <div className={`${className} pb-[2.rem] lg:pb-[2.5rem]`}>
-        <h2 className="text-white font-semibold text-2xl">{title}</h2>
-        <div className="flex flex-wrap lg:grid lg:grid-cols-7 gap-2 lg:gap-[26px] mt-[18px]">
+        <h2 className="text-white font-semibold text-2xl lg:mx-0 mx-2">{title}</h2>
+        <div className="grid lg:grid-cols-7 grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]">
           {data.map((movie: Movie) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0"

@@ -38,7 +38,7 @@ export default function NavbarSearch({children} : {children: React.ReactNode})  
           >
             Movie.INFC
           </h1>
-          <ul className="flex items-center gap-[1.62rem] ml-[10.6rem]">
+          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[10.6rem]">
             <li
               className={`${inter.variable} font-inter text-white font-bold text-[1.25rem] hover:text-white cursor-pointer `}
             >
