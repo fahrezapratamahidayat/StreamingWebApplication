@@ -91,20 +91,20 @@ export default function MovieDetailView({ slug }: { slug: string }) {
       {data && credits && dataVideos && (
         <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
           <div className="mt-[5rem] ">
-            <div className="relative rounded-[0.65rem] mx-1.5 lg:mx-0">
-              <div className="max-w-full h-auto">
+            <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
+              <div className="w-full">
                 <Image
-                  width={1072}
-                  height={440}
+                  width={500}
+                  height={500}
                   priority={true}
-                  className="backdrop-blur-sm lg:h-[27.5rem] lg:w-[63rem] h-[30.5rem] w-[24rem] object-cover rounded-[0.65rem]"
+                  className="backdrop-blur-sm lg:h-[27.5rem] h-[30.5rem] w-full object-cover rounded-[0.65rem]"
                   src={`https://image.tmdb.org/t/p/original/${
                     data && data?.backdrop_path
                   }`}
                   alt=""
                 />
               </div>
-              <div className="absolute top-0 left-0 lg:h-full lg:w-full h-[35.5rem] w-[24rem] rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black dark:bg-gradient-to-b dark:from-transparent dark:to-black"></div>
+              <div className="absolute top-0 left-0 lg:h-full lg:w-full h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black dark:bg-gradient-to-b dark:from-transparent dark:to-black"></div>
               <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
                 <div className="lg:ml-[2.31rem] ml-3 mt-[2.75rem]">
                   <h1
@@ -150,7 +150,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
                     >
                       <button
                         type="button"
-                        className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                        className="text-black bg-white hover:bg-white/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
                       >
                         <svg
                           className="me-2"
@@ -170,7 +170,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
                     </Link>
                     <button
                       type="button"
-                      className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                      className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

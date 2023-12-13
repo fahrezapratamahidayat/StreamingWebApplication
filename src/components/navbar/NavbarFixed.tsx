@@ -1,5 +1,5 @@
 "use client";
-import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
+import { movieSidebaritem, tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -9,26 +9,34 @@ export default function NavbarFixed() {
   const [searchValue, setSearchValue] = useState("");
   const [toggleNav, setToggleNav] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [toggleSearch, setToggleSearch] = useState(false);
   const router = useRouter();
   const overlay: any = useRef(null);
   const overlaySidebar: any = useRef(null);
+  const overlaySearchBar: any = useRef(null);
+  const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
 
   const handleSearchForm = (event: any) => {
     event.preventDefault();
     setSearchValue(event.target.value);
 
-    router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`);
-    setSearchValue("");
+    if(searchValue.length > 1){
+      router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`);
+      setToggleSearch(false);
+      setSearchValue("");
+    }else{
+      alert('Please enter at least 2 characters')
+    }
   };
 
   const handleShowNav = () => {
     if (toggleNav === false) {
       setToggleNav(true);
-      document.body.classList.add("modal-open");
+      document.body.classList.add("overflow-scroll");
     } else {
       setToggleNav(false);
-      document.body.classList.remove("modal-open");
+      document.body.classList.remove("overflow-scroll");
     }
   };
 
@@ -40,7 +48,17 @@ export default function NavbarFixed() {
       setToggleSidebar(false);
       document.body.classList.remove("modal-open");
     }
-  }
+  };
+
+  const handleSearchBar = () => {
+    if (toggleSearch === false) {
+      document.body.classList.add("modal-open");
+      setToggleSearch(true);
+    } else {
+      document.body.classList.remove("modal-open");
+      setToggleSearch(false);
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -52,7 +70,7 @@ export default function NavbarFixed() {
     const handleClickOutside = (event: MouseEvent) => {
       if (overlay.current && overlay.current.contains(event.target)) {
         setToggleNav(false);
-        document.body.classList.remove("modal-open");
+        document.body.classList.remove("overflow-scroll");
       }
     };
 
@@ -73,7 +91,10 @@ export default function NavbarFixed() {
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (overlaySidebar.current && !overlaySidebar.current.contains(event.target)) {
+      if (
+        overlaySidebar.current &&
+        !overlaySidebar.current.contains(event.target)
+      ) {
         setToggleSidebar(false);
         document.body.classList.remove("modal-open");
       }
@@ -93,7 +114,7 @@ export default function NavbarFixed() {
       <div
         className="fixed z-40 w-full backdrop-blur flex-none 
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
-        dark:border-slate-50/[0.06] supports-backdrop-blur:bg-white/60 bg-transparent"
+        dark:border-slate-50/[0.06]  bg-transparent"
       >
         <div className="flex items-center px-5 py-3 justify-between">
           <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
@@ -164,39 +185,25 @@ export default function NavbarFixed() {
               </div>
             </form>
           </div>
-          <div className="lg:hidden flex items-center ">
+          <div className="lg:hidden flex items-center ml-auto pr-2">
             <div className="relative">
-              <button className="" onClick={handleShowNav}>
+              <button onClick={handleSearchBar}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 26"
                   fill="none"
                 >
                   <path
-                    d="M21 10H3"
+                    d="M11 19.5C15.4183 19.5 19 15.9183 19 11.5C19 7.08172 15.4183 3.5 11 3.5C6.58172 3.5 3 7.08172 3 11.5C3 15.9183 6.58172 19.5 11 19.5Z"
                     stroke="white"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
-                    d="M21 6H3"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M21 14H3"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M21 18H3"
+                    d="M21 21.4999L16.65 17.1499"
                     stroke="white"
                     strokeWidth="2"
                     strokeLinecap="round"
@@ -205,13 +212,155 @@ export default function NavbarFixed() {
                 </svg>
               </button>
               <div
+                className={`${
+                  toggleSearch ? "block" : "hidden"
+                } fixed top-0 left-0 backdrop-blur-sm bg-black/80 h-[99rem] w-full z-[99]`}
+              >
+                <div className=" absolute w-full mt-[25%]  rounded shadow-md px-2">
+                  <form onSubmit={handleSearchForm} ref={searchFormRef}>
+                    <div className="bg-gray-700 rounded-lg h-[3.5rem] w-full flex items-center px-5 ">
+                      <button>
+                        <svg
+                          className=""
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="25"
+                          height="25"
+                          viewBox="0 0 25 25"
+                          fill="none"
+                        >
+                          <path
+                            d="M11 19.5C15.4183 19.5 19 15.9183 19 11.5C19 7.08172 15.4183 3.5 11 3.5C6.58172 3.5 3 7.08172 3 11.5C3 15.9183 6.58172 19.5 11 19.5Z"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M21 21.4999L16.65 17.1499"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <span className="sr-only">Navigation</span>
+                      </button>
+                      <input
+                        type="text"
+                        value={searchValue}
+                        className="ml-3 bg-transparent w-full mr-5 text-white focus:outline-none text-sm"
+                        placeholder="Search Movie and tv"
+                        onChange={(e) => setSearchValue(e.target.value)}
+                      />
+                    </div>
+                  </form>
+                  <button
+                      onClick={() => setToggleSearch(false)}
+                      className="absolute top-4 right-5"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="25"
+                        viewBox="0 0 24 25"
+                        fill="none"
+                      >
+                        <path
+                          d="M18 6.5L6 18.5"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M6 6.5L18 18.5"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <span className="sr-only">close</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="lg:hidden flex items-center justify-between">
+            <div className="relative">
+              {toggleNav ? (
+                <button className="" onClick={handleShowNav}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                  >
+                    <path
+                      d="M18 6.5L6 18.5"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M6 6.5L18 18.5"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button className="" onClick={handleShowNav}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M21 10H3"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M21 6H3"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M21 14H3"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M21 18H3"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              )}
+              <div
                 ref={overlay}
                 className={`${
                   toggleNav ? "block" : "hidden"
                 } fixed top-[3.5rem] left-0  bg-black/50  h-[99rem] w-full `}
               >
-                <nav className="absolute top-0 w-full left-1/2 bg-slate-900 rounded shadow-md">
-                  <ul className="flex flex-col gap-[1.62rem] p-5">
+                <nav className="absolute top-0 w-full left-0 h-full bg-black rounded shadow-md">
+                  <ul className="flex flex-col gap-[1.62rem] p-5 ">
                     <li
                       className={`${
                         pathname === "/" ? "text-white" : "text-[#939393]"
@@ -250,8 +399,11 @@ export default function NavbarFixed() {
             </div>
           </div>
         </div>
-        <div className="flex items-center lg:hidden p-4 border-b border-t border-slate-50/60">
-          <button className="hover:text-slate-500 text-slate-400" onClick={handleShowSidebar}>
+        <div className={`${pathname === "/" || pathname?.startsWith("/search") ? "hidden" : ""} flex items-center lg:hidden p-4 border-b border-t border-slate-50/60`}>
+          <button
+            className="hover:text-slate-500 text-slate-400"
+            onClick={handleShowSidebar}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -284,11 +436,9 @@ export default function NavbarFixed() {
             <span className="sr-only">Navigation</span>
           </button>
           <ul className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
-          <li
+            <li
               className={`${
-                pathname === ("/")
-                  ? "text-white inline-block"
-                  : "hidden "
+                pathname === "/" ? "text-white inline-block" : "hidden "
               }`}
             >
               Home
@@ -304,18 +454,21 @@ export default function NavbarFixed() {
             </li>
             <li
               className={`${
-                pathname?.includes("/tv")
-                  ? "text-white inline-block"
-                  : "hidden"
+                pathname?.includes("/tv") ? "text-white inline-block" : "hidden"
               }`}
             >
               Tv Shows
             </li>
           </ul>
           <div
-            className={`${toggleSidebar ? "block" : "hidden"} fixed top-0 left-0  bg-black/50  h-[99rem] w-full `}
+            className={`${
+              toggleSidebar ? "block" : "hidden"
+            } fixed top-0 left-0  bg-black/50  h-[99rem] w-full `}
           >
-            <aside className="absolute top-0 w-[80%]  bg-black  rounded shadow-md" ref={overlaySidebar}>
+            <aside
+              className="absolute top-0 w-[80%]  bg-black  rounded shadow-md"
+              ref={overlaySidebar}
+            >
               <div className="relative">
                 <div className="pb-[1rem] flex flex-col items p-5 hover:overflow-y-auto h-[calc(100vh-3rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
                   <h2
@@ -363,31 +516,45 @@ export default function NavbarFixed() {
                   <ul
                     className={`font-semibold mt-[0.8rem] text-[#828486] transition-all`}
                   >
-                    {tvShowsSidebarItem.map((genre: any) => (
-                      <li
-                        key={genre.id}
-                        className={`border-l border-slate-800 ${
-                          DropDown ? "" : "hidden"
-                        } transition-all duration-500 ease-out`}
-                      >
-                        <Link
-                          className={`hover:text-white mt-[0.75rem] text-sm ml-3
-                  }`}
-                          href={
-                            pathname?.startsWith("/tv")
-                              ? `/tv/genre/${
-                                  genre.id
-                                }?name=${genre.name.replace(/\s+/g, "+")}`
-                              : `/movies/genre/${
-                                  genre.id
-                                }?name=${genre.name.replace(/\s+/g, "+")}`
-                          }
-                          scroll={false}
-                        >
-                          {genre.name}
-                        </Link>
-                      </li>
-                    ))}
+                    {pathname?.startsWith("/tv")
+                      ? tvShowsSidebarItem.map((genre: any) => (
+                          <li
+                            key={genre.id}
+                            className={`border-l border-slate-800 ${
+                              DropDown ? "" : "hidden"
+                            } transition-all duration-500 ease-out`}
+                          >
+                            <Link
+                              className={`hover:text-white mt-[0.75rem] text-sm ml-3`}
+                              href={`/tv/genre/${
+                                genre.id
+                              }?name=${genre.name.replace(/\s+/g, "+")}`}
+                              scroll={false}
+                            >
+                              {genre.name}
+                            </Link>
+                          </li>
+                        ))
+                      : pathname?.startsWith("/movies")
+                      ? movieSidebaritem.map((genre: any) => (
+                          <li
+                            key={genre.id}
+                            className={`border-l border-slate-800 ${
+                              DropDown ? "" : "hidden"
+                            } transition-all duration-500 ease-out`}
+                          >
+                            <Link
+                              className={`hover:text-white mt-[0.75rem] text-sm ml-3`}
+                              href={`/movies/genre/${
+                                genre.id
+                              }?name=${genre.name.replace(/\s+/g, "+")}`}
+                              scroll={false}
+                            >
+                              {genre.name}
+                            </Link>
+                          </li>
+                        ))
+                      : null}
                   </ul>
                   <h2 className="mt-[1.56rem] text-white font-semibold text-base">
                     Libary
