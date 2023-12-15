@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { fetchData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ export default function tvGenrePage(props: genrePageProps) {
   const [movie, setMovies] = useState<any>([]);
 
   const fetchDataAsync = async () => {
-    const data = await fetchData(
+    const data = await FetchingData(
       `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params.genre}`
     );
     setMovies(data.results);
@@ -70,10 +70,12 @@ export default function tvGenrePage(props: genrePageProps) {
   return (
     <>
       <Sidebar items={tvShowsSidebarItem} />
-      <div className="ml-[21rem] mt-[5rem]">
-        {movie && (
-            <CardPosterTvShows title={`Genre : ${title}`} data={movie}/>
-        )}
+      <div className="flex flex-col lg:ml-[20rem] lg:pt-0 pt-[4rem]">
+        <div className="mt-[5rem]">
+          {movie && (
+            <CardPosterTvShows title={`Genre : ${title}`} data={movie} />
+          )}
+        </div>
       </div>
     </>
   );

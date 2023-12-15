@@ -80,7 +80,7 @@ export default function GenrePage(props: genrePageProps) {
   return (
     <>
       <Sidebar items={movieSidebaritem}/>
-      <div className="flex flex-col ml-[20rem]">
+      <div className="flex flex-col lg:ml-[20rem] lg:pt-0 pt-[4rem]">
         <div className="mt-[5rem]">
         {movies && (
             <CardPoster data={movies} title={`Genre : ${title}`} />

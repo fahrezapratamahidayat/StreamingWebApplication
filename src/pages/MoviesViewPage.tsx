@@ -1,48 +1,7 @@
 'use client'
 import CardPosterMovies from "@/components/card/CardPosterMovies";
-import { ApiOptions } from "@/services/DataApi";
-import axios from "axios";
-import { useEffect, useState,  } from "react";
-
-const getPlayingMoviesList = {
-  method: "GET",
-  url: `${process.env.NEXT_PUBLIC_MOVIE_BASE_URL}/movie/now_playing`,
-  params: { language: "en-US", page: "1" },
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
-  },
-};
-
-const getPopularMoviesList = {
-  method: "GET",
-  url: `${process.env.NEXT_PUBLIC_MOVIE_BASE_URL}/movie/popular`,
-  params: { language: "en-US", page: "1" },
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
-  },
-};
-
-const getTopRatedMoviesList = {
-  method: "GET",
-  url: `${process.env.NEXT_PUBLIC_MOVIE_BASE_URL}/movie/top_rated`,
-  params: { language: "en-US", page: "1" },
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
-  },
-};
-
-const getUpComingMovieList = {
-  method: "GET",
-  url: `${process.env.NEXT_PUBLIC_MOVIE_BASE_URL}/movie/upcoming`,
-  params: { language: "en-US", page: "1" },
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_TOKEN}`,
-  },
-};
+import {FetchingData } from "@/services/DataApi";
+import { useEffect, useState} from "react";
 
 type Movie = {
   id: number;
@@ -60,47 +19,39 @@ export default function Home() {
   const [upComingMovies, setUpComingMovies] = useState([]);
 
   const fetchData = async () => {
-    const snapshot = await axios
-      .request(getPlayingMoviesList)
-      .then(function (response) {
-        setPlaying(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    try {
+      const res = await FetchingData('movie/now_playing');
+      setPlaying(res.results)
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const fetchDataPopularMovies = async () => {
-    const snapshot = await axios
-      .request(getPopularMoviesList)
-      .then(function (response) {
-        setPopularMovies(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    try {
+      const res = await FetchingData('movie/popular');
+      setPopularMovies(res.results)
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const fetchDataTopRatedMovies = async () => {
-    const snapshot = await axios
-      .request(getTopRatedMoviesList)
-      .then(function (response) {
-        setTopRatedMovies(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    try {
+      const res = await FetchingData('movie/top_rated');
+      setTopRatedMovies(res.results)
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const fetchDataUpComingMovies = async () => {
-    const snapshot = await axios
-      .request(getUpComingMovieList)
-      .then(function (response) {
-        setUpComingMovies(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    try {
+      const res = await FetchingData('/movie/upcoming');
+      setUpComingMovies(res.results)
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   useEffect(() => {
@@ -112,21 +63,21 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col lg:ml-[19.8rem] pt-[4rem] lg:pt-0">
+      <div className="flex flex-col lg:ml-[19rem] pt-[4rem] lg:pt-0 lg:mr-5">
         <div className="mt-[5rem]">
         </div>
         {playing && upComingMovies && topRatedMovies && popularMovies && (
           <>
             <CardPosterMovies title={`Now Playing`} data={playing} />
-            <CardPosterMovies title={`Popular`} data={popularMovies} className="mt-[3.5rem]"/>
+            <CardPosterMovies title={`Popular`} data={popularMovies} className="ml"/>
             {CardPosterMovies({
               title: `Top Rated`,
-              className: "mt-[3.5rem]",
+              className: "]",
               data: topRatedMovies.filter(
                 (movie: Movie) => movie.vote_average > 8.5
               ),
             })}
-            <CardPosterMovies title={`Upcoming`} data={upComingMovies} className="mt-[3.5rem]"/>
+            <CardPosterMovies title={`Upcoming`} data={upComingMovies} className=""/>
           </>
         )}
       </div>

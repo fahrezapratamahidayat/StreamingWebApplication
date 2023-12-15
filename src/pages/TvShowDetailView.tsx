@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
-import { fetchData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import { useEffect, useState } from "react";
 
 const poppins = Poppins({
@@ -71,17 +71,17 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [credits, setCredits] = useState<TvShowProps | null>(null);
 
   const fetchDataAsync = async () => {
-    const data = await fetchData(`tv/${slug}`);
+    const data = await FetchingData(`tv/${slug}`);
     setData(data);
   };
 
   const fetchDataVideo = async () => {
-    const data = await fetchData(`tv/${slug}/videos`);
+    const data = await FetchingData(`tv/${slug}/videos`);
     setDataVideos(data);
   };
 
   const fetchCredits = async () => {
-    const data = await fetchData(`tv/${slug}/credits`);
+    const data = await FetchingData(`tv/${slug}/credits`);
     setCredits(data);
   };
 

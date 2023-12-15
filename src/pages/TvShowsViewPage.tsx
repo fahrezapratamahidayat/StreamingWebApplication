@@ -1,7 +1,7 @@
 "use client";
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
 import PageLayouts from "@/layouts/PageLayouts";
-import { fetchData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import { useEffect, useState } from "react";
 
 export default function TvShowsView() {
@@ -9,9 +9,11 @@ export default function TvShowsView() {
 
   const fetchDataAsync = async () => {
     try {
-      const data = await fetchData("/trending/tv/day");
-      setData(data.results);
-    } catch (error) {}
+      const res = await FetchingData("trending/tv/day");
+      setData(res.results);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {

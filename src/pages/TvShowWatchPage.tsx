@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/components/Modal";
-import { fetchData } from "@/services/DataApi";
+import { FetchingData } from "@/services/DataApi";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -59,7 +59,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
 
   const fetchDataSeason = async () => {
     try {
-      const data = await fetchData(`tv/${slug}/season/${selectedSeason}`);
+      const data = await FetchingData(`tv/${slug}/season/${selectedSeason}`);
       setSeasonData(data);
     } catch (error) {
       console.error("Error fetching season data:", error);
@@ -68,7 +68,7 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
 
   const fetchDataAsync = async () => {
     try {
-      const tvShowData = await fetchData(`tv/${slug}`);
+      const tvShowData = await FetchingData(`tv/${slug}`);
       const filteredData: TvShowSubset = {
         name: tvShowData.name,
         number_of_seasons: tvShowData.number_of_seasons,
