@@ -15,7 +15,7 @@ export default function GenrePage(props: genrePageProps) {
   const { params } = props;
   return (
     <>
-    <MoviesGenreView params={params}/>
+    <MoviesGenreView params={params.genre}/>
     </>
   );
 }

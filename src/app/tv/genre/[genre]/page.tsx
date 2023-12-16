@@ -15,7 +15,7 @@ export default function tvGenrePage(props: genrePageProps) {
   const { params } = props;
   return (
     <>
-      <TvGenreView params={params} />
+      <TvGenreView params={params.genre} />
     </>
   );
 }

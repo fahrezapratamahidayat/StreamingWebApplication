@@ -5,11 +5,11 @@ import { FetchingData} from "@/services/DataApi";
 import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { useEffect, useState } from "react";
 
-export default function TvGenreView({params} : {params: {genre: string}}) {
+export default function TvGenreView({params} : {params: string}) {
   const [movie, setMovies] = useState<any>([]);
   const fetchDataAsync = async () => {
     const data = await FetchingData(
-      `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params.genre}`
+      `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params}`
     );
     setMovies(data.results);
   };
@@ -19,43 +19,43 @@ export default function TvGenreView({params} : {params: {genre: string}}) {
   }, []);
 
   let title;
-  if (params.genre === "10759") {
+  if (params === "10759") {
     title = "Action";
-  } else if (params.genre === "16") {
+  } else if (params === "16") {
     title = "Animation";
-  } else if (params.genre === "16") {
+  } else if (params === "16") {
     title = "Animation";
-  } else if (params.genre === "35") {
+  } else if (params === "35") {
     title = "Comedy";
-  } else if (params.genre === "80") {
+  } else if (params === "80") {
     title = "Crime";
-  } else if (params.genre === "99") {
+  } else if (params === "99") {
     title = "Documentary";
-  } else if (params.genre === "18") {
+  } else if (params === "18") {
     title = "Drama";
-  } else if (params.genre === "10751") {
+  } else if (params === "10751") {
     title = "Family";
-  } else if (params.genre === "14") {
+  } else if (params === "14") {
     title = "Fantasy";
-  } else if (params.genre === "36") {
+  } else if (params === "36") {
     title = "History";
-  } else if (params.genre === "27") {
+  } else if (params === "27") {
     title = "Horror";
-  } else if (params.genre === "10402") {
+  } else if (params === "10402") {
     title = "Music";
-  } else if (params.genre === "9648") {
+  } else if (params === "9648") {
     title = "Mystery";
-  } else if (params.genre === "1079") {
+  } else if (params === "1079") {
     title = "Romance";
-  } else if (params.genre === "878") {
+  } else if (params === "878") {
     title = "Science Fiction";
-  } else if (params.genre === "53") {
+  } else if (params === "53") {
     title = "Thriller";
-  } else if (params.genre === "10752") {
+  } else if (params === "10752") {
     title = "War";
-  } else if (params.genre === "37") {
+  } else if (params === "37") {
     title = "Western";
-  } else if (params.genre === "12") {
+  } else if (params === "12") {
     title = "Adventure";
   } else title = "";
 

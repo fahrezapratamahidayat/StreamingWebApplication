@@ -4,10 +4,6 @@ import { Metadata } from "next";
 export const metadata : Metadata = {
   title: "Santai Wir",
   description: "SantaiWir",
-  openGraph: {
-    title: "Santai Wir",
-    description: "SantaiWir",
-  },
 }
 
 export default function HomePage(){
