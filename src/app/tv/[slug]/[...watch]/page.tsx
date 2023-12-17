@@ -1,5 +1,5 @@
 import TvWatchPageView from "@/pages/TvShowWatchPage";
-import { fetchData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
 
 type dataPageProps = {
@@ -15,7 +15,7 @@ export async function generateMetadata(
   // read route params
   const id = params.slug
 
-  const snapshot = await fetchData(`tv/${id}`)
+  const snapshot = await FetchingData(`tv/${id}`)
   const data = {
     title : snapshot.name,
     overview : snapshot.overview
