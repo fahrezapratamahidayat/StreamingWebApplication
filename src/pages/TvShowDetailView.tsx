@@ -129,7 +129,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
         <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
           <div className="mt-[5rem]">
             <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
-              <div className="w-full ">
+              <div className="w-full overflow-x-hidden">
                 <Image
                   width={1072}
                   height={440}
@@ -141,7 +141,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                   alt=""
                 />
               </div>
-              <div className="absolute top-0 left-0 lg:h-full lg:w-full w-full h-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black"></div>
+              <div className="absolute top-0 left-0 lg:h-full lg:w-full w-full h-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black overflow-x-hidden"></div>
               <div className=" flex absolute top-0 left-0 h-full w-full  rounded-[0.65rem]">
                 <div className="lg:ml-[2.31rem] ml-3 mt-[2.75rem]">
                   <h1
