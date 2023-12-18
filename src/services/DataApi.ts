@@ -45,7 +45,14 @@ export const FetchingData = async (parameter: string) => {
     const res = await fetch(requestOptions.url, {
       method: requestOptions.method,
       headers: requestOptions.headers,
+<<<<<<< HEAD
       cache: 'force-cache',
+=======
+      cache: "force-cache",
+      next: {
+        revalidate: 10
+      }
+>>>>>>> 4ba0243f32f4ea96c980c70ad0365aa10e1df1bf
     });
     if (!res.ok) {
       throw new Error(`Failed to fetch data. Status: ${res.status}`);
