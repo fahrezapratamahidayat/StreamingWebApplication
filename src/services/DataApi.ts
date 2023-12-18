@@ -45,8 +45,6 @@ export const FetchingData = async (parameter: string) => {
     const res = await fetch(requestOptions.url, {
       method: requestOptions.method,
       headers: requestOptions.headers,
-      // cache: 'no-store',
-      // next: { revalidate: 10 },
     });
     if (!res.ok) {
       throw new Error(`Failed to fetch data. Status: ${res.status}`);
