@@ -45,9 +45,9 @@ export const FetchingData = async (parameter: string) => {
     const res = await fetch(requestOptions.url, {
       method: requestOptions.method,
       headers: requestOptions.headers,
-      cache: 'no-store',
+      cache: "force-cache",
       next: {
-        revalidate: 1,
+        revalidate: 10
       }
     });
     if (!res.ok) {
