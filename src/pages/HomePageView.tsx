@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Homeviews from "@/pages/MoviesViewPage";
-import { FetchingData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import axios from "axios";
 import Image from "next/image";
 
@@ -35,12 +35,8 @@ export default function HomePageView() {
   const [trending, setTrending] = useState([])
 
   const data = async () => {
-    try {
-      const res = await FetchingData('trending/all/day');
-      setTrending(res.results)
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    const res = await fetchData('trending/all/day');
+    setTrending(res.results)
   };
   
 

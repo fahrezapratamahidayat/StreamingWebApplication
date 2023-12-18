@@ -8,12 +8,8 @@ export default function TvShowsView() {
   const [data, setData] = useState([]);
 
   const fetchDataAsync = async () => {
-    try {
-      const res = await FetchingData("trending/tv/day");
-      setData(res.results);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    const res = await fetchData("trending/tv/day");
+    setData(res.results);
   };
 
   useEffect(() => {
