@@ -17,7 +17,7 @@ export async function generateMetadata(
 
   const snapshot = await FetchingData(`movie/${id}`);
   const data = {
-    title: snapshot.original_title,
+    title: snapshot.title,
     overview: snapshot.overview,
   };
 

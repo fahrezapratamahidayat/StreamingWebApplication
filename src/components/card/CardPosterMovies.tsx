@@ -43,7 +43,7 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
         <div className="grid lg:grid-cols-7 grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]">
           {data.map((movie: Movie) => (
             <div
-              className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0"
+              className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0 transition-transform ease-in-out duration-100 hover:scale-105"
               key={movie.id}
             >
               <Link
@@ -56,7 +56,7 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
                   height={170}
                   priority
                   className="rounded-xl "
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt={movie.title}
                 />
               </Link>
