@@ -56,7 +56,7 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
                   height={170}
                   priority
                   className="rounded-xl "
-                  src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                  src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
                   alt={movie.title}
                 />
               </Link>

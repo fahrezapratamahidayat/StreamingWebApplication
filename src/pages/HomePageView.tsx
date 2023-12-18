@@ -66,7 +66,7 @@ export default function HomePageView() {
                       height={170} // default 308
                       priority
                       className="rounded-xl "
-                      src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                      src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
                       alt={movie.title || movie.original_name}
                     />
                   </Link>
