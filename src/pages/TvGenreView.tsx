@@ -1,14 +1,14 @@
 "use client";
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { FetchingData} from "@/services/DataApi";
+import { FetchingData, fetchData} from "@/services/DataApi";
 import { tvShowsSidebarItem } from "@/utils/ItemSidebar";
 import { useEffect, useState } from "react";
 
 export default function TvGenreView({params} : {params: string}) {
   const [movie, setMovies] = useState<any>([]);
   const fetchDataAsync = async () => {
-    const data = await FetchingData(
+    const data = await fetchData(
       `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params}`
     );
     setMovies(data.results);

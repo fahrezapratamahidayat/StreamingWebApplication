@@ -43,13 +43,13 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
         <div className="grid lg:grid-cols-7 grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]">
           {data.map((movie: Movie) => (
             <div
-              className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0 transition-transform ease-in-out duration-100 hover:scale-105"
+              className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0"
               key={movie.id}
             >
               <Link
                 href={`/movies/${movie.id}`}
                 scroll={false}
-                className="cursor-pointer hover:scale-105 w-auto h-auto"
+                className="cursor-pointer  transition-transform ease-in-out duration-100 hover:scale-105 w-auto h-auto"
               >
                 <Image
                   width={122}

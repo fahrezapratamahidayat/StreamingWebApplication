@@ -1,6 +1,6 @@
 'use client'
 import CardPosterMovies from "@/components/card/CardPosterMovies";
-import {FetchingData } from "@/services/DataApi";
+import {FetchingData, fetchData } from "@/services/DataApi";
 import { useEffect, useState} from "react";
 
 type Movie = {
@@ -18,44 +18,28 @@ export default function Home() {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [upComingMovies, setUpComingMovies] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const res = await FetchingData('movie/now_playing');
-      setPlaying(res.results)
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const fetchDataPlaying = async () => {
+    const res = await fetchData('movie/now_playing');
+    setPlaying(res.results)
   };
 
   const fetchDataPopularMovies = async () => {
-    try {
-      const res = await FetchingData('movie/popular');
-      setPopularMovies(res.results)
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    const res = await fetchData('movie/popular');
+    setPopularMovies(res.results)
   };
 
   const fetchDataTopRatedMovies = async () => {
-    try {
-      const res = await FetchingData('movie/top_rated');
-      setTopRatedMovies(res.results)
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    const res = await fetchData('movie/top_rated');
+    setTopRatedMovies(res.results)
   };
 
   const fetchDataUpComingMovies = async () => {
-    try {
-      const res = await FetchingData('/movie/upcoming');
-      setUpComingMovies(res.results)
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    const res = await fetchData('/movie/upcoming');
+    setUpComingMovies(res.results)
   };
 
   useEffect(() => {
-    fetchData();
+    fetchDataPlaying();
     fetchDataPopularMovies();
     fetchDataTopRatedMovies();
     fetchDataUpComingMovies();

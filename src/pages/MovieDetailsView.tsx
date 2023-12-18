@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FetchingData } from "@/services/DataApi";
+import { FetchingData, fetchData } from "@/services/DataApi";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import ListDirector from "@/components/fragments/ListDirector";
@@ -38,18 +38,17 @@ export default function MovieDetailView({ slug }: { slug: string }) {
   const [credits, setCredits] = useState<MovieData | null>(null);
 
   const fetchDataAsync = async () => {
-    const data = await FetchingData(`movie/${slug}`);
-    console.log(data);
+    const data = await fetchData(`movie/${slug}`);
     setData(data);
   };
 
   const fetchDataVideo = async () => {
-    const data = await FetchingData(`movie/${slug}/videos`);
+    const data = await fetchData(`movie/${slug}/videos`);
     setDataVideos(data);
   };
 
   const fetchCredits = async () => {
-    const data = await FetchingData(`movie/${slug}/credits`);
+    const data = await fetchData(`movie/${slug}/credits`);
     setCredits(data);
   };
 

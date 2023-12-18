@@ -71,17 +71,17 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [credits, setCredits] = useState<TvShowProps | null>(null);
 
   const fetchDataAsync = async () => {
-    const data = await FetchingData(`tv/${slug}`);
+    const data = await fetchData(`tv/${slug}`);
     setData(data);
   };
 
   const fetchDataVideo = async () => {
-    const data = await FetchingData(`tv/${slug}/videos`);
+    const data = await fetchData(`tv/${slug}/videos`);
     setDataVideos(data);
   };
 
   const fetchCredits = async () => {
-    const data = await FetchingData(`tv/${slug}/credits`);
+    const data = await fetchData(`tv/${slug}/credits`);
     setCredits(data);
   };
 
