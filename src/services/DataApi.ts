@@ -17,7 +17,6 @@ export const ApiOptions = (parameter: string): AxiosRequestConfig => {
 export const fetchData = async (parameter: string) => {
   try {
     const response = await axios.request(ApiOptions(parameter));
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
