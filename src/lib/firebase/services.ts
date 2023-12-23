@@ -1,0 +1,193 @@
+import {
+  addDoc,
+  arrayRemove,
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import app from "./init";
+import bcrypt from "bcrypt";
+
+const firestore = getFirestore(app);
+
+interface User {
+  id: string;
+  email: string;
+  watchlist?: string[]; // Assuming watchlist is an array of strings
+  // Add other properties as needed
+}
+
+export async function RegisterUser(data: {
+  username: string;
+  password: string;
+  email: string;
+}) {
+  const q = query(
+    collection(firestore, "users"),
+    where("email", "==", data.email)
+  );
+  const querySnapshot = await getDocs(q);
+  const users = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  if (users.length > 0) {
+    return {
+      status: false,
+      statusCode: 400,
+      message: "Email already exists",
+    };
+  } else {
+    data.password = await bcrypt.hash(data.password, 10);
+    try {
+      await addDoc(collection(firestore, "users"), data);
+      return {
+        status: true,
+        message: "User created successfully",
+        statusCode: 200,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        message: "register failed",
+        statusCode: 400,
+      };
+    }
+  }
+}
+
+export async function LoginUsers(data: { email: string; password: string }) {
+  const q = query(
+    collection(firestore, "users"),
+    where("email", "==", data.email)
+  );
+  const querySnapshot = await getDocs(q);
+  const users = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  if (users) {
+    return users[0];
+  } else {
+    return null;
+  }
+}
+
+export async function GetAllUsers() {
+  const q = query(collection(firestore, "users"));
+  const querySnapshot = await getDocs(q);
+  const users = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return users;
+}
+
+export async function AddWatchList(email: string, id: string) {
+  const userQuery = query(
+    collection(firestore, "users"),
+    where("email", "==", email)
+  );
+  const userQuerySnapshot = await getDocs(userQuery);
+  const users: any = userQuerySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  if (users.length === 0) {
+    return {
+      status: false,
+      statusCode: 404,
+      message: "User not found",
+    };
+  }
+
+  const userId = users[0].id;
+  const userWatchlist = users[0].watchlist || [];
+
+  if (userWatchlist.includes(id)) {
+    return {
+      status: false,
+      statusCode: 400,
+      message: "already exists in the watchlist",
+    };
+  } else {
+    try {
+      const userDocRef = doc(firestore, "users", userId);
+      await updateDoc(userDocRef, {
+        watchlist: arrayUnion(id),
+      });
+
+      return {
+        status: true,
+        message: "Watchlist added successfully",
+        statusCode: 200,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        message: "Failed to add watchlist",
+        statusCode: 400,
+      };
+    }
+  }
+}
+
+export async function RemoveWatchList(email: string, id: string) {
+  const userQuery = query(
+    collection(firestore, "users"),
+    where("email", "==", email)
+  );
+
+  try {
+    const userQuerySnapshot = await getDocs(userQuery);
+    const users: any = userQuerySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (users.length === 0) {
+      return {
+        status: false,
+        statusCode: 404,
+        message: "User not found",
+      };
+    }
+
+    const userId = users[0].id;
+    const userWatchlist = users[0].watchlist || [];
+
+    if (!userWatchlist.includes(id)) {
+      return {
+        status: false,
+        statusCode: 400,
+        message: "Item not found in the watchlist",
+      };
+    } else {
+      const userDocRef = doc(firestore, "users", userId);
+      await updateDoc(userDocRef, {
+        watchlist: arrayRemove(id),
+      });
+
+      return {
+        status: true,
+        message: "Watchlist item removed successfully",
+        statusCode: 200,
+      };
+    }
+  } catch (error) {
+    console.error("Error removing watchlist item:", error);
+    return {
+      status: false,
+      message: "Failed to remove watchlist item",
+      statusCode: 500,
+    };
+  }
+}
+// TODO : Add more services

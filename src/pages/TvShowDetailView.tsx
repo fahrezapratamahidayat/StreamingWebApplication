@@ -7,6 +7,7 @@ import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -69,6 +70,9 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [data, setData] = useState<TvShowProps | null>(null);
   const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
   const [credits, setCredits] = useState<TvShowProps | null>(null);
+  const { data: session, status }: { data: any; status: string } = useSession();
+  const { user: { email } } = session;
+  
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`tv/${slug}`);
@@ -123,6 +127,32 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
       `/tv/${slug}/watch?=${data?.name.replace(/\s+/g, "+")}/season/1`
     );
   };
+
+  const handleAddWatchList = async (event: any) => {
+    event.preventDefault();
+    try {
+      const res = await fetch('/api/watchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: slug, // Pastikan variabel slug telah didefinisikan
+          email: email,
+        }),
+      });
+
+      if (res.ok) {
+        // Handle success
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      console.error('Error adding to watchlist:', error);
+      // Handle error
+    }
+  };
+  
   return (
     <>
       {data && dataVideos && credits && (
@@ -209,6 +239,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                     </button>
                     <button
                       type="button"
+                      onClick={handleAddWatchList}
                       className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
                     >
                       <svg

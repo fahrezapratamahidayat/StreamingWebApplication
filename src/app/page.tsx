@@ -1,3 +1,4 @@
+import MainLayouts from "@/layouts/MainLayouts";
 import HomePageView from "@/pages/HomePageView";
 import { Metadata } from "next";
 
@@ -9,7 +10,9 @@ export const metadata : Metadata = {
 export default function HomePage(){
   return (
     <>
-    <HomePageView />
+    <MainLayouts>
+      <HomePageView />
+    </MainLayouts>
     </>
   )
 }

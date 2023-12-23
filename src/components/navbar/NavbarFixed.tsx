@@ -118,34 +118,34 @@ export default function NavbarFixed() {
       >
         <div className="flex items-center px-5 py-3 justify-between">
           <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
-          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[11.5rem]">
+          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[8.5rem]">
             <li
               className={`${
-                pathname === "/" ? "text-white" : "text-[#939393]"
-              } font-bold text-base hover:text-white  cursor-pointer `}
+                pathname === "/" ? "text-white border-b border-blue-500" : "text-[#939393]"
+              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
             >
               <Link href="/">Home</Link>
             </li>
             <li
               className={`${
                 pathname?.startsWith("/movies")
-                  ? "text-white"
+                  ? "text-white border-b border-blue-500"
                   : "text-[#939393]"
-              } font-bold text-base hover:text-white cursor-pointer `}
+              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
             >
               <Link href="/movies">Movies</Link>
             </li>
             <li
               className={`${
-                pathname?.startsWith("/tv") ? "text-white" : "text-[#939393]"
-              } font-bold text-base hover:text-white cursor-pointer`}
+                pathname?.startsWith("/tv") ? "text-white border-b border-blue-500" : "text-[#939393]"
+              } font-bold text-base hover:text-white cursor-pointer hover:border-b border-blue-500`}
             >
               <Link href="/tv">Tv Shows</Link>
             </li>
             <li
               className={`${
-                pathname === "/animes" ? "text-white" : "text-[#939393]"
-              } font-bold text-base hover:text-white cursor-pointer`}
+                pathname === "/animes" ? "text-white border-b border-blue-500" : "text-[#939393]"
+              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
             >
               Animes
             </li>

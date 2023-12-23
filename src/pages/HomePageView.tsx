@@ -1,13 +1,14 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import CardPoster from "@/components/card/CardPosterMovies";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
-import Sidebar from "@/components/sidebar/Sidebar";
-import Homeviews from "@/pages/MoviesViewPage";
-import { FetchingData, fetchData } from "@/services/DataApi";
-import axios from "axios";
+import { Montserrat } from "next/font/google";
+import { fetchData } from "@/services/DataApi";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 const monstserrat = Montserrat({
   subsets: ["latin"],
@@ -32,13 +33,13 @@ interface CardProps {
 }
 
 export default function HomePageView() {
-  const [trending, setTrending] = useState([])
+  const [trending, setTrending] = useState([]);
+  const [popular, setPopular] = useState([]);
 
   const data = async () => {
-    const res = await fetchData('trending/all/day');
-    setTrending(res.results)
+    const res = await fetchData("trending/all/day");
+    setTrending(res.results);
   };
-  
 
   useEffect(() => {
     data();
@@ -46,34 +47,42 @@ export default function HomePageView() {
 
   return (
     <>
-      <div className="min-h-screen bg-black mx-5 pt-[2rem] lg:pt-0">
-        <div className="flex">
-          <div className="mt-[16px] ">
-            <h2 className="text-white font-semibold text-[1.5rem]">trending</h2>
-            <div className="flex flex-wrap gap-[20px] mt-[18px]">
-              {trending.map((movie: Movie) => (
-                <div
-                  className="flex flex-col  justify-center items-start gap-[5px]"
-                  key={movie.id}
-                >
-                  <Link
-                    href={`/movies/${movie.id}`}
-                    scroll={false}
-                    className="cursor-pointer w-auto h-auto"
-                  >
-                    <Image
-                      width={124} // default 157
-                      height={170} // default 308
-                      priority
-                      className="rounded-xl "
-                      src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
-                      alt={movie.title || movie.original_name}
-                    />
-                  </Link>
-                </div>
+      <div className="relative w-full min-h-screen ">
+        <div className="bg-black opacity-50 h-full w-full px-5">
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={10}
+            loop={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay]}
+            className="text-white w-auto"
+          >
+            {trending &&
+              trending.map((item: any) => (
+                <SwiperSlide key={item.id} className="pt-[4rem]">
+                  <Image
+                    width={200}
+                    height={200}
+                    src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                    alt={item.id}
+                    className="object-cover rounded-md"
+                  />
+                </SwiperSlide>
               ))}
-            </div>
-          </div>
+          </Swiper>
+        </div>
+        <div className="absolute top-0 left-0 h-full w-full flex items-center justify-center">
+          <h1
+            className={`font-bold text-7xl text-white tracking-widest relative z-10`}
+          >
+            Santai{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-violet-500">
+              Movies
+            </span>
+          </h1>
         </div>
       </div>
     </>

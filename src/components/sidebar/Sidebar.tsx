@@ -1,4 +1,5 @@
 "use client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,6 +31,7 @@ const monstserrat = Montserrat({
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
+  const { data: session, status }: { data: any; status: string } = useSession();
   const pathname = usePathname();
   return (
     <>
@@ -92,8 +94,14 @@ const Sidebar = ({ items }: any) => {
                   }`}
                   href={
                     pathname?.includes("tv")
-                      ? `/tv/genre/${genre.id}?name=${genre.name.replace(/\s+/g, '+')}`
-                      : `/movies/genre/${genre.id}?name=${genre.name.replace(/\s+/g, '+')}`
+                      ? `/tv/genre/${genre.id}?name=${genre.name.replace(
+                          /\s+/g,
+                          "+"
+                        )}`
+                      : `/movies/genre/${genre.id}?name=${genre.name.replace(
+                          /\s+/g,
+                          "+"
+                        )}`
                   }
                   scroll={false}
                 >
@@ -124,10 +132,22 @@ const Sidebar = ({ items }: any) => {
             General
           </h2>
           <ul>
-            <li className="mt-[0.75rem] text-[#828486] text-sm">Logout</li>
-            <li className="mt-[0.75rem] text-[#828486] text-sm">
-              Dark Mode
-            </li>
+            {status === "authenticated" ? (
+              <button
+                className="mt-[0.75rem] text-sky-500 text-semibold text-sm"
+                onClick={() => signOut()}
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                className="mt-[0.75rem] text-blue-500 text-sm"
+                onClick={() => signIn()}
+              >
+                Login
+              </button>
+            )}
+            <li className="mt-[0.75rem] text-[#828486] text-sm">Dark Mode</li>
           </ul>
         </div>
       </nav>
