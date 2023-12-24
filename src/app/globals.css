@@ -7,6 +7,23 @@
   overflow: hidden;
 }
 
+.overflow-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.overflow-sidebar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.overflow-sidebar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 2px;
+}
+
+.overflow-sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
 .overflow-scroll {
   overflow: hidden;
 }
@@ -42,19 +59,9 @@
 
 .overflow-video::-webkit-scrollbar-thumb {
   background-color: #888;
-  border-radius: 10px;
+  border-radius: px;
 }
 
 .overflow-video::-webkit-scrollbar-thumb:hover {
   background-color: #555;
-}
-
-.scrollbar-container {
-  overflow-y: scroll; /* Set the container to have a vertical scrollbar */
-  direction: rtl; /* Set the direction to right-to-left */
-}
-
-/* Style for the content inside the container */
-.scrollbar-content {
-  direction: ltr; /* Set the direction back to left-to-right for the content */
 }

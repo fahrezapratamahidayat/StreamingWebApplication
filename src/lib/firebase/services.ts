@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
+import { getSession } from "next-auth/react";
 
 const firestore = getFirestore(app);
 
@@ -22,6 +23,7 @@ interface User {
   watchlist?: string[]; // Assuming watchlist is an array of strings
   // Add other properties as needed
 }
+
 
 export async function RegisterUser(data: {
   username: string;
@@ -61,6 +63,55 @@ export async function RegisterUser(data: {
     }
   }
 }
+// export async function RegisterUser(data: {
+//   username: string;
+//   password: string;
+//   email: string;
+//   id: number;
+// }) {
+//   const q = query(
+//     collection(firestore, "users"),
+//     where("email", "==", data.email)
+//   );
+//   const querySnapshot = await getDocs(q);
+//   const users = querySnapshot.docs.map((doc) => ({
+//     id: doc.id,
+//     ...doc.data(),
+//   }));
+
+//   if (users.length > 0) {
+//     return {
+//       status: false,
+//       statusCode: 400,
+//       message: "Email already exists",
+//     };
+//   } else {
+//     data.password = await bcrypt.hash(data.password, 10);
+    
+//     // Get the current user count
+//     const userCountQuery = await getDocs(collection(firestore, "users"));
+//     const userCount = userCountQuery.docs.length;
+
+//     // Set the user ID as the current user count
+//     data.id = userCount + 1;
+
+//     try {
+//       await addDoc(collection(firestore, "users"), data);
+//       return {
+//         status: true,
+//         message: "User created successfully",
+//         statusCode: 200,
+//       };
+//     } catch (error) {
+//       return {
+//         status: false,
+//         message: "Register failed",
+//         statusCode: 400,
+//       };
+//     }
+//   }
+// }
+
 
 export async function LoginUsers(data: { email: string; password: string }) {
   const q = query(
@@ -132,7 +183,7 @@ export async function AddWatchList(email: string, id: string) {
     } catch (error) {
       return {
         status: false,
-        message: "Failed to add watchlist",
+        message: `Failed to add watchlist ${error}`,
         statusCode: 400,
       };
     }
@@ -190,4 +241,44 @@ export async function RemoveWatchList(email: string, id: string) {
     };
   }
 }
+
+export async function GetDataUSer(email: string) {
+  const userQuery = query(
+    collection(firestore, "users"),
+    where("email", "==", email)
+  );
+  
+  try {
+    const userQuerySnapshot = await getDocs(userQuery);
+    const users: any = userQuerySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (users.length === 0) {
+      return {
+        status: false,
+        statusCode: 404,
+        message: "User not found",
+      };
+    }
+
+    const userData = users[0];
+
+    return {
+      status: true,
+      user: userData,
+      statusCode: 200,
+    };
+  } catch (error) {
+    console.error("Error getting user by email:", error);
+    return {
+      status: false,
+      message: "Failed to get user by email",
+      statusCode: 500,
+    };
+  }
+}
+
+
 // TODO : Add more services

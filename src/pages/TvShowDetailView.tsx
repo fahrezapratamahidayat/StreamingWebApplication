@@ -71,8 +71,6 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
   const [credits, setCredits] = useState<TvShowProps | null>(null);
   const { data: session, status }: { data: any; status: string } = useSession();
-  const { user: { email } } = session;
-  
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`tv/${slug}`);
@@ -116,6 +114,10 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
       />
     ));
 
+    const GetDataUser = async () => {
+      const data = await fetch('/api/account/watchlist')
+    }
+
   useEffect(() => {
     fetchDataAsync();
     fetchDataVideo();
@@ -131,14 +133,14 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const handleAddWatchList = async (event: any) => {
     event.preventDefault();
     try {
-      const res = await fetch('/api/watchlist', {
+      const res = await fetch('/api/account/watchlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: slug, // Pastikan variabel slug telah didefinisikan
-          email: email,
+          id: slug, 
+          email: session?.user?.email,
         }),
       });
 
@@ -152,7 +154,6 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
       // Handle error
     }
   };
-  
   return (
     <>
       {data && dataVideos && credits && (

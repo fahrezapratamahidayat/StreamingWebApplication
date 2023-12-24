@@ -1,8 +1,6 @@
 import { AddWatchList } from "@/lib/firebase/services";
 import { NextRequest, NextResponse } from "next/server";
 
-// api/watchlist.ts
-
 export async function POST(request: NextRequest) {
     try {
       const req = await request.json();
