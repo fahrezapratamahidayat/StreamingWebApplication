@@ -31,7 +31,7 @@ const monstserrat = Montserrat({
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
-  const { data: session, status }: { data: any; status: string } = useSession();
+  const { data: session, status }: { data: any; status: string } = useSession() || {};
   const pathname = usePathname();
   return (
     <>
@@ -132,7 +132,7 @@ const Sidebar = ({ items }: any) => {
             General
           </h2>
           <ul>
-            {status === "authenticated" ? (
+            {status && status === "authenticated" ? (
               <button
                 className="mt-[0.75rem] text-sky-500 text-semibold text-sm"
                 onClick={() => signOut()}
