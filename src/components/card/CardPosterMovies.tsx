@@ -61,8 +61,8 @@ export default function CardPosterMovies({ title, data,className }: CardProps) {
                 />
               </Link>
               <p className="text-white text-sm">
-                {movie.title && movie.title.length > 14
-                  ? movie.title.substr(0, 14) + "..."
+                {movie.title && movie.title.length > 13
+                  ? movie.title.substr(0, 13) + "..."
                   : movie.title}
               </p>
               <div className="flex items-center justify-between w-full ">

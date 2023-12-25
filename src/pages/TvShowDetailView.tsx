@@ -6,7 +6,7 @@ import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import { FetchingData, fetchData } from "@/services/DataApi";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 const poppins = Poppins({
@@ -70,7 +70,10 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [data, setData] = useState<TvShowProps | null>(null);
   const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
   const [credits, setCredits] = useState<TvShowProps | null>(null);
-  const { data: session, status }: { data: any; status: string } = useSession() || {};
+  const [isLoading, setIsloading] = useState(false);
+  const { data: session, status }: { data: any; status: string } =
+    useSession() || {};
+  const [userWatchList, setUserWatchList] = useState([]);
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`tv/${slug}`);
@@ -114,10 +117,6 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
       />
     ));
 
-    const GetDataUser = async () => {
-      const data = await fetch('/api/account/watchlist')
-    }
-
   useEffect(() => {
     fetchDataAsync();
     fetchDataVideo();
@@ -132,40 +131,103 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
 
   const handleAddWatchList = async (event: any) => {
     event.preventDefault();
-    try {
-      const res = await fetch('/api/account/watchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    setIsloading(true);
+    const res = await fetch(`/api/account/addwatchlist?key=${process.env.NEXT_PUBLIC_API_KEY}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        watchlistItem: {
+          id: slug,
+          title: data?.name,
+          poster_path: data?.poster_path,
+          vote_average: data?.vote_average,
+          release_date: data?.first_air_date,
+          media_type: "tv",
         },
-        body: JSON.stringify({
-          id: slug, 
-          email: session?.user?.email,
-        }),
-      });
-
-      if (res.ok) {
-        // Handle success
-      } else {
-        // Handle error
-      }
-    } catch (error) {
-      console.error('Error adding to watchlist:', error);
-      // Handle error
+        email: session?.user?.email,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      alert(`${data.message}`);
+      setIsloading(false);
+    } else {
+      const data = await res.json();
+      alert(`${data.message}`);
+      setIsloading(false);
     }
   };
+
+  const handleRemoveWatchList = async (event: any) => {
+    event.preventDefault();
+    setIsloading(true);
+    const res = await fetch(`/api/account/removewatchlist?key=${process.env.NEXT_PUBLIC_API_KEY}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        watchlistItem: {
+          id: slug,
+          title: data?.name,
+          poster_path: data?.poster_path,
+          vote_average: data?.vote_average,
+          release_date: data?.first_air_date,
+          media_type: "tv",
+        },
+        email: session?.user?.email,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      alert(`${data.message}`);
+      setIsloading(false);
+    } else {
+      const data = await res.json();
+      alert(`${data.message}`);
+      setIsloading(false);
+    }
+  };
+
+  const fetchDataWatchlist = async () => {
+    try {
+      if (!session) {
+        return;
+      }
+      const email = encodeURIComponent(session.user.email);
+      const response = await fetch(`/api/account/user?email=${email}&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch watchlist. Status: ${response.status}`
+        );
+      }
+      const data = await response.json();
+      setUserWatchList(data.user.watchlist);
+    } catch (error) {
+      console.error("Error fetching watchlist:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchDataWatchlist();
+  }, [userWatchList]);
   return (
     <>
-      {data && dataVideos && credits && (
+    <Suspense fallback={<div>Loading...</div>}>
+    {data && dataVideos && credits && (
         <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
           <div className="mt-[5rem]">
             <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
-              <div className="w-full overflow-x-hidden">
+              <div className="w-full overflow-x-hidden lg:pr-[1.2rem]">
                 <Image
                   width={1072}
                   height={440}
                   priority={true}
-                  className="backdrop-blur-sm lg:h-[27.5rem] lg:w-[63rem] h-[30.5rem] w-full object-cover rounded-[0.65rem]"
+                  className="backdrop-blur-sm lg:h-[27.5rem] h-[30.5rem] w-full object-cover rounded-[0.65rem]"
                   src={`https://image.tmdb.org/t/p/original/${
                     data && data?.backdrop_path
                   }`}
@@ -238,36 +300,85 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                       </svg>
                       Watch Now
                     </button>
-                    <button
-                      type="button"
-                      onClick={handleAddWatchList}
-                      className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        className="me-2"
+                    {userWatchList.some((item: any) => item.id === slug) ? (
+                      <button
+                        disabled={isLoading}
+                        type="button"
+                        onClick={handleRemoveWatchList}
+                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
                       >
-                        <path
-                          d="M12 5V19"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M5 12H19"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      WatchList
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          className="me-2"
+                        >
+                          <path
+                            d="M3 6H5H21"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M10 11V17"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M14 11V17"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {`${isLoading ? "Removing..." : "Watchlist"} `}
+                      </button>
+                    ) : (
+                      <button
+                        disabled={isLoading}
+                        type="button"
+                        onClick={handleAddWatchList}
+                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          className="me-2"
+                        >
+                          <path
+                            d="M12 5V19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M5 12H19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {`${isLoading ? "Adding..." : "Watch List"} `}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -303,6 +414,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
           </div>
         </div>
       )}
+      </Suspense>
     </>
   );
 }

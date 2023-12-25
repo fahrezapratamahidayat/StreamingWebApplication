@@ -13,17 +13,14 @@ import {
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
-import { getSession } from "next-auth/react";
 
 const firestore = getFirestore(app);
 
 interface User {
   id: string;
   email: string;
-  watchlist?: string[]; // Assuming watchlist is an array of strings
-  // Add other properties as needed
+  watchlist?: string[];
 }
-
 
 export async function RegisterUser(data: {
   username: string;
@@ -87,7 +84,7 @@ export async function RegisterUser(data: {
 //     };
 //   } else {
 //     data.password = await bcrypt.hash(data.password, 10);
-    
+
 //     // Get the current user count
 //     const userCountQuery = await getDocs(collection(firestore, "users"));
 //     const userCount = userCountQuery.docs.length;
@@ -111,7 +108,6 @@ export async function RegisterUser(data: {
 //     }
 //   }
 // }
-
 
 export async function LoginUsers(data: { email: string; password: string }) {
   const q = query(
@@ -140,7 +136,17 @@ export async function GetAllUsers() {
   return users;
 }
 
-export async function AddWatchList(email: string, id: string) {
+export async function AddWatchList(
+  email: string,
+  watchlistItem: {
+    id: string;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    release_date: string;
+    media_type: string;
+  }
+) {
   const userQuery = query(
     collection(firestore, "users"),
     where("email", "==", email)
@@ -161,8 +167,11 @@ export async function AddWatchList(email: string, id: string) {
 
   const userId = users[0].id;
   const userWatchlist = users[0].watchlist || [];
+  const itemExist = userWatchlist.some(
+    (item: any) => item.id === watchlistItem.id
+  );
 
-  if (userWatchlist.includes(id)) {
+  if (itemExist) {
     return {
       status: false,
       statusCode: 400,
@@ -172,9 +181,8 @@ export async function AddWatchList(email: string, id: string) {
     try {
       const userDocRef = doc(firestore, "users", userId);
       await updateDoc(userDocRef, {
-        watchlist: arrayUnion(id),
+        watchlist: arrayUnion(watchlistItem),
       });
-
       return {
         status: true,
         message: "Watchlist added successfully",
@@ -190,7 +198,17 @@ export async function AddWatchList(email: string, id: string) {
   }
 }
 
-export async function RemoveWatchList(email: string, id: string) {
+export async function RemoveWatchList(
+  email: string,
+  watchlistItem: {
+    id: string;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    release_date: string;
+    media_type: string;
+  }
+) {
   const userQuery = query(
     collection(firestore, "users"),
     where("email", "==", email)
@@ -213,8 +231,11 @@ export async function RemoveWatchList(email: string, id: string) {
 
     const userId = users[0].id;
     const userWatchlist = users[0].watchlist || [];
+    const itemExist = userWatchlist.some(
+      (item: any) => item.id === watchlistItem.id
+    );
 
-    if (!userWatchlist.includes(id)) {
+    if (!itemExist) {
       return {
         status: false,
         statusCode: 400,
@@ -223,7 +244,7 @@ export async function RemoveWatchList(email: string, id: string) {
     } else {
       const userDocRef = doc(firestore, "users", userId);
       await updateDoc(userDocRef, {
-        watchlist: arrayRemove(id),
+        watchlist: arrayRemove(watchlistItem),
       });
 
       return {
@@ -247,7 +268,7 @@ export async function GetDataUSer(email: string) {
     collection(firestore, "users"),
     where("email", "==", email)
   );
-  
+
   try {
     const userQuerySnapshot = await getDocs(userQuery);
     const users: any = userQuerySnapshot.docs.map((doc) => ({
@@ -279,6 +300,5 @@ export async function GetDataUSer(email: string) {
     };
   }
 }
-
 
 // TODO : Add more services

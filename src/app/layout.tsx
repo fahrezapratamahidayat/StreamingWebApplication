@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MainLayouts from "@/layouts/MainLayouts";
@@ -19,8 +19,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 bg-black`}
       >
-        <NavbarFixed />
         <SessionProvider>
+          <NavbarFixed />
           {children}
         </SessionProvider>
       </body>

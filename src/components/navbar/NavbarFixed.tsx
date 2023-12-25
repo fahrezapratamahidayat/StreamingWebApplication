@@ -1,5 +1,6 @@
 "use client";
 import { movieSidebaritem, tvShowsSidebarItem } from "@/utils/ItemSidebar";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -13,20 +14,20 @@ export default function NavbarFixed() {
   const router = useRouter();
   const overlay: any = useRef(null);
   const overlaySidebar: any = useRef(null);
-  const overlaySearchBar: any = useRef(null);
   const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
+  const { data: session, status }: { data: any; status: string } = useSession() || {};
 
   const handleSearchForm = (event: any) => {
     event.preventDefault();
     setSearchValue(event.target.value);
 
-    if(searchValue.length > 1){
+    if (searchValue.length > 1) {
       router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`);
       setToggleSearch(false);
       setSearchValue("");
-    }else{
-      alert('Please enter at least 2 characters')
+    } else {
+      alert("Please enter at least 2 characters");
     }
   };
 
@@ -121,7 +122,9 @@ export default function NavbarFixed() {
           <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[8.5rem]">
             <li
               className={`${
-                pathname === "/" ? "text-white border-b border-blue-500" : "text-[#939393]"
+                pathname === "/"
+                  ? "text-white border-b border-blue-500"
+                  : "text-[#939393]"
               } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
             >
               <Link href="/">Home</Link>
@@ -137,14 +140,18 @@ export default function NavbarFixed() {
             </li>
             <li
               className={`${
-                pathname?.startsWith("/tv") ? "text-white border-b border-blue-500" : "text-[#939393]"
+                pathname?.startsWith("/tv")
+                  ? "text-white border-b border-blue-500"
+                  : "text-[#939393]"
               } font-bold text-base hover:text-white cursor-pointer hover:border-b border-blue-500`}
             >
               <Link href="/tv">Tv Shows</Link>
             </li>
             <li
               className={`${
-                pathname === "/animes" ? "text-white border-b border-blue-500" : "text-[#939393]"
+                pathname === "/animes"
+                  ? "text-white border-b border-blue-500"
+                  : "text-[#939393]"
               } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
             >
               Animes
@@ -255,33 +262,33 @@ export default function NavbarFixed() {
                     </div>
                   </form>
                   <button
-                      onClick={() => setToggleSearch(false)}
-                      className="absolute top-4 right-5"
+                    onClick={() => setToggleSearch(false)}
+                    className="absolute top-4 right-5"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="25"
+                      viewBox="0 0 24 25"
+                      fill="none"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="25"
-                        viewBox="0 0 24 25"
-                        fill="none"
-                      >
-                        <path
-                          d="M18 6.5L6 18.5"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M6 6.5L18 18.5"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <span className="sr-only">close</span>
-                    </button>
+                      <path
+                        d="M18 6.5L6 18.5"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M6 6.5L18 18.5"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <span className="sr-only">close</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -316,34 +323,34 @@ export default function NavbarFixed() {
               ) : (
                 <button className="" onClick={handleShowNav}>
                   <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </button>
               )}
               <div
@@ -392,47 +399,51 @@ export default function NavbarFixed() {
             </div>
           </div>
         </div>
-        <div className={`${pathname === "/" || pathname?.startsWith("/search") ? "hidden" : ""} flex items-center lg:hidden p-4 border-b border-t border-slate-50/60`}>
+        <div
+          className={`${
+            pathname === "/" || pathname?.startsWith("/search") ? "hidden" : ""
+          } flex items-center lg:hidden p-4 border-b border-t border-slate-50/60`}
+        >
           <button
             className="hover:text-slate-500 text-slate-400"
             onClick={handleShowSidebar}
           >
-                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M21 10H3"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M21 6H3"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M21 14H3"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M21 18H3"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M21 10H3"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M21 6H3"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M21 14H3"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M21 18H3"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
             <span className="sr-only">Navigation</span>
           </button>
           <ul className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
@@ -466,7 +477,7 @@ export default function NavbarFixed() {
             } fixed top-0 left-0  bg-black/50  h-[99rem] w-full `}
           >
             <aside
-              className="absolute top-0 w-[80%]  bg-black  rounded shadow-md"
+              className="absolute top-0 w-[80%]  bg-black rounded shadow-md"
               ref={overlaySidebar}
             >
               <div className="relative">
@@ -573,16 +584,28 @@ export default function NavbarFixed() {
                       Top Rated
                     </li>
                     <li className="mt-[0.75rem] text-[#828486] text-sm">
-                      Likes
+                      <Link href="/watchlist">watchlist</Link>
                     </li>
                   </ul>
                   <h2 className="mt-[1.81rem] text-white font-semibold text-base">
                     General
                   </h2>
                   <ul>
-                    <li className="mt-[0.75rem] text-[#828486] text-sm">
-                      Logout
-                    </li>
+                    {status && status === "authenticated" ? (
+                      <button
+                        className="mt-[0.75rem] text-sky-500 text-semibold text-sm"
+                        onClick={() => signOut()}
+                      >
+                        Logout
+                      </button>
+                    ) : (
+                      <button
+                        className="mt-[0.75rem] text-blue-500 text-sm"
+                        onClick={() => signIn()}
+                      >
+                        Login
+                      </button>
+                    )}
                     <li className="mt-[0.75rem] text-[#828486] text-sm">
                       Dark Mode
                     </li>

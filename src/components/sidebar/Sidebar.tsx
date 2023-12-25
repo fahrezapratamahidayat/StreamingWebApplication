@@ -31,7 +31,8 @@ const monstserrat = Montserrat({
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
-  const { data: session, status }: { data: any; status: string } = useSession() || {};
+  const { data: session, status }: { data: any; status: string } =
+    useSession() || {};
   const pathname = usePathname();
   return (
     <>
@@ -126,7 +127,11 @@ const Sidebar = ({ items }: any) => {
             >
               Top Rated
             </li>
-            <li className="mt-[0.75rem] text-[#828486] text-sm">Likes</li>
+            <li className="mt-[0.75rem] text-[#828486] text-sm">
+              <Link href="/watchlist">
+                Watchlist
+              </Link>
+            </li>
           </ul>
           <h2 className="mt-[1.81rem] text-white font-semibold text-base">
             General
