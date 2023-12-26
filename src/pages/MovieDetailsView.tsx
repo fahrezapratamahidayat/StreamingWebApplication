@@ -94,7 +94,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
 
   const handleWatchNow = (event:any) => {
     event.preventDefault();
-    router.push(`/movie/${slug}/watch?=${data?.title.replace(/\s+/g, "+")}`);
+    router.push(`/movies/${slug}/watch?=${data?.title.replace(/\s+/g, "+")}`);
   }
 
   const handleAddWatchList = async (event: any) => {
@@ -149,13 +149,13 @@ export default function MovieDetailView({ slug }: { slug: string }) {
       }),
     });
     if (res.ok) {
+      setIsloading(false);
       const data = await res.json();
       alert(`${data.message}`);
-      setIsloading(false);
     } else {
+      setIsloading(false);
       const data = await res.json();
       alert(`${data.message}`);
-      setIsloading(false);
     }
   };
 
@@ -188,17 +188,18 @@ export default function MovieDetailView({ slug }: { slug: string }) {
       {data && credits && dataVideos && (
         <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
           <div className="mt-[5rem] ">
-            <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
+            <div className="relative rounded-[0.65rem] lg:mx-0 w-full lg:pr-[1.2rem]">
               <div className="w-full">
                 <Image
-                  width={500}
-                  height={500}
+                  width={700}
+                  height={400}
                   priority={true}
+                  quality={100}
                   className="backdrop-blur-sm lg:h-[27.5rem] h-[30.5rem] w-full object-cover rounded-[0.65rem]"
                   src={`https://image.tmdb.org/t/p/original/${
                     data && data?.backdrop_path
                   }`}
-                  alt=""
+                  alt={data && data.title}
                 />
               </div>
               <div className="absolute top-0 left-0 lg:h-full lg:w-full h-full w-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black dark:bg-gradient-to-b dark:from-transparent dark:to-black"></div>

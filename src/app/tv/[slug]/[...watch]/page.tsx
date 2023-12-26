@@ -1,3 +1,4 @@
+import MainLayouts from "@/layouts/MainLayouts";
 import TvWatchPageView from "@/pages/TvShowWatchPage";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
@@ -13,26 +14,27 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const id = params.slug
+  const id = params.slug;
 
-  const snapshot = await FetchingData(`tv/${id}`)
+  const snapshot = await FetchingData(`tv/${id}`);
   const data = {
-    title : snapshot.name,
-    overview : snapshot.overview
-  }
- 
+    title: snapshot.name,
+    overview: snapshot.overview,
+  };
+
   return {
     title: `${data.title} | Watch`,
-    description: data.overview
-  }
+    description: data.overview,
+  };
 }
 export default function WatchTvPage(props: dataPageProps) {
   const { params } = props;
-  
 
   return (
     <>
-    <TvWatchPageView slug={params.slug} />
+      <MainLayouts>
+        <TvWatchPageView slug={params.slug} />
+      </MainLayouts>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import MainLayouts from "@/layouts/MainLayouts";
 import { FetchingData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -30,13 +31,15 @@ export default function watchMovie(props: watchMovieProps) {
   const { params } = props;
   return (
     <>
-      <div className=" mt-[5rem] mx-5 w-full pt-[4rem] lg:pt-0">
+    <MainLayouts>
+    <div className=" mt-[5rem] mx-5 w-full pt-[4rem] lg:pt-0">
         <iframe
           src={`https://multiembed.mov/?video_id=${params.slug}&tmdb=1`}
           className="lg:h-[31.5rem] w-full h-full "
           allowFullScreen
         ></iframe>
       </div>
+    </MainLayouts>
     </>
   );
 }

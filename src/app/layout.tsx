@@ -5,6 +5,7 @@ import MainLayouts from "@/layouts/MainLayouts";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
 import MovieContextProvider from "@/context/DataMovies";
 import { SessionProvider } from "next-auth/react";
+import { usePathname } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -12,6 +13,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  const disableNavbar = pathname === "/login" || pathname === "register";
+
   return (
     <html lang="en" className="">
       <meta charSet="utf-8" />
@@ -20,7 +25,7 @@ export default function RootLayout({
         className={`${inter.className} scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 bg-black`}
       >
         <SessionProvider>
-          <NavbarFixed />
+          {!disableNavbar && <NavbarFixed />}
           {children}
         </SessionProvider>
       </body>

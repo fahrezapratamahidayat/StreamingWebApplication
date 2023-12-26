@@ -11,11 +11,10 @@ export default function WatchListPage() {
   const fetchData = async () => {
     try {
       if (!session) {
-        console.error("User not authenticated");
         return;
       }
       const email = session.user.email;
-      const snapshot = await fetch(`api/account/getwatchlist?email=${email}`);
+      const snapshot = await fetch(`api/account/user?email=${email}&key=${process.env.NEXT_PUBLIC_API_KEY}`);
       const data = await snapshot.json();
       setUserWatchList(data.user.watchlist);
     } catch (error) {
@@ -27,7 +26,8 @@ export default function WatchListPage() {
     if (status === "authenticated") {
       fetchData();
     }
-  }, [status]);
+  }, [status,userWatchList]);
+  
   return (
     <>
     <MainLayouts>

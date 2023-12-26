@@ -215,6 +215,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   useEffect(() => {
     fetchDataWatchlist();
   }, [userWatchList]);
+
   return (
     <>
     <Suspense fallback={<div>Loading...</div>}>
@@ -224,14 +225,15 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
             <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
               <div className="w-full overflow-x-hidden lg:pr-[1.2rem]">
                 <Image
-                  width={1072}
-                  height={440}
+                  width={700}
+                  height={400}
+                  quality={100}
                   priority={true}
                   className="backdrop-blur-sm lg:h-[27.5rem] h-[30.5rem] w-full object-cover rounded-[0.65rem]"
                   src={`https://image.tmdb.org/t/p/original/${
                     data && data?.backdrop_path
                   }`}
-                  alt=""
+                  alt={data && data?.name}
                 />
               </div>
               <div className="absolute top-0 left-0 lg:h-full lg:w-full w-full h-full rounded-[0.65rem] inset-0 bg-gradient-to-b from-transparent to-black overflow-x-hidden"></div>
