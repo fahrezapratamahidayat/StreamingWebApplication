@@ -6,8 +6,9 @@ import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import { FetchingData, fetchData } from "@/services/DataApi";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { NavbarContext } from "@/context/NavbarContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -74,6 +75,8 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const { data: session, status }: { data: any; status: string } =
     useSession() || {};
   const [userWatchList, setUserWatchList] = useState([]);
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar, setShowNavbar } = navbarContext;
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`tv/${slug}`);
@@ -220,10 +223,10 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
     <>
     <Suspense fallback={<div>Loading...</div>}>
     {data && dataVideos && credits && (
-        <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
+        <div className={`flex flex-col ${showNavbar ? "lg:ml-[19rem] " : "lg:ml-[3rem]"} pb-[5rem] pt-[4rem] lg:pt-0 transition-all`}>
           <div className="mt-[5rem]">
             <div className="relative rounded-[0.65rem] lg:mx-0 w-full">
-              <div className="w-full overflow-x-hidden lg:pr-[1.2rem]">
+              <div className="w-full overflow-x-hidden lg:pr-[1.3rem]">
                 <Image
                   width={700}
                   height={400}
@@ -307,7 +310,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                         disabled={isLoading}
                         type="button"
                         onClick={handleRemoveWatchList}
-                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2 transition-all ease-in-out"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -353,7 +356,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                         disabled={isLoading}
                         type="button"
                         onClick={handleAddWatchList}
-                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2"
+                        className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2 transition-all ease-in-out"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -401,7 +404,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                   <h2 className="text-white font-semibold text-[1.25rem] ">
                     {credits?.cast && credits.cast.length > 0 ? "Staring" : ""}
                   </h2>
-                  <div className="grid lg:grid-cols-4  grid-cols-2 mx-5 lg:ml-[5.81rem] mt-5 gap-[2.44rem] flex-wrap">
+                  <div className={`grid ${showNavbar ? "lg:grid-cols-5" : "lg:grid-cols-7"} grid-cols-2 mx-5 lg:ml-[5.81rem] mt-5 gap-[2.44rem] flex-wrap`}>
                     {castList}
                   </div>
                 </div>

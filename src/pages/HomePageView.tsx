@@ -9,6 +9,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { SwiperOptions } from "swiper/types";
+
+interface CustomSwiperOptions extends SwiperOptions {
+  slidesPerColumn?: number;
+  slidesPerColumnFill?: "column" | "row";
+}
 
 const monstserrat = Montserrat({
   subsets: ["latin"],
@@ -34,45 +40,45 @@ interface CardProps {
 
 export default function HomePageView() {
   const [trending, setTrending] = useState([]);
-  const [popular, setPopular] = useState([]);
+  const [mingguan,setMingguan] = useState([])
 
-  const data = async () => {
-    const res = await fetchData("trending/all/day");
-    setTrending(res.results);
+  const day = async () => {
+    const day = await fetchData("trending/all/day");
+    const week = await fetchData("trending/all/week");
+    const filter = day.results.filter(
+      (day: any) => !week.results.some((week: any) => week.id === day.id)
+    );
+    setTrending(day.results);
   };
 
+  // const week = async () => {
+  //   const week = await fetchData("trending/all/week");
+  //   const filter = week.results.filter(
+  //     (item: any) => !trending.some((tren: any) => tren.id === item.id)
+  //   );
+  //   setMingguan(filter)
+  // };
+
   useEffect(() => {
-    data();
+    day();
   }, []);
 
   return (
     <>
-      <div className="relative w-full min-h-screen ">
-        <div className="bg-black opacity-50 h-full w-full px-5">
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={10}
-            loop={true}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay]}
-            className="text-white w-auto"
-          >
-            {trending &&
-              trending.map((item: any) => (
-                <SwiperSlide key={item.id} className="pt-[4rem]">
-                  <Image
-                    width={200}
-                    height={200}
-                    src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
-                    alt={item.id}
-                    className="object-cover rounded-md"
-                  />
-                </SwiperSlide>
-              ))}
-          </Swiper>
+      <div className="min-w-full min-h-screen ">
+        <div className="relative bg-black opacity-50 h-full w-full px-5 mt-">
+          {/* <div className="grid grid-cols-10 grid-rows-10 gap-1 pt-[4rem] ">
+            {trending.map((item: any) => (
+              <Image
+                width={500}
+                height={500}
+                alt={item.name}
+                src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                key={item.id}
+                className="object-cover rounded"
+              />
+            ))}
+          </div> */}
         </div>
         <div className="absolute top-0 left-0 h-full w-full flex items-center justify-center">
           <h1
@@ -88,3 +94,24 @@ export default function HomePageView() {
     </>
   );
 }
+const test = () => {
+  {
+    /* <Swiper
+            {...swiperParams}
+            className="text-white w-auto"
+          >
+            {trending &&
+              trending.map((item: any) => (
+                <SwiperSlide key={item.id} className="pt-[4rem]">
+                  <Image
+                    width={500}
+                    height={500}
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    alt={item.id}
+                    className="object-cover rounded-md"
+                  />
+                </SwiperSlide>
+              ))}
+          </Swiper> */
+  }
+};

@@ -1,9 +1,10 @@
 "use client";
+import { NavbarContext } from "@/context/NavbarContext";
 import axios from "axios";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 const options = {
   method: "GET",
@@ -36,11 +37,13 @@ interface CardProps {
   className?: string;
 }
 export default function CardPosterMovies({ title, data,className }: CardProps) {
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar, setShowNavbar } = navbarContext;
   return (
     <>
-      <div className={`${className} pb-[2.rem] lg:pb-[2.5rem]`}>
+      <div className={`${className} pb-[2.rem] lg:pb-[2.5rem] transition-all ${showNavbar ? "ease-in" : "ease-out"}`}>
         <h2 className="text-white font-semibold text-2xl lg:mx-0 mx-2">{data.length > 0 ? title : ""}</h2>
-        <div className="grid lg:grid-cols-7 grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]">
+        <div className={`grid ${showNavbar ? "lg:grid-cols-7" : "lg:grid-cols-9"} grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]`}>
           {data.map((movie: Movie) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0"

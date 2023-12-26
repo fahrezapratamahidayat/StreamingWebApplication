@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchData } from "@/services/DataApi";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import ListDirector from "@/components/fragments/ListDirector";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { NavbarContext } from "@/context/NavbarContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,6 +42,8 @@ export default function MovieDetailView({ slug }: { slug: string }) {
   const { data: session, status }: { data: any; status: string } = useSession() || {};
   const router = useRouter();
   const [userWatchList, setUserWatchList] = useState([]);
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar, setShowNavbar } = navbarContext;
 
   const fetchDataAsync = async () => {
     const data = await fetchData(`movie/${slug}`);
@@ -186,9 +189,9 @@ export default function MovieDetailView({ slug }: { slug: string }) {
   return (
     <>
       {data && credits && dataVideos && (
-        <div className="flex flex-col lg:ml-[19rem] pb-[5rem] pt-[4rem] lg:pt-0">
+        <div className={`flex flex-col ${showNavbar ? "lg:ml-[19rem]" : "lg:ml-[3rem]"} pb-[5rem] pt-[4rem] lg:pt-0 transition-all`}>
           <div className="mt-[5rem] ">
-            <div className="relative rounded-[0.65rem] lg:mx-0 w-full lg:pr-[1.2rem]">
+            <div className="relative rounded-[0.65rem] lg:mx-0 w-full lg:pr-[1.3rem]">
               <div className="w-full">
                 <Image
                   width={700}
@@ -360,7 +363,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
                   <h2 className="text-white font-semibold text-[1.25rem]">
                     {credits?.cast && credits.cast.length > 0 ? "Staring" : ""}
                   </h2>
-                  <div className="grid lg:grid-cols-4  grid-cols-2 ml-11 lg:ml-[5.81rem] mt-5 gap-[2.44rem] flex-wrap">
+                  <div className={`grid ${showNavbar ? "lg:grid-cols-4" : "lg:grid-cols-6"} grid-cols-2 ml-11 lg:ml-[5.81rem] mt-5 gap-[2.44rem]`}>
                     {castList}
                   </div>
                 </div>

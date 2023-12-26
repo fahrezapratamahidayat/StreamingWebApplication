@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import CardPosterMovies from "@/components/card/CardPosterMovies";
-import {FetchingData, fetchData } from "@/services/DataApi";
-import { useEffect, useState} from "react";
+import { NavbarContext } from "@/context/NavbarContext";
+import { FetchingData, fetchData } from "@/services/DataApi";
+import { useContext, useEffect, useState } from "react";
 
 type Movie = {
   id: number;
@@ -17,25 +18,27 @@ export default function Home() {
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [upComingMovies, setUpComingMovies] = useState([]);
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar, setShowNavbar } = navbarContext;
 
   const fetchDataPlaying = async () => {
-    const res = await fetchData('movie/now_playing');
-    setPlaying(res.results)
+    const res = await fetchData("movie/now_playing");
+    setPlaying(res.results);
   };
 
   const fetchDataPopularMovies = async () => {
-    const res = await fetchData('movie/popular');
-    setPopularMovies(res.results)
+    const res = await fetchData("movie/popular");
+    setPopularMovies(res.results);
   };
 
   const fetchDataTopRatedMovies = async () => {
-    const res = await fetchData('movie/top_rated');
-    setTopRatedMovies(res.results)
+    const res = await fetchData("movie/top_rated");
+    setTopRatedMovies(res.results);
   };
 
   const fetchDataUpComingMovies = async () => {
-    const res = await fetchData('/movie/upcoming');
-    setUpComingMovies(res.results)
+    const res = await fetchData("/movie/upcoming");
+    setUpComingMovies(res.results);
   };
 
   useEffect(() => {
@@ -47,13 +50,20 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col lg:ml-[19rem] pt-[4rem] lg:pt-0 lg:mr-5">
-        <div className="mt-[5rem]">
-        </div>
+      <div
+        className={`flex flex-col ${
+          showNavbar ? "lg:ml-[19rem] transition-all ease-in" : "lg:ml-[4rem] transition-all ease-out"
+        } pt-[4rem] lg:pt-0 lg:mr-5`}
+      >
+        <div className="mt-[5rem]"></div>
         {playing && upComingMovies && topRatedMovies && popularMovies && (
           <>
             <CardPosterMovies title={`Now Playing`} data={playing} />
-            <CardPosterMovies title={`Popular`} data={popularMovies} className="ml"/>
+            <CardPosterMovies
+              title={`Popular`}
+              data={popularMovies}
+              className="ml"
+            />
             {CardPosterMovies({
               title: `Top Rated`,
               className: "]",
@@ -61,7 +71,11 @@ export default function Home() {
                 (movie: Movie) => movie.vote_average > 8.5
               ),
             })}
-            <CardPosterMovies title={`Upcoming`} data={upComingMovies} className=""/>
+            <CardPosterMovies
+              title={`Upcoming`}
+              data={upComingMovies}
+              className=""
+            />
           </>
         )}
       </div>
