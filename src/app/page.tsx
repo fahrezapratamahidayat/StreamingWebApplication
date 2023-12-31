@@ -1,4 +1,4 @@
-import MainLayouts from "@/layouts/MainLayouts";
+import MainLayouts from "@/components/layouts/MainLayouts";
 import HomePageView from "@/pages/HomePageView";
 import { Metadata } from "next";
 

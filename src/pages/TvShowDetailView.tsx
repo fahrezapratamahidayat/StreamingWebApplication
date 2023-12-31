@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
+import CardPosterSlider from "@/components/card/CardPosterSlider";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -71,6 +72,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [data, setData] = useState<TvShowProps | null>(null);
   const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
   const [credits, setCredits] = useState<TvShowProps | null>(null);
+  const [similiarTv, setSimiliarTv] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const { data: session, status }: { data: any; status: string } =
     useSession() || {};
@@ -78,7 +80,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const navbarContext = useContext(NavbarContext);
   const { showNavbar, setShowNavbar } = navbarContext;
 
-  const fetchDataAsync = async () => {
+  const fetchDataTv = async () => {
     const data = await fetchData(`tv/${slug}`);
     setData(data);
   };
@@ -91,6 +93,14 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const fetchCredits = async () => {
     const data = await fetchData(`tv/${slug}/credits`);
     setCredits(data);
+  };
+
+  const fetchSimiliarTv = async () => {
+    const data = await fetchData(`tv/${slug}/similar`);
+    const filter = data.results.filter(
+      (item: any) => item.backdrop_path !== null && item.poster_path !== null
+    );
+    setSimiliarTv(filter);
   };
 
   const videoList = dataVideos?.results.map((video) => (
@@ -121,9 +131,10 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
     ));
 
   useEffect(() => {
-    fetchDataAsync();
+    fetchDataTv();
     fetchDataVideo();
     fetchCredits();
+    fetchSimiliarTv();
   }, []);
 
   const handleWatchNow = () => {
@@ -454,7 +465,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                   </div>
                 </div>
               </div>
-              <div className="lg:flex lg:flex-col lg:ml-[3rem] mx-3 lg:mx-0">
+              <div className="lg:flex lg:flex-col lg:ml-[3rem] mx-3 lg:mx-0 ">
                 <div className="lg:mt-[3.12rem] mt-[5.69rem] flex">
                   <div className="flex lg:flex-row flex-col lg:items-baseline">
                     <h2 className="text-white font-semibold text-[1.25rem]">
@@ -486,8 +497,11 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                 <h2 className="text-white  font-semibold text-base mt-[5.12rem]">
                   Trailer And Clips
                 </h2>
-                <div className="mt-[1.69rem] lg:w-[60rem] w-[22rem] flex items-center gap-[2.44rem] overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
+                <div className="mt-[1.69rem] w-[98%] flex items-center overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
                   {videoList}
+                </div>
+                <div className="mt-[3.12rem]">
+                  <CardPosterSlider data={similiarTv} />
                 </div>
               </div>
             </div>

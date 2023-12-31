@@ -1,7 +1,7 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MainLayouts from "@/layouts/MainLayouts";
+import MainLayouts from "@/components/layouts/MainLayouts";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
 import MovieContextProvider from "@/context/DataMovies";
 import { SessionProvider } from "next-auth/react";

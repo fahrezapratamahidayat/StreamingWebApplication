@@ -1,6 +1,6 @@
 "use client";
 import CardPosterWatchList from "@/components/card/CardPosterWatchlist";
-import MainLayouts from "@/layouts/MainLayouts";
+import MainLayouts from "@/components/layouts/MainLayouts";
 import { getToken } from "next-auth/jwt";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

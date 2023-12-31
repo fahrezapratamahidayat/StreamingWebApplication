@@ -1,5 +1,5 @@
 "use client";
-import { movieSidebaritem, tvShowsSidebarItem } from "@/utils/ItemSidebar";
+import { movieSidebaritem, tvShowsSidebarItem } from "@/utils/data";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";

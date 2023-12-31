@@ -1,5 +1,5 @@
-import MainLayouts from "@/layouts/MainLayouts";
-import PageLayouts from "@/layouts/PageLayouts";
+import MainLayouts from "@/components/layouts/MainLayouts";
+import PageLayouts from "@/components/layouts/PageLayouts";
 import SearchPageView from "@/pages/SearchPageView";
 
 export const metadata = {

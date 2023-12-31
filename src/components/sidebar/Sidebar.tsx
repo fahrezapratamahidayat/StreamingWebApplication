@@ -7,30 +7,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-inter",
-});
-
-const moul = Moul({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-moul",
-});
-
-const monstserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-monstserrat",
-});
-
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
   const { data: session, status }: { data: any; status: string } =
@@ -38,6 +14,12 @@ const Sidebar = ({ items }: any) => {
   const pathname = usePathname();
   const navbarContext = useContext(NavbarContext);
   const { showNavbar, setShowNavbar } = navbarContext;
+  const handleClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <>
       <div
@@ -65,14 +47,14 @@ const Sidebar = ({ items }: any) => {
       </div>
       <nav
         className={`lg:block hidden ${
-          showNavbar ? "w-[250px]" : "fixed top-0 -left-[12rem]"
+          showNavbar ? "w-[250px]" : "fixed top-0 -left-[13rem]"
         } pt-[5rem] fixed h-full lg:block transition-all ease-in-out`}
       >
         <div
           className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out`}
         >
           <h2
-            className={`text-white font-semibold text-base cursor-pointer flex items-center mb-5`}
+            className={`text-white font-semibold text-base cursor-pointer flex items-center`}
           >
             Genre
             {DropDown ? (
@@ -114,7 +96,7 @@ const Sidebar = ({ items }: any) => {
             )}
           </h2>
           <ul
-            className={`font-semibold mt-[0.8rem] text-[#828486] transition-all pl-2`}
+            className={`font-semibold ${DropDown ? "mt-[0.8rem]" : ""} text-[#828486] transition-all pl-2`}
           >
             {items.map((genre: any) => (
               <li
@@ -124,6 +106,7 @@ const Sidebar = ({ items }: any) => {
                 } transition-all duration-500 ease-out`}
               >
                 <Link
+                key={genre.title}
                   className={`hover:text-white mt-[0.75rem] text-sm pl-3
                   }`}
                   href={
@@ -137,6 +120,7 @@ const Sidebar = ({ items }: any) => {
                           "+"
                         )}`
                   }
+                  onClick={handleClick}
                   scroll={false}
                 >
                   {genre.name}

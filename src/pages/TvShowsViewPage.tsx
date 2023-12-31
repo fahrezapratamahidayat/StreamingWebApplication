@@ -4,19 +4,14 @@ import { NavbarContext } from "@/context/NavbarContext";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { useContext, useEffect, useState } from "react";
 
-export default function TvShowsView() {
+export default function TvShowsView({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [data, setData] = useState([]);
   const navbarContext = useContext(NavbarContext);
   const { showNavbar, setShowNavbar } = navbarContext;
-
-  const fetchDataAsync = async () => {
-    const res = await fetchData("trending/tv/day");
-    setData(res.results);
-  };
-
-  useEffect(() => {
-    fetchDataAsync();
-  }, []);
 
   return (
     <>
@@ -27,9 +22,7 @@ export default function TvShowsView() {
             : "lg:ml-[4rem] transition-all ease-out"
         } pt-[5rem] lg:pt-0`}
       >
-        <div className="mt-[5rem]">
-          <CardPosterTvShows title="Trending Today" data={data} />
-        </div>
+        <div className="mt-[5rem]">{children}</div>
       </div>
     </>
   );

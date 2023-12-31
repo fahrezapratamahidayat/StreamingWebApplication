@@ -1,4 +1,4 @@
-import PageLayouts from "@/layouts/PageLayouts";
+import PageLayouts from "@/components/layouts/PageLayouts";
 
 export default function Loading(){
     return (

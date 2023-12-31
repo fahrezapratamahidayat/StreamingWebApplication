@@ -1,4 +1,8 @@
+import { fetchGenreMovies } from "@/app/actions";
+import LoadMore from "@/components/button/LoadMore";
+import CardLayouts from "@/components/layouts/CardLayout";
 import MoviesGenreView from "@/pages/MoviesGenreView";
+import { movieTitleGenre } from "@/utils/data";
 
 type genrePageProps = {
   params: {
@@ -11,11 +15,19 @@ export const metadata = {
   description: "Movie Genre",
 }
 
-export default function GenrePage(props: genrePageProps) {
+export default async function GenrePage(props: genrePageProps) {
   const { params } = props;
+  const MoviesGenre = await fetchGenreMovies(1, params.genre);
+  const title = movieTitleGenre(params.genre);
+  
   return (
     <>
-    <MoviesGenreView params={params.genre}/>
+    <MoviesGenreView params={params.genre}>
+      <CardLayouts title={title}>
+        {MoviesGenre}
+      </CardLayouts>
+      <LoadMore fetchData={fetchGenreMovies} genre={params.genre} />
+    </MoviesGenreView>
     </>
   );
 }
