@@ -11,8 +11,8 @@ import { MovieProps, TvShowProps } from "@/types/CardProps";
   // }
 
 
-export const fetchMovies = async (page: number) => {
-    const res = await fetchData(`movie/now_playing?page=${page}&limit=10`);
+export const fetchMovies = async (page: number,endpoint: string) => {
+    const res = await fetchData(`movie/${endpoint}?page=${page}&limit=10`);
     return res.results.map((item : MovieProps,index: number) => (
         <CardPosterMovies
             key={item.id}
@@ -22,8 +22,8 @@ export const fetchMovies = async (page: number) => {
     ))
 }
 
-export const fetchTvShow = async (page: number) => {
-    const res = await fetchData(`tv/popular?page=${page}&limit=10`);
+export const fetchTvShow = async (page: number,endpoint: string) => {
+    const res = await fetchData(`tv/${endpoint}?page=${page}&limit=10`);
     return res.results.map((item : TvShowProps,index: number) => (
         <CardPosterTvShows
             key={item.id}
@@ -53,4 +53,9 @@ export const fetchGenreMovies = async (page?: number, params?: string) => {
             index={index}
         />
     ))
+}
+
+export const tes = async (page: number,endpoint: string) => {
+    const res = await fetchData(`movie/${endpoint}?page=${page}&limit=10`);
+    return res.results
 }

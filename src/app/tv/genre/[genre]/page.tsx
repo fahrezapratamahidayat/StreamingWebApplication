@@ -1,4 +1,4 @@
-import { fetchGenreTv } from "@/app/actions";
+import { fetchGenreTv } from "@/app/action";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import TvGenreView from "@/pages/TvGenreView";
@@ -27,7 +27,7 @@ export default async function tvGenrePage(props: genrePageProps) {
         <CardLayouts title={title} className="lg:mr-[1.2rem]">
           {TvShowGenre}
         </CardLayouts>
-        <LoadMore fetchData={fetchGenreTv} genre={params.genre} />
+        <LoadMore fetchData={fetchGenreTv} endpoint="" />
       </TvGenreView>
     </>
   );

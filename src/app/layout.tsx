@@ -23,7 +23,7 @@ export default function RootLayout({
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body
-        className={`${inter.className} scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 bg-black`}
+        className={`${inter.className} overflow-main bg-black`}
       >
         <SessionProvider>
           <NavbarContextProvider>

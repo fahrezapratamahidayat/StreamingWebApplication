@@ -154,7 +154,7 @@ export default function NavbarFixed() {
                   : "text-[#939393]"
               } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
             >
-              Animes
+              <Link href="/animes">Animes</Link>
             </li>
           </ul>
           <div className="lg:flex hidden relative items-center">
@@ -391,7 +391,7 @@ export default function NavbarFixed() {
                         pathname === "/animes" ? "text-white" : "text-[#939393]"
                       } font-bold text-base hover:text-white cursor-pointer`}
                     >
-                      Animes
+                      <Link href="/animes">Animes</Link>
                     </li>
                   </ul>
                 </nav>
@@ -528,9 +528,9 @@ export default function NavbarFixed() {
                     className={`font-semibold mt-[0.8rem] text-[#828486] transition-all`}
                   >
                     {pathname?.startsWith("/tv")
-                      ? tvShowsSidebarItem.map((genre: any) => (
+                      ? tvShowsSidebarItem.map((genre: any,index:number) => (
                           <li
-                            key={genre.id}
+                            key={index}
                             className={`border-l border-slate-800 ${
                               DropDown ? "" : "hidden"
                             } transition-all duration-500 ease-out`}
@@ -547,9 +547,9 @@ export default function NavbarFixed() {
                           </li>
                         ))
                       : pathname?.startsWith("/movies")
-                      ? movieSidebaritem.map((genre: any) => (
+                      ? movieSidebaritem.map((genre: any,index:number) => (
                           <li
-                            key={genre.id}
+                            key={index}
                             className={`border-l border-slate-800 ${
                               DropDown ? "" : "hidden"
                             } transition-all duration-500 ease-out`}

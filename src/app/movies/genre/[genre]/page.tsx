@@ -1,4 +1,4 @@
-import { fetchGenreMovies } from "@/app/actions";
+import { fetchGenreMovies } from "@/app/action";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import MoviesGenreView from "@/pages/MoviesGenreView";
@@ -26,7 +26,7 @@ export default async function GenrePage(props: genrePageProps) {
       <CardLayouts title={title}>
         {MoviesGenre}
       </CardLayouts>
-      <LoadMore fetchData={fetchGenreMovies} genre={params.genre} />
+      <LoadMore fetchData={fetchGenreMovies} endpoint="" />
     </MoviesGenreView>
     </>
   );

@@ -1,11 +1,9 @@
 "use client";
-import { MovieContext } from "@/context/DataMovies";
 import { NavbarContext } from "@/context/NavbarContext";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
@@ -98,15 +96,14 @@ const Sidebar = ({ items }: any) => {
           <ul
             className={`font-semibold ${DropDown ? "mt-[0.8rem]" : ""} text-[#828486] transition-all pl-2`}
           >
-            {items.map((genre: any) => (
+            {items.map((genre: any,index:number) => (
               <li
-                key={genre.id}
+                key={genre.index}
                 className={`border-l border-slate-800 ${
                   DropDown ? "" : "hidden"
                 } transition-all duration-500 ease-out`}
               >
                 <Link
-                key={genre.title}
                   className={`hover:text-white mt-[0.75rem] text-sm pl-3
                   }`}
                   href={

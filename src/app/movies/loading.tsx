@@ -8,7 +8,7 @@ export default function Loading() {
         <div className={`animate-pulse `}>
         <div className="w-[150px] h-5 bg-slate-800"></div>
           <div className="flex flex-wrap gap-[26px] mt-[18px]">
-            {data.map((movie: any) => (
+            {data.map((movie: any,index:number) => (
               <div
                 className="flex flex-col justify-center items-start gap-[5px]"
                 key={movie.id}
