@@ -40,49 +40,10 @@ interface CardProps {
 }
 
 export default function HomePageView() {
-  const [trending, setTrending] = useState([]);
-  const [mingguan, setMingguan] = useState([]);
-  const { data: session, status }: { data: any; status: string } = useSession();
-  console.log(session)
-
-  const day = async () => {
-    const day = await fetchData("trending/all/day");
-    const week = await fetchData("trending/all/week");
-    const filter = day.results.filter(
-      (day: any) => !week.results.some((week: any) => week.id === day.id)
-    );
-    setTrending(day.results);
-  };
-
-  // const week = async () => {
-  //   const week = await fetchData("trending/all/week");
-  //   const filter = week.results.filter(
-  //     (item: any) => !trending.some((tren: any) => tren.id === item.id)
-  //   );
-  //   setMingguan(filter)
-  // };
-
-  useEffect(() => {
-    day();
-  }, []);
 
   return (
     <>
       <div className="min-w-full min-h-screen ">
-        <div className="relative bg-black opacity-50 h-full w-full px-5 mt-">
-          {/* <div className="grid grid-cols-10 grid-rows-10 gap-1 pt-[4rem] ">
-            {trending.map((item: any) => (
-              <Image
-                width={500}
-                height={500}
-                alt={item.name}
-                src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                key={item.id}
-                className="object-cover rounded"
-              />
-            ))}
-          </div> */}
-        </div>
         <div className="absolute top-0 left-0 h-full w-full flex items-center justify-center">
           <h1
             className={`font-bold text-7xl text-white tracking-widest relative z-10`}
@@ -97,24 +58,3 @@ export default function HomePageView() {
     </>
   );
 }
-const test = () => {
-  {
-    /* <Swiper
-            {...swiperParams}
-            className="text-white w-auto"
-          >
-            {trending &&
-              trending.map((item: any) => (
-                <SwiperSlide key={item.id} className="pt-[4rem]">
-                  <Image
-                    width={500}
-                    height={500}
-                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                    alt={item.id}
-                    className="object-cover rounded-md"
-                  />
-                </SwiperSlide>
-              ))}
-          </Swiper> */
-  }
-};
