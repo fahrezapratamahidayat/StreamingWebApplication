@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { SwiperOptions } from "swiper/types";
+import { useSession } from "next-auth/react";
 
 interface CustomSwiperOptions extends SwiperOptions {
   slidesPerColumn?: number;
@@ -40,7 +41,9 @@ interface CardProps {
 
 export default function HomePageView() {
   const [trending, setTrending] = useState([]);
-  const [mingguan,setMingguan] = useState([])
+  const [mingguan, setMingguan] = useState([]);
+  const { data: session, status }: { data: any; status: string } = useSession();
+  console.log(session)
 
   const day = async () => {
     const day = await fetchData("trending/all/day");

@@ -57,7 +57,7 @@ export default function CardPosterWatchList({ title, data }: CardProps) {
                   height={308}
                   className="rounded-xl "
                   priority
-                  src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${item.poster_path}`}
+                  src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}${item.poster_path}`}
                   alt={item.title}
                 />
               </Link>

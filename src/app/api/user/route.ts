@@ -1,17 +1,16 @@
-import { AddWatchList, GetDataUSer } from "@/lib/firebase/services";
+import { AddWatchList, getUserId } from "@/lib/firebase/services";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
-  const key = searchParams.get("key");
+  const id = searchParams.get("id");
 
-  if (email && key === process.env.NEXT_PUBLIC_API_KEY) {
+  if (id) {
     try {
-      const result = await GetDataUSer(email);
+      const result = await getUserId(id);
       return NextResponse.json(
         { status: result.status, message: result.message, user: result.user },
-        { status: result.statusCode }
+        { status: result.status }
       );
     } catch (error) {
       return NextResponse.json(

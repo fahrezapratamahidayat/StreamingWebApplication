@@ -4,6 +4,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -13,6 +14,7 @@ import {
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
+import { update } from "firebase/database";
 
 const firestore = getFirestore(app);
 
@@ -26,6 +28,7 @@ export async function RegisterUser(data: {
   username: string;
   password: string;
   email: string;
+  createdAt?: Date;
 }) {
   const q = query(
     collection(firestore, "users"),
@@ -43,6 +46,7 @@ export async function RegisterUser(data: {
       message: "Email already exists",
     };
   } else {
+    data.createdAt = new Date();
     data.password = await bcrypt.hash(data.password, 10);
     try {
       await addDoc(collection(firestore, "users"), data);
@@ -263,40 +267,134 @@ export async function RemoveWatchList(
   }
 }
 
-export async function GetDataUSer(email: string) {
-  const userQuery = query(
-    collection(firestore, "users"),
-    where("email", "==", email)
-  );
-
+export async function getUserId(id: string) {
   try {
-    const userQuerySnapshot = await getDocs(userQuery);
-    const users: any = userQuerySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const snapshot = await getDoc(doc(firestore, "users", id));
 
-    if (users.length === 0) {
+    if (!snapshot.exists()) {
       return {
-        status: false,
-        statusCode: 404,
+        results: null,
+        status: 404,
         message: "User not found",
       };
     }
 
-    const userData = users[0];
-
+    const data = snapshot.data();
     return {
-      status: true,
-      user: userData,
-      statusCode: 200,
+      status: 200,
+      message: "User found successfully",
+      user: data,
     };
   } catch (error) {
-    console.error("Error getting user by email:", error);
+    console.error("Error getting user by ID:", error);
     return {
-      status: false,
-      message: "Failed to get user by email",
-      statusCode: 500,
+      results: null,
+      status: 500,
+      message: "Failed to get user by ID",
+    };
+  }
+}
+
+export async function addMyList(
+  id: string,
+  watchlistItem: {
+    id: number;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    release_date: string;
+    media_type: string;
+  }
+) {
+  try {
+    const userDocRef = doc(firestore, "users", id);
+    const snapshot = await getDoc(userDocRef);
+    if (!snapshot.exists()) {
+      return {
+        status: 404,
+        message: "User not found",
+        results: null,
+      };
+    }
+    const userData = snapshot.data();
+    const isItemInWatchlist = userData.watchlist || [].some(
+      (item: any) => item.id === watchlistItem.id
+    );
+    if (!isItemInWatchlist) {
+      return {
+        status: 400,
+        message: "Item already exists in the watchlist",
+        results: null,
+      };
+    } else {
+      await updateDoc(userDocRef, {
+        watchlist: arrayUnion(watchlistItem),
+        updateAt: new Date(),
+      });
+      return {
+        status: 200,
+        message: "Watchlist item added successfully",
+        results: watchlistItem,
+      };
+    }
+  } catch (error) {
+    console.log("Error adding item to watchlist:", error);
+    return {
+      status: 500,
+      message: "Internal server error",
+      results: null,
+    };
+  }
+}
+
+export async function RemoveMyList(
+  id: string,
+  watchlistItem: {
+    id: number;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+    release_date: string;
+    media_type: string;
+  }
+) {
+  try {
+    const userDocRef = doc(firestore, "users", id);
+    const snapshot = await getDoc(userDocRef);
+    if (!snapshot.exists()) {
+      return {
+        status: 404,
+        message: "User not found",
+        results: null,
+      };
+    }
+    const userData = snapshot.data();
+    const isItemInWatchlist = userData.watchlist.some(
+      (item: any) => item.id === watchlistItem.id
+    );
+    if (!isItemInWatchlist) {
+      return {
+        status: 400,
+        message: "Item not found in the watchlist",
+        results: null,
+      };
+    } else {
+      await updateDoc(userDocRef, {
+        watchlist: arrayRemove(watchlistItem),
+        updateAt: new Date(),
+      });
+      return {
+        status: 200,
+        message: "Watchlist item removed successfully",
+        results: watchlistItem,
+      };
+    }
+  } catch (error) {
+    console.error("Error removing item from watchlist:", error);
+    return {
+      status: 500,
+      message: "Internal server error",
+      results: null,
     };
   }
 }

@@ -6,33 +6,16 @@ import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import CardPosterSlider from "@/components/card/CardPosterSlider";
-import { FetchingData, fetchData } from "@/services/DataApi";
+import { fetchData } from "@/services/DataApi";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { NavbarContext } from "@/context/NavbarContext";
+import ButtonWatchlist from "@/components/button/Button";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-inter",
-});
-
-const moul = Moul({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-moul",
-});
-
-const monstserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-monstserrat",
 });
 
 type TvShowProps = {
@@ -73,12 +56,8 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
   const [dataVideos, setDataVideos] = useState<TvShowProps | null>(null);
   const [credits, setCredits] = useState<TvShowProps | null>(null);
   const [similiarTv, setSimiliarTv] = useState([]);
-  const [isLoading, setIsloading] = useState(false);
-  const { data: session, status }: { data: any; status: string } =
-    useSession() || {};
-  const [userWatchList, setUserWatchList] = useState([]);
   const navbarContext = useContext(NavbarContext);
-  const { showNavbar, setShowNavbar } = navbarContext;
+  const { showNavbar } = navbarContext;
 
   const fetchDataTv = async () => {
     const data = await fetchData(`tv/${slug}`);
@@ -142,101 +121,6 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
       `/tv/${slug}/watch?=${data?.name.replace(/\s+/g, "+")}/season/1`
     );
   };
-
-  const handleAddWatchList = async (event: any) => {
-    event.preventDefault();
-    setIsloading(true);
-    const res = await fetch(
-      `/api/account/addwatchlist?key=${process.env.NEXT_PUBLIC_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          watchlistItem: {
-            id: slug,
-            title: data?.name,
-            poster_path: data?.poster_path,
-            vote_average: data?.vote_average,
-            release_date: data?.first_air_date,
-            media_type: "tv",
-          },
-          email: session?.user?.email,
-        }),
-      }
-    );
-    if (res.ok) {
-      const data = await res.json();
-      alert(`${data.message}`);
-      setIsloading(false);
-    } else {
-      const data = await res.json();
-      alert(`${data.message}`);
-      setIsloading(false);
-    }
-  };
-
-  const handleRemoveWatchList = async (event: any) => {
-    event.preventDefault();
-    setIsloading(true);
-    const res = await fetch(
-      `/api/account/removewatchlist?key=${process.env.NEXT_PUBLIC_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          watchlistItem: {
-            id: slug,
-            title: data?.name,
-            poster_path: data?.poster_path,
-            vote_average: data?.vote_average,
-            release_date: data?.first_air_date,
-            media_type: "tv",
-          },
-          email: session?.user?.email,
-        }),
-      }
-    );
-    if (res.ok) {
-      const data = await res.json();
-      alert(`${data.message}`);
-      setIsloading(false);
-    } else {
-      const data = await res.json();
-      alert(`${data.message}`);
-      setIsloading(false);
-    }
-  };
-
-  const fetchDataWatchlist = async () => {
-    try {
-      if (!session) {
-        return;
-      }
-      const email = encodeURIComponent(session.user.email);
-      const response = await fetch(
-        `/api/account/user?email=${email}&key=${process.env.NEXT_PUBLIC_API_KEY}`
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch watchlist. Status: ${response.status}`
-        );
-      }
-      const data = await response.json();
-      setUserWatchList(data.user.watchlist);
-    } catch (error) {
-      console.error("Error fetching watchlist:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataWatchlist();
-  }, [userWatchList]);
-
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
@@ -328,139 +212,7 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                         </svg>
                         Watch Now
                       </button>
-                      {userWatchList.some((item: any) => item.id === slug) ? (
-                        <button
-                          disabled={isLoading}
-                          type="button"
-                          onClick={handleRemoveWatchList}
-                          className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2 transition-all ease-in-out"
-                        >
-                          {isLoading ? (
-                            <svg
-                              width="24px"
-                              height="24px"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="me-1 animate-spin transition-all"
-                            >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              ></g>
-                              <g id="SVGRepo_iconCarrier">
-                                {" "}
-                                <path
-                                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.8273 3 17.35 4.30367 19 6.34267"
-                                  stroke="#ffff"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                ></path>{" "}
-                              </g>
-                            </svg>
-                          ) : (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              className="me-2"
-                            >
-                              <path
-                                d="M3 6H5H21"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M10 11V17"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M14 11V17"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          )}
-                          {`${isLoading ? "Removing..." : "Watchlist"} `}
-                        </button>
-                      ) : (
-                        <button
-                          disabled={isLoading}
-                          type="button"
-                          onClick={handleAddWatchList}
-                          className="text-white bg-[#828486] hover:bg-[#828486]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-semibold rounded-lg text-sm lg:px-5 lg:py-2.5  p-2 px-2 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2 transition-all ease-in-out"
-                        >
-                          {isLoading ? (
-                            <svg
-                              width="24px"
-                              height="24px"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="me-1 animate-spin transition-all"
-                            >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              ></g>
-                              <g id="SVGRepo_iconCarrier">
-                                {" "}
-                                <path
-                                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.8273 3 17.35 4.30367 19 6.34267"
-                                  stroke="#ffff"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                ></path>{" "}
-                              </g>
-                            </svg>
-                          ) : (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              className="me-2"
-                            >
-                              <path
-                                d="M12 5V19"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M5 12H19"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          )}
-                          {`${isLoading ? "Adding..." : "Watch List"} `}
-                        </button>
-                      )}
+                    <ButtonWatchlist  slug={slug} data={data} />
                     </div>
                   </div>
                 </div>
@@ -500,9 +252,9 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                 <div className="mt-[1.69rem] w-[98%] flex items-center overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
                   {videoList}
                 </div>
-                <div className="mt-[3.12rem]">
+                {/* <div className="mt-[3.12rem]">
                   <CardPosterSlider data={similiarTv} />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -13,10 +13,12 @@ export default function WatchListPage() {
       if (!session) {
         return;
       }
-      const email = session.user.email;
-      const snapshot = await fetch(`api/account/user?email=${email}&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+      const snapshot = await fetch(
+        `http://localhost:3000/api/user?id=${session.user.id}`,
+      );
       const data = await snapshot.json();
       setUserWatchList(data.user.watchlist);
+      console.log(data.user.watchlist);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -26,15 +28,16 @@ export default function WatchListPage() {
     if (status === "authenticated") {
       fetchData();
     }
-  }, [status,userWatchList]);
-  
+  }, [status]);
   return (
     <>
-    <MainLayouts>
-      <div className="mt-[5rem] mx-5">
-        <CardPosterWatchList title="Watchlist" data={userWatchList} />
-      </div>
-    </MainLayouts>
+      <MainLayouts>
+        <div className="mt-[5rem] mx-5">
+          {userWatchList && (
+            <CardPosterWatchList title="Watchlist" data={userWatchList} />
+          )}
+        </div>
+      </MainLayouts>
     </>
   );
 }
