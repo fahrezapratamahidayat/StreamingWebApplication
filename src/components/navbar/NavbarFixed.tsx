@@ -16,18 +16,23 @@ export default function NavbarFixed() {
   const overlaySidebar: any = useRef(null);
   const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
-  const { data: session, status }: { data: any; status: string } = useSession() || {};
+  const { data: status }: { data: any; status: string } =
+    useSession() || {};
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleSearchForm = (event: any) => {
     event.preventDefault();
     setSearchValue(event.target.value);
 
     if (searchValue.length > 1) {
-      router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`);
+      router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`, {
+        scroll: false,
+      });
       setToggleSearch(false);
       setSearchValue("");
     } else {
       alert("Please enter at least 2 characters");
+      setSearchValue("");
     }
   };
 
@@ -117,9 +122,9 @@ export default function NavbarFixed() {
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
         dark:border-slate-50/[0.06]  bg-transparent"
       >
-        <div className="flex items-center px-5 py-3 justify-between">
+        <div className="flex items-center px-5 py-3 ">
           <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
-          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[8.5rem]">
+          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[28rem]">
             <li
               className={`${
                 pathname === "/"
@@ -157,20 +162,12 @@ export default function NavbarFixed() {
               <Link href="/animes">Animes</Link>
             </li>
           </ul>
-          <div className="lg:flex hidden relative items-center">
+          <div className="lg:flex hidden relative items-center ml-auto">
             <form onSubmit={handleSearchForm}>
               <div className="relative w-full">
-                <input
-                  className="block p-2 w-[13rem] z-20 text-sm rounded-md border-[1px] focus:ring-blue-500  bg-gray-700 border-s-gray-700  border-gray-600 placeholder-gray-400 text-white focus:border-blue-500"
-                  placeholder="Search Movie and tv"
-                  value={searchValue}
-                  type="text"
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  required
-                />
                 <button
                   type="submit"
-                  className="absolute top-0 end-0 h-full p-2.5  text-sm font-medium text-white"
+                  className="absolute top-0 left-0 end-0 h-full p-2.5  text-sm font-medium text-white peer"
                 >
                   <svg
                     className="w-4 h-4"
@@ -189,6 +186,18 @@ export default function NavbarFixed() {
                   </svg>
                   <span className="sr-only">Search</span>
                 </button>
+                <input
+                  className={`${
+                    searchValue || isFocused ? "bg-gray-700" : "bg-transparent"
+                  } block text-white p-2 pl-[2rem] rounded-md placeholder-shown:w-0 peer-hover:bg-gray-700 peer-hover:w-[13rem] transition-all text-sm placeholder:text-sm focus:w-[13rem] focus:text-white w-[13rem] peer-focus:bg-gray-700`}
+                  placeholder="Search Movie and tv "
+                  value={searchValue}
+                  type="text"
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  required
+                />
               </div>
             </form>
           </div>
@@ -474,14 +483,14 @@ export default function NavbarFixed() {
           <div
             className={`${
               toggleSidebar ? "block" : "hidden"
-            } fixed top-0 left-0  bg-black/50  h-[99rem] w-full `}
+            } fixed top-0 left-0  bg-black/50  h-[100rem] w-full `}
           >
             <aside
               className="absolute top-0 w-[80%]  bg-black rounded shadow-md"
               ref={overlaySidebar}
             >
-              <div className="relative">
-                <div className="pb-[1rem] flex flex-col items p-5 h-full scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all">
+              <div className="relative overflow-y-auto overflow-sidebar h-[calc(100vh)] ">
+                <div className="pb-[1rem] flex flex-col items p-5 transition-all ">
                   <h2
                     className={`text-white font-semibold text-base cursor-pointer flex items-center`}
                   >
@@ -528,7 +537,7 @@ export default function NavbarFixed() {
                     className={`font-semibold mt-[0.8rem] text-[#828486] transition-all`}
                   >
                     {pathname?.startsWith("/tv")
-                      ? tvShowsSidebarItem.map((genre: any,index:number) => (
+                      ? tvShowsSidebarItem.map((genre: any, index: number) => (
                           <li
                             key={index}
                             className={`border-l border-slate-800 ${
@@ -536,7 +545,7 @@ export default function NavbarFixed() {
                             } transition-all duration-500 ease-out`}
                           >
                             <Link
-                              className={`hover:text-white mt-[0.75rem] text-sm ml-3`}
+                              className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
                               href={`/tv/genre/${
                                 genre.id
                               }?name=${genre.name.replace(/\s+/g, "+")}`}
@@ -547,7 +556,7 @@ export default function NavbarFixed() {
                           </li>
                         ))
                       : pathname?.startsWith("/movies")
-                      ? movieSidebaritem.map((genre: any,index:number) => (
+                      ? movieSidebaritem.map((genre: any, index: number) => (
                           <li
                             key={index}
                             className={`border-l border-slate-800 ${
@@ -555,7 +564,7 @@ export default function NavbarFixed() {
                             } transition-all duration-500 ease-out`}
                           >
                             <Link
-                              className={`hover:text-white mt-[0.75rem] text-sm ml-3`}
+                              className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
                               href={`/movies/genre/${
                                 genre.id
                               }?name=${genre.name.replace(/\s+/g, "+")}`}
@@ -570,44 +579,42 @@ export default function NavbarFixed() {
                   <h2 className="mt-[1.56rem] text-white font-semibold text-base">
                     Libary
                   </h2>
-                  <ul>
+                  <ul className="transition-all pl- py-2">
                     <li
-                      className="mt-[0.75rem] text-[#828486] text-sm 
-      "
+                      className={`border-l border-slate-800 transition-all duration-500 ease-out`}
                     >
-                      Recent
-                    </li>
-                    <li
-                      className="mt-[0.75rem] text-[#828486]  text-sm
-                  "
-                    >
-                      Top Rated
-                    </li>
-                    <li className="mt-[0.75rem] text-[#828486] text-sm">
-                      <Link href="/watchlist">watchlist</Link>
+                      <Link
+                        className={`hover:text-white mt-[0.75rem] text-sm pl-3 text-[#828486]
+                  }`}
+                        href="/mylist"
+                        scroll={false}
+                      >
+                        My List
+                      </Link>
                     </li>
                   </ul>
                   <h2 className="mt-[1.81rem] text-white font-semibold text-base">
                     General
                   </h2>
-                  <ul>
-                    {status && status === "authenticated" ? (
-                      <button
-                        className="mt-[0.75rem] text-sky-500 text-semibold text-sm"
-                        onClick={() => signOut()}
-                      >
-                        Logout
-                      </button>
-                    ) : (
-                      <button
-                        className="mt-[0.75rem] text-blue-500 text-sm"
-                        onClick={() => signIn()}
-                      >
-                        Login
-                      </button>
-                    )}
-                    <li className="mt-[0.75rem] text-[#828486] text-sm">
-                      Dark Mode
+                  <ul className="transition-all pl- py-2">
+                    <li
+                      className={`border-l border-slate-800 transition-all duration-500 ease-out`}
+                    >
+                      {status && status === "authenticated" ? (
+                        <button
+                          className=" text-sky-500 text-semibold text-sm pl-3"
+                          onClick={() => signOut()}
+                        >
+                          Logout
+                        </button>
+                      ) : (
+                        <button
+                          className=" text-blue-500 text-sm pl-3"
+                          onClick={() => signIn()}
+                        >
+                          Login
+                        </button>
+                      )}
                     </li>
                   </ul>
                 </div>

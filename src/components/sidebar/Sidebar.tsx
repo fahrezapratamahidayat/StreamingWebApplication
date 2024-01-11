@@ -15,7 +15,7 @@ const Sidebar = ({ items }: any) => {
   const handleClick = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
   return (
@@ -94,14 +94,16 @@ const Sidebar = ({ items }: any) => {
             )}
           </h2>
           <ul
-            className={`font-semibold ${DropDown ? "mt-[0.8rem]" : ""} text-[#828486] transition-all pl-2`}
+            className={`font-semibold ${
+              DropDown ? "mt-[0.8rem]" : ""
+            } text-[#828486] transition-all pl-2`}
           >
-            {items.map((genre: any,index:number) => (
+            {items.map((genre: any, index: number) => (
               <li
-                key={genre.index}
+                key={index}
                 className={`border-l border-slate-800 ${
-                  DropDown ? "" : "hidden"
-                } transition-all duration-500 ease-out`}
+                  DropDown ? "block" : "hidden"
+                } transition-all ease-in-out`}
               >
                 <Link
                   className={`hover:text-white mt-[0.75rem] text-sm pl-3
@@ -145,23 +147,26 @@ const Sidebar = ({ items }: any) => {
           <h2 className="mt-[1.81rem] text-white font-semibold text-base">
             General
           </h2>
-          <ul>
-            {status && status === "authenticated" ? (
-              <button
-                className="mt-[0.75rem] text-sky-500 text-semibold text-sm"
-                onClick={() => signOut()}
-              >
-                Logout
-              </button>
-            ) : (
-              <button
-                className="mt-[0.75rem] text-blue-500 text-sm"
-                onClick={() => signIn()}
-              >
-                Login
-              </button>
-            )}
-            <li className="mt-[0.75rem] text-[#828486] text-sm">Dark Mode</li>
+          <ul className="transition-all pl-2 py-2">
+            <li
+              className={`border-l border-slate-800 transition-all duration-500 ease-out`}
+            >
+              {status && status === "authenticated" ? (
+                <button
+                  className=" text-sky-500 text-semibold text-sm pl-3"
+                  onClick={() => signOut()}
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  className=" text-blue-500 text-sm pl-3"
+                  onClick={() => signIn()}
+                >
+                  Login
+                </button>
+              )}
+            </li>
           </ul>
         </div>
       </nav>
