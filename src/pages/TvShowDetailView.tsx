@@ -10,7 +10,7 @@ import { fetchData } from "@/services/DataApi";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { NavbarContext } from "@/context/NavbarContext";
-import ButtonWatchlist from "@/components/button/Button";
+import ButtonWatchlist from "@/components/button/ButtonWatchlist";
 
 const poppins = Poppins({
   subsets: ["latin"],

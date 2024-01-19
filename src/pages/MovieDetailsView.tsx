@@ -9,7 +9,7 @@ import ListDirector from "@/components/fragments/ListDirector";
 import { useRouter } from "next/navigation";
 import { NavbarContext } from "@/context/NavbarContext";
 import DetailLayouts from "@/components/layouts/DetailLayouts";
-import ButtonWatchlist from "@/components/button/Button";
+import ButtonWatchlist from "@/components/button/ButtonWatchlist";
 
 const poppins = Poppins({
   subsets: ["latin"],

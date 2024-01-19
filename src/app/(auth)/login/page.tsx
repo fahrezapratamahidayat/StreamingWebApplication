@@ -1,4 +1,8 @@
 "use client";
+import Button from "@/components/button/Button";
+import Checkbox from "@/components/input/Checkbox";
+import Input from "@/components/input/Input";
+import AuthLayouts from "@/components/layouts/AuthLayouts";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,7 +22,7 @@ export default function LoginPage(searchParams: any) {
         redirect: false,
         email: event.target.email.value,
         password: event.target.password.value,
-        callbackUrl
+        callbackUrl,
       });
       if (!res?.error) {
         push(callbackUrl);
@@ -36,7 +40,7 @@ export default function LoginPage(searchParams: any) {
   };
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center ">
+      {/* <div className="flex min-h-screen items-center justify-center ">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
           <form className="space-y-6" onSubmit={(e) => handleLogin(e)}>
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
@@ -95,7 +99,68 @@ export default function LoginPage(searchParams: any) {
             </div>
           </form>
         </div>
-      </div>
+      </div> */}
+      <AuthLayouts title="Sign in to your account">
+        <form
+          action="#"
+          className="mt-8 space-y-6"
+          method="POST"
+          onSubmit={handleLogin}
+        >
+          <input name="remember" type="hidden" value="true" />
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div className="">
+              <Input
+                id="email"
+                name="email"
+                title="Email"
+                placeholder=""
+                className=""
+                type="email"
+              />
+            </div>
+            <div className="">
+              <Input
+                id="password"
+                name="password"
+                title="Password"
+                placeholder=""
+                className=""
+                type="password"
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Checkbox
+                id="remember_me"
+                name="remember_me"
+                title="Remember me"
+              />
+            </div>
+            <div className="text-sm">
+              <Link
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+                href="#"
+              >
+                Forgot your password?
+              </Link>
+            </div>
+          </div>
+          <Button name="Sign in" type="submit" />
+        </form>
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Don&apos;t have an account?{" "}
+            <Link
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+              href="/register"
+            >
+              Sign up
+            </Link>
+          </p>
+        </div>
+      </AuthLayouts>
     </>
   );
 }

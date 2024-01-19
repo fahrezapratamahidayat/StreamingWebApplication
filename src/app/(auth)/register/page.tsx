@@ -1,15 +1,22 @@
 "use client";
 
+import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import * as Yup from "yup";
+import AuthLayouts from "@/components/layouts/AuthLayouts";
+import Input from "@/components/input/Input";
+import Checkbox from "@/components/input/Checkbox";
+import Button from "@/components/button/Button";
 
 export default function RegisterPage() {
   const { push } = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsloading] = useState(false);
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
+  const RegisterUser = async (event: any) => {
+    const { fullname, email, password, confirm_password, agree } =
+      formik.values;
     setIsloading(true);
     setError("");
     const res = await fetch("/api/auth/register", {
@@ -18,13 +25,13 @@ export default function RegisterPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fullname: event.target.fullname.value,
-        email: event.target.email.value,
-        password: event.target.password.value,
+        fullname: fullname,
+        email: email,
+        password: password,
       }),
     });
     if (res.status === 200) {
-      event.target.reset();
+      formik.resetForm();
       push("/login");
       setIsloading(false);
     } else {
@@ -32,82 +39,142 @@ export default function RegisterPage() {
       setError("email already exist");
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      fullname: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+      agree: false,
+    },
+    onSubmit: (values) => {
+      console.log(values)
+    },
+    validationSchema: Yup.object({
+      fullname: Yup.string().required("Fullname is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required")
+        .email(),
+      password: Yup.string()
+        .required("Password is required")
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+          "Passwords must include uppercase, lowercase, numbers, and special characters."
+        ),
+      confirm_password: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Passwords must match"
+      ),
+    }),
+  });
+  const handleForm = (event: any) => {
+    const { target } = event;
+    formik.setFieldValue(target.name, target.value);
+  };
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center flex-col">
-        <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-          {error !== "" && <div className="text-red-600">{error}</div>}
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Sign Up to our platform
-            </h3>
-            <div>
-              <label
-                htmlFor="fullname"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
-                Your Name
-              </label>
-              <input
-                type="text"
-                name="fullname"
+      <AuthLayouts title="Create Your account">
+        <form
+          action="#"
+          className="mt-8 space-y-6 transition-all"
+          method="POST"
+          onSubmit={formik.handleSubmit}
+        >
+          <div className="flex flex-col w-full">
+            <div className="">
+              <Input
                 id="fullname"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="john doe"
-                required
+                name="fullname"
+                onChange={handleForm}
+                title="Full name"
+                placeholder=""
+                className=""
+                type="text"
               />
+              <div className="w-full text-sm transition-transform duration-75 ease-in-out">
+                <p className="text-red-500">{formik.errors.fullname}</p>
+              </div>
             </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
-                Your email
-              </label>
-              <input
-                type="email"
-                name="email"
+            <div className="">
+              <Input
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@company.com"
-                required
+                name="email"
+                onChange={handleForm}
+                title="Email"
+                placeholder=""
+                className=""
+                type="email"
               />
+              <div className="w-full pl-3 text-sm">
+                <p className="text-red-500">{formik.errors.email}</p>
+              </div>
             </div>
-            <div>
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
-                Your password
-              </label>
-              <input
-                type="password"
-                name="password"
+            <div className="">
+              <Input
                 id="password"
-                placeholder="••••••••"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                required
+                name="password"
+                onChange={handleForm}
+                title="Password"
+                placeholder=""
+                className={`${
+                  formik.errors.password
+                    ? `invalid:border-red-500 invalid:text-red-500
+                    focus:invalid:border-red-500 focus:invalid:ring-red-500 `
+                    : "focus:border-blue-800 focus:outline-none focus:ring-0"
+                }`}
+                type="password"
+              />
+              <div className="w-full pl-3 text-sm">
+                <p className="text-red-500 ">{formik.errors.password}</p>
+              </div>
+            </div>
+            <div className="">
+              <Input
+                id="confirm_password"
+                name="confirm_password"
+                onChange={handleForm}
+                title="Confirm Password"
+                placeholder=""
+                className=""
+                type="password"
+              />
+              <div className="w-full pl-3 text-sm">
+                <p className="text-red-500 ">
+                  {formik.errors.confirm_password}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Checkbox
+                id="agree"
+                name="agree"
+                title="I agree to the terms and conditions"
+                onChange={handleForm}
               />
             </div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          </div>
+          {isLoading ? (
+            <Button name="Loading..." type="submit" />
+          ) : (
+            <Button name="Sign up" type="submit" />
+          )}
+        </form>
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{" "}
+            <Link
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+              href="/login"
             >
-              {isLoading ? "Loading" : "Sign up account"}
-            </button>
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-              have an account?{" "}
-              <Link
-                href="/login"
-                className="text-blue-700 hover:underline dark:text-blue-500"
-              >
-                Sign in account
-              </Link>
-            </div>
-          </form>
+              Sign in
+            </Link>
+          </p>
         </div>
-      </div>
+      </AuthLayouts>
     </>
   );
 }
