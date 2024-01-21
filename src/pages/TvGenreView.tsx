@@ -11,17 +11,6 @@ import { Children, useContext, useEffect, useState } from "react";
 export default function TvGenreView({params, children} : {params: string, children: React.ReactNode} ) {
   const navbarContext = useContext(NavbarContext);
   const { showNavbar, setShowNavbar } = navbarContext;
-  // const [movie, setMovies] = useState<any>([]);
-  // const fetchDataAsync = async () => {
-  //   const data = await fetchData(
-  //     `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${10759}`
-  //   );
-  //   console.log(data.results)
-  // };
-
-  // useEffect(() => {
-  //   fetchDataAsync();
-  // }, []);
 
   return (
     <>

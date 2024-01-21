@@ -1,10 +1,10 @@
 "use client";
 import CardPoster from "@/components/card/CardPosterMovies";
-import Sidebar from "@/components/Sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import { fetchData } from "@/services/DataApi";
 import { useContext, useEffect, useState, } from "react";
 import { NavbarContext } from "@/context/NavbarContext";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 type Movies = {
     id: number;
@@ -19,16 +19,6 @@ type Movies = {
 export default function MoviesGenreView({params,children} : {params:string,children:React.ReactNode}) {
   const navbarContext = useContext(NavbarContext);
   const { showNavbar, setShowNavbar } = navbarContext;
-  // const [movies,setMovies] = useState<any>([]);
-
-  // const fetchDataAsync = async () => {
-  //   const data = await fetchData(`discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${params}`);
-  //   setMovies(data.results);
-  // };
-
-  // useEffect(() => {
-  //   fetchDataAsync();
-  // },[])
 
   let title;
   if (params === "28") {
