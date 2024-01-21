@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import DetailViews from "@/pages/MovieDetailsView";
 import { movieSidebaritem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";

@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import { Metadata } from "next";
 import { fetchMovies } from "../action";
 import { movieSidebaritem} from "@/utils/data";

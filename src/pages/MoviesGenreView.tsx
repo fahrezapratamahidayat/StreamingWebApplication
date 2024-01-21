@@ -4,7 +4,7 @@ import { movieSidebaritem } from "@/utils/data";
 import { fetchData } from "@/services/DataApi";
 import { useContext, useEffect, useState, } from "react";
 import { NavbarContext } from "@/context/NavbarContext";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 type Movies = {
     id: number;

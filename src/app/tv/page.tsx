@@ -1,5 +1,5 @@
 import CardLayouts from "@/components/layouts/CardLayout";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata } from "next";
 import { fetchTvShow } from "../action";
