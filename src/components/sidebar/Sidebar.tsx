@@ -18,6 +18,7 @@ const Sidebar = ({ items }: any) => {
       behavior: "smooth",
     });
   };
+  
   return (
     <>
       <div
