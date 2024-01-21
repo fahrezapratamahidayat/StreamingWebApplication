@@ -1,5 +1,5 @@
 "use client";
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
@@ -45,8 +45,8 @@ export default function MoviesPageView() {
 
 
   const Datas = async () => {
-    const tes = await fetchMovies(1, endpoint);
-    setData(tes);
+    const res = await fetchMovies(1, endpoint);
+    setData(res);
   };
 
   useEffect(() => {

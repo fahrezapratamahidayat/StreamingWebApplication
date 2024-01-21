@@ -16,3 +16,17 @@ export type TvShowProps = {
   vote_average: number;
   first_air_date: string;
 };
+
+export type CardSearchProps = {
+  id: number;
+  title: string;
+  original_name: string;
+  original_title: string;
+  name: string;
+  overview: string;
+  poster_path: string;
+  vote_average: number;
+  first_air_date: string;
+  release_date: string;
+  media_type: string;
+};

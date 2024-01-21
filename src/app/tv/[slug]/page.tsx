@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import TvShowDetailView from "@/pages/TvShowDetailView";
 import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";

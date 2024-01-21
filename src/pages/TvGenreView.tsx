@@ -2,7 +2,7 @@
 import LoadMore from "@/components/button/LoadMore";
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
 import CardLayouts from "@/components/layouts/CardLayout";
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { NavbarContext } from "@/context/NavbarContext";
 import { FetchingData, fetchData} from "@/services/DataApi";
 import { tvShowsSidebarItem } from "@/utils/data";

@@ -20,7 +20,7 @@ const variants = {
   visible: { opacity: 1 },
 };
 
-export default function CardPosterTvShows({ tv,index }: CardProps) {
+export default function CardPosterTvShows({ tv, index }: CardProps) {
   return (
     <>
       <MotionDiv
@@ -29,25 +29,33 @@ export default function CardPosterTvShows({ tv,index }: CardProps) {
         animate="visible"
         transition={{ duration: 0.5, delay: index * 0.25, ease: "easeInOut" }}
         viewport={{ amount: 0 }}
-        className="flex flex-col justify-center items-start gap-[5px]"
+        className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0 w-fit"
         key={tv.id}
       >
         <Link
           href={`/tv/${tv.id}`}
           scroll={false}
-          className="cursor-pointer transition hover:scale-105 w-auto h-auto"
+          // className="cursor-pointer  transition-transform ease-in-out duration-100 hover:scale-105 w-auto h-auto"
         >
-          <Image
-            width={124} // default 157
-            height={170} // default 308
-            className="rounded"
-            priority
-            src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${tv.poster_path}`}
-            alt={tv.name}
-          />
+          <MotionDiv
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <Image
+              width={122} // default 157
+              height={170} // default 308
+              className="rounded-md"
+              priority
+              src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${tv.poster_path}`}
+              alt={tv.name}
+            />
+          </MotionDiv>
         </Link>
         <p className="text-white text-sm">
-          {tv.name.length > 14 ? tv.name.substr(0, 14) + "..." : tv.name}
+          {tv.name.length > 13 ? tv.name.substr(0, 13) + "..." : tv.name}
         </p>
         <div className="flex items-center justify-between w-full">
           <p

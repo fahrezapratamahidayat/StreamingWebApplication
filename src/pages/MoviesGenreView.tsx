@@ -1,6 +1,6 @@
 "use client";
 import CardPoster from "@/components/card/CardPosterMovies";
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import { fetchData } from "@/services/DataApi";
 import { useContext, useEffect, useState, } from "react";

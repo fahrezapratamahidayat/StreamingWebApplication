@@ -20,13 +20,8 @@ export default function CardShowMoreLayouts({
           showNavbar ? "ease-in" : "ease-out"
         }`}
       >
-        <h2 className="text-white font-semibold text-2xl lg:mx-0 mx-2">
-          {title}
-        </h2>
         <div
-          className={`grid ${
-            showNavbar ? "lg:grid-cols-7" : "lg:grid-cols-9"
-          } grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]`}
+          className={`lg:flex flex-wrap grid md:flex grid-cols-3 lg:gap-1  md:gap-1 mt-[18px] min-[400px]:flex max-[767px]:flex min-[400px]:gap-1 max-[767px]:gap-1 min-[400px]:ml-4 lg:ml-0 `}
         >
           {children}
         </div>

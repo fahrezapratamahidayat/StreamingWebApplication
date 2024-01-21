@@ -207,7 +207,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
             <h2 className="text-white  font-semibold text-[1rem] mt-[5.12rem]">
               Trailer And Clips
             </h2>
-            <div className="mt-[1.69rem] lg:w-[60rem] w-[22rem]  flex items-center gap-[2.44rem] overflow-x-auto overflow-video">
+            <div className="mt-[1.69rem] w-[98%] flex items-center overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900">
               {videoList}
             </div>
           </div>

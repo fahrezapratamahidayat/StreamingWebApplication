@@ -28,29 +28,37 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
         animate="visible"
         transition={{ duration: 0.5, delay: index * 0.25, ease: "easeInOut" }}
         viewport={{ amount: 0 }}
-        className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0"
+        className="flex flex-col justify-center items-start gap-[5px] mt-2 lg:mt-0 w-fit"
         key={movie.id}
       >
         <Link
           href={`/movies/${movie.id}`}
           scroll={false}
-          className="cursor-pointer  transition-transform ease-in-out duration-100 hover:scale-105 w-auto h-auto"
+          // className="cursor-pointer  transition-transform ease-in-out duration-100 hover:scale-105 w-auto h-auto"
         >
-          <Image
-            width={122}
-            height={170}
-            priority
-            className="rounded-md"
-            src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
-            alt={movie.title}
-          />
+          <MotionDiv
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <Image
+              width={122}
+              height={170}
+              priority
+              className="rounded-md"
+              src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
+              alt={movie.title}
+            />
+          </MotionDiv>
         </Link>
-        <p className="text-white text-sm">
+        <p className="text-white text-sm ">
           {movie.title && movie.title.length > 13
             ? movie.title.substr(0, 13) + "..."
             : movie.title}
         </p>
-        <div className="flex items-center justify-between w-full ">
+        <div className="flex items-center justify-between w-full">
           <p
             className={`${monstserrat.variable} px-[2px] py-[1px]  rounded-[0.1875rem] font-monstserrat text-sm text-slate-400 `}
           >

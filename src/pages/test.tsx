@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter, Montserrat, Moul, Poppins } from "next/font/google";
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import Link from "next/link";
 
 const poppins = Poppins({

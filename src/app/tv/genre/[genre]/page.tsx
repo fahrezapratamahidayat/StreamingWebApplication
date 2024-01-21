@@ -24,10 +24,10 @@ export default async function tvGenrePage(props: genrePageProps) {
   return (
     <>
       <TvGenreView params={title}>
-        <CardLayouts title={title} className="lg:mr-[1.2rem]">
+        <CardLayouts title={title}>
           {TvShowGenre}
         </CardLayouts>
-        <LoadMore fetchData={fetchGenreTv} endpoint="" />
+        {TvShowGenre && <LoadMore fetchData={fetchGenreTv} endpoint={params.genre} />}
       </TvGenreView>
     </>
   );

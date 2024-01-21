@@ -43,7 +43,7 @@ const Sidebar = ({ items }: any) => {
           </svg>
         </button>
       </div>
-      <nav
+      <aside
         className={`lg:block hidden ${
           showNavbar ? "w-[250px]" : "fixed top-0 -left-[13rem]"
         } pt-[5rem] fixed h-full lg:block transition-all ease-in-out`}
@@ -169,7 +169,7 @@ const Sidebar = ({ items }: any) => {
             </li>
           </ul>
         </div>
-      </nav>
+      </aside>
     </>
   );
 };

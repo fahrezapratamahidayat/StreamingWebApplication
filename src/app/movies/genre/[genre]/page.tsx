@@ -1,6 +1,8 @@
 import { fetchGenreMovies } from "@/app/action";
+import Loading from "@/app/tv/loading";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
+import SkeletonSidebar from "@/components/skeleton/SkeletonSidebar";
 import MoviesGenreView from "@/pages/MoviesGenreView";
 import { movieTitleGenre } from "@/utils/data";
 

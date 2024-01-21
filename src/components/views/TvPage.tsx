@@ -1,10 +1,10 @@
 "use client";
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import PagesLayouts from "@/components/layouts/PagesLayouts";
-import { fetchMovies, fetchTvShow, tes } from "@/app/action";
+import { fetchTvShow, } from "@/app/action";
 import { useEffect, useState } from "react";
 
 export default function TvPageView() {
@@ -37,14 +37,14 @@ export default function TvPageView() {
         setTitle("Top Rated");
         break;
       default:
-        setEndpoint("popular"); // Default to "On The Air" if none of the cases match
+        setEndpoint("popular"); 
         setTitle("Popular");
     }
   };
 
   const Datas = async () => {
-    const tes = await fetchTvShow(1, endpoint);
-    setData(tes);
+    const res = await fetchTvShow(1, endpoint);
+    setData(res);
   };
 
   useEffect(() => {

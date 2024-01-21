@@ -23,7 +23,7 @@ const config: Config = {
         'height': 'height',
       },
       screens: {
-        'sm-md' : "1366px"
+        'macbox-air' : "1280px",
       },
     },
   },

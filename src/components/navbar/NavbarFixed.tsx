@@ -16,8 +16,7 @@ export default function NavbarFixed() {
   const overlaySidebar: any = useRef(null);
   const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
-  const { data: status }: { data: any; status: string } =
-    useSession() || {};
+  const { data: status }: { data: any; status: string } = useSession() || {};
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSearchForm = (event: any) => {
@@ -122,84 +121,88 @@ export default function NavbarFixed() {
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
         dark:border-slate-50/[0.06]  bg-transparent"
       >
-        <div className="flex items-center px-5 py-3 ">
-          <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
-          <ul className="lg:flex hidden items-center gap-[1.62rem] ml-[28rem]">
-            <li
-              className={`${
-                pathname === "/"
-                  ? "text-white border-b border-blue-500"
-                  : "text-[#939393]"
-              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
-            >
-              <Link href="/">Home</Link>
-            </li>
-            <li
-              className={`${
-                pathname?.startsWith("/movies")
-                  ? "text-white border-b border-blue-500"
-                  : "text-[#939393]"
-              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
-            >
-              <Link href="/movies">Movies</Link>
-            </li>
-            <li
-              className={`${
-                pathname?.startsWith("/tv")
-                  ? "text-white border-b border-blue-500"
-                  : "text-[#939393]"
-              } font-bold text-base hover:text-white cursor-pointer hover:border-b border-blue-500`}
-            >
-              <Link href="/tv">Tv Shows</Link>
-            </li>
-            <li
-              className={`${
-                pathname === "/animes"
-                  ? "text-white border-b border-blue-500"
-                  : "text-[#939393]"
-              } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
-            >
-              <Link href="/animes">Animes</Link>
-            </li>
-          </ul>
-          <div className="lg:flex hidden relative items-center ml-auto">
-            <form onSubmit={handleSearchForm}>
-              <div className="relative w-full">
-                <button
-                  type="submit"
-                  className="absolute top-0 left-0 end-0 h-full p-2.5  text-sm font-medium text-white peer"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
+        <div className="flex items-center px-5 py-3 w-full">
+          <div className="w-full flex items-center justify-between">
+            <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
+            <ul className="lg:flex hidden items-center gap-[1.62rem]">
+              <li
+                className={`${
+                  pathname === "/"
+                    ? "text-white border-b border-blue-500"
+                    : "text-[#939393]"
+                } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
+              >
+                <Link href="/">Home</Link>
+              </li>
+              <li
+                className={`${
+                  pathname?.startsWith("/movies")
+                    ? "text-white border-b border-blue-500"
+                    : "text-[#939393]"
+                } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer `}
+              >
+                <Link href="/movies">Movies</Link>
+              </li>
+              <li
+                className={`${
+                  pathname?.startsWith("/tv")
+                    ? "text-white border-b border-blue-500"
+                    : "text-[#939393]"
+                } font-bold text-base hover:text-white cursor-pointer hover:border-b border-blue-500`}
+              >
+                <Link href="/tv">Tv Shows</Link>
+              </li>
+              <li
+                className={`${
+                  pathname === "/animes"
+                    ? "text-white border-b border-blue-500"
+                    : "text-[#939393]"
+                } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
+              >
+                <Link href="/animes">Animes</Link>
+              </li>
+            </ul>
+            <div className="lg:flex hidden relative items-center">
+              <form onSubmit={handleSearchForm}>
+                <div className="relative w-full">
+                  <button
+                    type="submit"
+                    className="absolute top-0 left-0 end-0 h-full p-2.5  text-sm font-medium text-white peer"
                   >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                  <span className="sr-only">Search</span>
-                </button>
-                <input
-                  className={`${
-                    searchValue || isFocused ? "bg-gray-700" : "bg-transparent"
-                  } block text-white p-2 pl-[2rem] rounded-md placeholder-shown:w-0 peer-hover:bg-gray-700 peer-hover:w-[13rem] transition-all text-sm placeholder:text-sm focus:w-[13rem] focus:text-white w-[13rem] peer-focus:bg-gray-700`}
-                  placeholder="Search Movie and tv "
-                  value={searchValue}
-                  type="text"
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  required
-                />
-              </div>
-            </form>
+                    <svg
+                      className="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                    <span className="sr-only">Search</span>
+                  </button>
+                  <input
+                    className={`${
+                      searchValue || isFocused
+                        ? "bg-gray-700"
+                        : "bg-transparent"
+                    } block text-white p-2 pl-[2rem] rounded-md placeholder-shown:w-0 peer-hover:bg-gray-700 peer-hover:w-[13rem] transition-all text-sm placeholder:text-sm focus:w-[13rem] focus:text-white w-[13rem] peer-focus:bg-gray-700`}
+                    placeholder="Search Movie and tv "
+                    value={searchValue}
+                    type="text"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onChange={(event) => setSearchValue(event.target.value)}
+                    required
+                  />
+                </div>
+              </form>
+            </div>
           </div>
           <div className="lg:hidden flex items-center ml-auto pr-2">
             <div className="relative">

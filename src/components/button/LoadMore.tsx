@@ -43,7 +43,7 @@ export default function LoadMore({ fetchData, endpoint }: LoadMoreProps) {
 
   return (
     <>
-      <CardShowMoreLayouts className="lg:mr-[1.2rem]">
+      <CardShowMoreLayouts className="">
         {items}
       </CardShowMoreLayouts>
       <div
