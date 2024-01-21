@@ -1,7 +1,6 @@
 import MainLayouts from "@/components/layouts/MainLayouts";
-import PageLayouts from "@/components/layouts/PageLayouts";
-import SearchPageView from "@/pages/SearchPageView";
-import Loading from "./loading";
+import SearchPageView from "@/components/views/SearchPage";
+
 
 export const metadata = {
   title: "Search",

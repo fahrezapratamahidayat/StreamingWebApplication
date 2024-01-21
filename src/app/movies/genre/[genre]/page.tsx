@@ -1,10 +1,9 @@
 import { fetchGenreMovies } from "@/app/action";
-import Loading from "@/app/tv/loading";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import SkeletonSidebar from "@/components/skeleton/SkeletonSidebar";
-import MoviesGenreView from "@/pages/MoviesGenreView";
-import { movieTitleGenre } from "@/utils/data";
+import PageLayout from "@/components/layouts/PageLayout";
+import Sidebar from "@/components/sidebar/Sidebar";
+import { movieSidebaritem, movieTitleGenre } from "@/utils/data";
 
 type genrePageProps = {
   params: {
@@ -24,12 +23,13 @@ export default async function GenrePage(props: genrePageProps) {
   
   return (
     <>
-    <MoviesGenreView params={params.genre}>
+    <Sidebar items={movieSidebaritem} />
+    <PageLayout>
       <CardLayouts title={title}>
         {MoviesGenre}
       </CardLayouts>
       <LoadMore fetchData={fetchGenreMovies} endpoint="" />
-    </MoviesGenreView>
+    </PageLayout>
     </>
   );
 }

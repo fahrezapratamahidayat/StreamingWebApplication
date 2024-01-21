@@ -2,7 +2,7 @@
 import { NavbarContext } from "@/context/NavbarContext";
 import {  useContext } from "react";
 
-export default function PagesLayouts({ children }: { children: React.ReactNode }) {
+export default function PageLayout({ children }: { children: React.ReactNode }) {
   const navbarContext = useContext(NavbarContext);
   const { showNavbar } = navbarContext;
   return (

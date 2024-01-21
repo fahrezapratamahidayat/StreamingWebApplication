@@ -252,9 +252,6 @@ export default function TvShowDetailView({ original_name, id, slug }: any) {
                 <div className="mt-[1.69rem] w-[98%] flex items-center overflow-x-auto overflow-video scrollbar-rounded-lg scrollbar-thin scrollbar-track-gray-700 scrollbar-thumb-gray-900 ">
                   {videoList}
                 </div>
-                {/* <div className="mt-[3.12rem]">
-                  <CardPosterSlider data={similiarTv} />
-                </div> */}
               </div>
             </div>
           </div>

@@ -1,10 +1,9 @@
 import { fetchGenreTv } from "@/app/action";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import TvGenreView from "@/pages/TvGenreView";
-import { tvTitleGenre } from "@/utils/data";
-import { useSearchParams } from "next/navigation";
-
+import PageLayout from "@/components/layouts/PageLayout";
+import Sidebar from "@/components/sidebar/Sidebar";
+import { tvShowsSidebarItem, tvTitleGenre } from "@/utils/data";
 type genrePageProps = {
   params: {
     genre: string;
@@ -23,12 +22,13 @@ export default async function tvGenrePage(props: genrePageProps) {
 
   return (
     <>
-      <TvGenreView params={title}>
+    <Sidebar items={tvShowsSidebarItem} />
+      <PageLayout>
         <CardLayouts title={title}>
           {TvShowGenre}
         </CardLayouts>
         {TvShowGenre && <LoadMore fetchData={fetchGenreTv} endpoint={params.genre} />}
-      </TvGenreView>
+      </PageLayout>
     </>
   );
 }

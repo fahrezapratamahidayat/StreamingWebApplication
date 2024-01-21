@@ -4,6 +4,8 @@ import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { MovieProps } from "@/types/CardProps";
+import { useContext } from "react";
+import { NavbarContext } from "@/context/NavbarContext";
 
 const monstserrat = Montserrat({
   subsets: ["latin"],
@@ -20,6 +22,9 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
+
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar } = navbarContext;
   return (
     <>
       <MotionDiv
@@ -44,7 +49,7 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Image
-              width={122}
+              width={showNavbar ? 122 : 123}
               height={170}
               priority
               className="rounded-md"

@@ -8,8 +8,8 @@ import CardVideo from "@/components/card/cardVideo";
 import ListDirector from "@/components/fragments/ListDirector";
 import { useRouter } from "next/navigation";
 import { NavbarContext } from "@/context/NavbarContext";
-import DetailLayouts from "@/components/layouts/DetailLayouts";
 import ButtonWatchlist from "@/components/button/ButtonWatchlist";
+import PageLayout from "@/components/layouts/PageLayout";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -100,7 +100,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
   return (
     <>
       {data && credits && dataVideos && (
-        <DetailLayouts>
+        <PageLayout>
           <div className="relative rounded-[0.65rem] lg:mx-0 w-full lg:pr-[1.3rem]">
             <div className="w-full">
               <Image
@@ -211,7 +211,7 @@ export default function MovieDetailView({ slug }: { slug: string }) {
               {videoList}
             </div>
           </div>
-        </DetailLayouts>
+        </PageLayout>
       )}
     </>
   );

@@ -47,10 +47,10 @@ const Sidebar = ({ items }: any) => {
       <aside
         className={`lg:block hidden ${
           showNavbar ? "w-[250px]" : "fixed top-0 -left-[13rem]"
-        } pt-[5rem] fixed h-full lg:block transition-all ease-in-out`}
+        } pt-[5rem] fixed h-full lg:block transition-all ease-in-out z-50`}
       >
         <div
-          className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out`}
+          className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out bg-black`}
         >
           <h2
             className={`text-white font-semibold text-base cursor-pointer flex items-center`}

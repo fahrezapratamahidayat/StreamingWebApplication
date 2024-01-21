@@ -1,5 +1,5 @@
 import Sidebar from "@/components/sidebar/Sidebar";
-import DetailViews from "@/pages/MovieDetailsView";
+import DetailViews from "@/components/views/MovieDetailsView";
 import { movieSidebaritem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";
 import { fetchData } from "@/services/DataApi";

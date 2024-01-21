@@ -1,11 +1,12 @@
 "use client";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { movieSidebaritem } from "@/utils/data";
+import {tvShowsSidebarItem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import PagesLayouts from "@/components/layouts/PagesLayouts";
 import { fetchTvShow, } from "@/app/action";
 import { useEffect, useState } from "react";
+import PagesLayout from "../layouts/PageLayout";
+import PageLayout from "../layouts/PageLayout";
 
 export default function TvPageView() {
   const [data, setData] = useState();
@@ -53,9 +54,9 @@ export default function TvPageView() {
 
   return (
     <>
-      <Sidebar items={movieSidebaritem} />
+      <Sidebar items={tvShowsSidebarItem} />
       {data && (
-        <PagesLayouts>
+        <PageLayout>
           <CardLayouts
             title={title}
             options={valueSelect}
@@ -65,7 +66,7 @@ export default function TvPageView() {
             {data}
           </CardLayouts>
           <LoadMore fetchData={fetchTvShow} endpoint={endpoint} />
-        </PagesLayouts>
+        </PageLayout>
       )}
     </>
   );

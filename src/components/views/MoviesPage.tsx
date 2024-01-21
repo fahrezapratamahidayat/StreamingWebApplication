@@ -3,9 +3,10 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import PagesLayouts from "@/components/layouts/PagesLayouts";
 import { fetchMovies } from "@/app/action";
 import { useEffect, useState } from "react";
+import PageLayout from "../layouts/PageLayout";
+import Link from "next/link";
 
 export default function MoviesPageView() {
   const [data, setData] = useState();
@@ -43,7 +44,6 @@ export default function MoviesPageView() {
     }
   };
 
-
   const Datas = async () => {
     const res = await fetchMovies(1, endpoint);
     setData(res);
@@ -57,16 +57,17 @@ export default function MoviesPageView() {
     <>
       <Sidebar items={movieSidebaritem} />
       {data && (
-        <PagesLayouts>
-          <CardLayouts title={title}
-          options={valueSelect}
-          selectedOption={endpoint}
-          onSelectChange={handleSelectChange}
+        <PageLayout>
+          <CardLayouts
+            title={title}
+            options={valueSelect}
+            selectedOption={endpoint}
+            onSelectChange={handleSelectChange}
           >
             {data}
           </CardLayouts>
           <LoadMore fetchData={fetchMovies} endpoint={endpoint} />
-        </PagesLayouts>
+        </PageLayout>
       )}
     </>
   );

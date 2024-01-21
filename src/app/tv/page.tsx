@@ -1,10 +1,5 @@
-import CardLayouts from "@/components/layouts/CardLayout";
-import Sidebar from "@/components/sidebar/Sidebar";
-import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata } from "next";
 import { fetchTvShow } from "../action";
-import LoadMore from "@/components/button/LoadMore";
-import PagesLayouts from "@/components/layouts/PagesLayouts";
 import TvPageView from "@/components/views/TvPage";
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import MainLayouts from "@/components/layouts/MainLayouts";
-import TvWatchPageView from "@/pages/TvShowWatchPage";
+import TvWatchPageView from "@/components/views/TvShowWatchPage";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
 

@@ -1,4 +1,4 @@
-import PageLayouts from "@/components/layouts/PageLayouts";
+import PageLayout from "@/components/layouts/PageLayout";
 import SkeletonCard from "@/components/skeleton/SkeletonCard";
 import SkeletonSidebar from "@/components/skeleton/SkeletonSidebar";
 
@@ -6,9 +6,9 @@ export default function Loading() {
   return (
     <>
     <SkeletonSidebar />
-      <PageLayouts>
+      <PageLayout>
         <SkeletonCard dummyArray={20} />
-      </PageLayouts>
+      </PageLayout>
     </>
   );
 }

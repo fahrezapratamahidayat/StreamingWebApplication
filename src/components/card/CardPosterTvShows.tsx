@@ -1,8 +1,11 @@
+"use client";
 import { TvShowProps } from "@/types/CardProps";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { MotionDiv } from "../motion/FramerMotion";
+import { useContext } from "react";
+import { NavbarContext } from "@/context/NavbarContext";
 
 const monstserrat = Montserrat({
   subsets: ["latin"],
@@ -21,6 +24,8 @@ const variants = {
 };
 
 export default function CardPosterTvShows({ tv, index }: CardProps) {
+  const navbarContext = useContext(NavbarContext);
+  const { showNavbar } = navbarContext;
   return (
     <>
       <MotionDiv
@@ -45,7 +50,7 @@ export default function CardPosterTvShows({ tv, index }: CardProps) {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Image
-              width={122} // default 157
+              width={showNavbar ? 122 : 123} // default 157
               height={170} // default 308
               className="rounded-md"
               priority

@@ -1,5 +1,5 @@
-import MainLayouts from "@/components/layouts/MainLayouts";
-import HomePageView from "@/pages/HomePageView";
+
+import HomePageView from "@/components/views/HomePage";
 import { Metadata } from "next";
 
 export const metadata : Metadata = {
