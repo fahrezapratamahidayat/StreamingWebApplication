@@ -95,7 +95,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="lg:mx-32 mx-5 border-t border-white opacity-30 mt-32 -z-20"></div>
-        <div className="w-full flex lg:flex-wrap gap-5 lg:gap-0 justify-between lg:items-center lg:px-32 mt-10 pb-10">
+        <div className="w-full flex lg:flex-wrap `gap-5 lg:gap-0 justify-between lg:items-center lg:px-32 mt-10 pb-10">
           <h1 className="text-white text-5xl text-bold ">Santai</h1>
           <p className="text-slate-400 text-sm font-normal">
             © 2023 Lift Media. All Rights Reserved.{" "}

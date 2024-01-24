@@ -1,12 +1,13 @@
 "use client";
 import Sidebar from "@/components/sidebar/Sidebar";
-import {tvShowsSidebarItem } from "@/utils/data";
+import { tvShowsSidebarItem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import { fetchTvShow, } from "@/app/actions";
+import { fetchTvShow } from "@/app/actions";
 import { useEffect, useState } from "react";
 import PagesLayout from "../layouts/PageLayout";
 import PageLayout from "../layouts/PageLayout";
+import Footer from "../footer/Footer";
 
 export default function TvPageView() {
   const [data, setData] = useState();
@@ -38,7 +39,7 @@ export default function TvPageView() {
         setTitle("Top Rated");
         break;
       default:
-        setEndpoint("popular"); 
+        setEndpoint("popular");
         setTitle("Popular");
     }
   };
@@ -56,17 +57,20 @@ export default function TvPageView() {
     <>
       <Sidebar items={tvShowsSidebarItem} />
       {data && (
-        <PageLayout>
-          <CardLayouts
-            title={title}
-            options={valueSelect}
-            selectedOption={endpoint}
-            onSelectChange={handleSelectChange}
-          >
-            {data}
-          </CardLayouts>
-          <LoadMore fetchData={fetchTvShow} endpoint={endpoint} />
-        </PageLayout>
+        <>
+          <PageLayout>
+            <CardLayouts
+              title={title}
+              options={valueSelect}
+              selectedOption={endpoint}
+              onSelectChange={handleSelectChange}
+            >
+              {data}
+            </CardLayouts>
+            <LoadMore fetchData={fetchTvShow} endpoint={endpoint} />
+          </PageLayout>
+          <Footer />
+        </>
       )}
     </>
   );

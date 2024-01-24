@@ -20,7 +20,6 @@ export default async function TvShowsPage() {
         <LoadMore fetchData={fetchTvShow} endpoint="popular"/>
       </PagesLayouts> */}
       <TvPageView />
-      <Footer />
     </>
   );
 }

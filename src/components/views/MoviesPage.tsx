@@ -9,7 +9,7 @@ import PageLayout from "../layouts/PageLayout";
 import Link from "next/link";
 import Footer from "../footer/Footer";
 
-export default function MoviesPageView() {
+export default function MoviesPageView({ items }: any) {
   const [data, setData] = useState();
   const [valueSelect] = useState([
     { value: "Now_Playing", label: "Now Playing" },
@@ -56,9 +56,9 @@ export default function MoviesPageView() {
 
   return (
     <>
-      <Sidebar items={movieSidebaritem} />
       {data && (
         <>
+          <Sidebar items={movieSidebaritem} />
           <PageLayout>
             <CardLayouts
               title={title}
