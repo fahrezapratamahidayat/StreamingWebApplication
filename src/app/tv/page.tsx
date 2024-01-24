@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import { fetchTvShow } from "../action";
+import { fetchTvShow } from "../actions";
 import TvPageView from "@/components/views/TvPage";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Tv Shows",
@@ -19,6 +20,7 @@ export default async function TvShowsPage() {
         <LoadMore fetchData={fetchTvShow} endpoint="popular"/>
       </PagesLayouts> */}
       <TvPageView />
+      <Footer />
     </>
   );
 }

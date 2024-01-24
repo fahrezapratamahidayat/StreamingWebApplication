@@ -1,4 +1,4 @@
-import { fetchGenreTv } from "@/app/action";
+import { fetchGenreTv } from "@/app/actions";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import PageLayout from "@/components/layouts/PageLayout";

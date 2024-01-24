@@ -1,5 +1,5 @@
 import Sidebar from "@/components/sidebar/Sidebar";
-import TvShowDetailView from "@/app/tv/TvShowDetailView";
+import TvShowDetailView from "@/components/views/TvShowDetailView";
 import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";
 import { fetchData } from "@/services/DataApi";

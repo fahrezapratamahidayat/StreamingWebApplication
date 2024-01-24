@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import { fetchMovies } from "../action";
+import { fetchMovies } from "../actions";
 import MoviesPageView from "@/components/views/MoviesPage";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Movies",

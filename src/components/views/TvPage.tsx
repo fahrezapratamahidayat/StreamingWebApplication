@@ -3,7 +3,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import {tvShowsSidebarItem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import { fetchTvShow, } from "@/app/action";
+import { fetchTvShow, } from "@/app/actions";
 import { useEffect, useState } from "react";
 import PagesLayout from "../layouts/PageLayout";
 import PageLayout from "../layouts/PageLayout";

@@ -3,10 +3,11 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
-import { fetchMovies } from "@/app/action";
+import { fetchMovies } from "@/app/actions";
 import { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import Link from "next/link";
+import Footer from "../footer/Footer";
 
 export default function MoviesPageView() {
   const [data, setData] = useState();
@@ -14,7 +15,7 @@ export default function MoviesPageView() {
     { value: "Now_Playing", label: "Now Playing" },
     { value: "popular", label: "Popular" },
     { value: "top_rated", label: "Top Rated" },
-    { value: "upcoming", label: "Upcoming" },
+    { value: "upcoming", label: "Up coming" },
   ]);
   const [endpoint, setEndpoint] = useState("now_playing");
   const [title, setTitle] = useState("Now Playing");
@@ -38,7 +39,7 @@ export default function MoviesPageView() {
         setTitle("Upcoming");
         break;
       default:
-        setEndpoint("now_playing"); // Default to "Now Playing" if none of the cases match
+        setEndpoint("now_playing");
         setTitle("Now Playing");
         break;
     }
@@ -57,17 +58,20 @@ export default function MoviesPageView() {
     <>
       <Sidebar items={movieSidebaritem} />
       {data && (
-        <PageLayout>
-          <CardLayouts
-            title={title}
-            options={valueSelect}
-            selectedOption={endpoint}
-            onSelectChange={handleSelectChange}
-          >
-            {data}
-          </CardLayouts>
-          <LoadMore fetchData={fetchMovies} endpoint={endpoint} />
-        </PageLayout>
+        <>
+          <PageLayout>
+            <CardLayouts
+              title={title}
+              options={valueSelect}
+              selectedOption={endpoint}
+              onSelectChange={handleSelectChange}
+            >
+              {data}
+            </CardLayouts>
+            <LoadMore fetchData={fetchMovies} endpoint={endpoint} />
+          </PageLayout>
+          <Footer />
+        </>
       )}
     </>
   );

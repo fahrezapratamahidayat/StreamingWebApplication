@@ -4,7 +4,7 @@ import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { MovieProps } from "@/types/CardProps";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavbarContext } from "@/context/NavbarContext";
 
 const monstserrat = Montserrat({
@@ -25,6 +25,28 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
 
   const navbarContext = useContext(NavbarContext);
   const { showNavbar } = navbarContext;
+
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Mengatur event listener untuk mendeteksi perubahan ukuran layar
+    window.addEventListener("resize", handleResize);
+
+    // Membersihkan event listener saat komponen tidak lagi digunakan
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <MotionDiv
@@ -52,7 +74,9 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
               width={showNavbar ? 122 : 123}
               height={170}
               priority
-              className="rounded-md"
+              className={`rounded-md min-[360px]:w-[115x] max-[360px]:w-[115px] min-[393px]:w-[128px] max-[393px]:w-[128px] min-[375px]:w-[118px] max-[375px]:w-[118px] min-[390px]:w-[125px] max-[390px]:w-[125px] ${
+                showNavbar ? "lg:w-[122px] " : "lg:w-[123px]"
+              }`}
               src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
               alt={movie.title}
             />
