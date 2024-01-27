@@ -56,7 +56,7 @@ export default function MoviesPageView({ items }: any) {
 
   return (
     <>
-      {data && (
+      {/* {data && (
         <>
           <Sidebar items={movieSidebaritem} />
           <PageLayout>
@@ -72,7 +72,7 @@ export default function MoviesPageView({ items }: any) {
           </PageLayout>
           <Footer />
         </>
-      )}
+      )} */}
     </>
   );
 }
