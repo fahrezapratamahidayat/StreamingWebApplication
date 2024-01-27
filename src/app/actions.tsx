@@ -27,7 +27,7 @@ export const fetchGenreTv = async (page?: number, params?: string) => {
   ));
 };
 
-export const fetchGenreMovies = async (page?: number, params?: string) => {
+export const fetchGenreMovies = async (page?: number, params?: string,sort?:string) => {
   const res = await fetchData(
     `discover/movie?page=${page}&with_genres=${params}`
   );

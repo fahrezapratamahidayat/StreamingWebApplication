@@ -110,12 +110,12 @@ const Sidebar = ({ items }: any) => {
                   className={`hover:text-white mt-[0.75rem] text-sm pl-3
                   }`}
                   href={
-                    pathname?.includes("tv")
-                      ? `/tv/genre/${genre.id}?name=${genre.name.replace(
+                    pathname?.includes("/tv")
+                      ? `/tv/genre?id=${genre.id}&name=${genre.name.replace(
                           /\s+/g,
                           "+"
                         )}`
-                      : `/movies/genre/${genre.id}?name=${genre.name.replace(
+                      : `/movies/genre?id=${genre.id}&name=${genre.name.replace(
                           /\s+/g,
                           "+"
                         )}`

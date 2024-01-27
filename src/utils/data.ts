@@ -232,3 +232,50 @@ export const movieTitleGenre = (params: any) => {
 
   return title;
 }
+
+export const MovieEndpoints = async (params: any) => {
+  let endpoints;
+  let title;
+
+  if (params === "now-playing") {
+    endpoints = "now_playing";
+    title = "Now Playing";
+  } else if (params === "popular") {
+    endpoints = "popular";
+    title = "Popular";
+  } else if (params === "top-rated") {
+    endpoints = "top_rated";
+    title = "Top Rated";
+  } else if (params === "upcoming") {
+    endpoints = "upcoming";
+    title = "Upcoming";
+  } else {
+    console.warn("Unexpected value for params:", params);
+    endpoints = "now_playing";
+    title = "Now Playing";
+  }
+
+  return { endpoints, title };
+};
+
+export const TvshowEndpoints = async (params: any) => {
+  let endpoints;
+  let title;
+  if(params === "airing-today"){
+    endpoints = "airing_today";
+    title = "Airing Today";
+  }else if(params === "on-the-air"){
+    endpoints = "on_the_air";
+    title = "On The Air";
+  }else if(params === "popular"){
+    endpoints = "popular";
+    title = "Popular";
+  }else if(params === "top-rated"){
+    endpoints = "top_rated";
+    title = "Top Rated";
+  }else{
+    endpoints = "airing_today";
+    title = "Airing Today";
+  }
+  return { endpoints, title };
+}

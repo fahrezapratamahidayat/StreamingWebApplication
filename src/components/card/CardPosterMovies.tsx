@@ -74,9 +74,7 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
               width={showNavbar ? 122 : 123}
               height={170}
               priority
-              className={`rounded-md min-[360px]:w-[115x] max-[360px]:w-[115px] min-[393px]:w-[128px] max-[393px]:w-[128px] min-[375px]:w-[118px] max-[375px]:w-[118px] min-[390px]:w-[125px] max-[390px]:w-[125px] ${
-                showNavbar ? "lg:w-[122px] " : "lg:w-[123px]"
-              }`}
+              className={`rounded-md`}
               src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
               alt={movie.title}
             />

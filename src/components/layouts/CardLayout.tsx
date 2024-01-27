@@ -1,12 +1,13 @@
 "use client";
 import { NavbarContext } from "@/context/NavbarContext";
+import { usePathname, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
 interface CardLayoutsProps {
   children: React.ReactNode;
   title?: any;
   className?: string;
-  options?: Array<{ value: string; label: string }>;
+  options?: Array<{ value: string; label: string, params: string }>;
   selectedOption?: string;
   onSelectChange?: (selectedValue: string) => void;
 }
@@ -23,6 +24,8 @@ export default function CardLayouts({
   const { showNavbar } = navbarContext;
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [label, setLabel] = useState<string>("");
+  const router = useRouter()
+  const pathname = usePathname();
 
   return (
     <>
@@ -32,26 +35,10 @@ export default function CardLayouts({
         }`}
       >
         <div className="relative w-full flex items-center">
-          <h2 className="text-white font-semibold text-2xl lg:ml-0 ml-4">
+          <h2 className="text-white font-semibold text-2xl lg:ml-0 ml-2">
             {title}
           </h2>
-          {/* {options && (
-            <select
-              id="sort by"
-              className="mb-6"
-              value="Sort by"
-              onChange={(e) => onSelectChange && onSelectChange(e.target.value)}
-            >
-              <option value="Sort by" hidden disabled>Select Movie by</option>
-              {options &&
-                options.map((opt) => (
-                  <option className="bg-slate-700 fixed" key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-            </select>
-          )} */}
-          <div className="ml-auto relative">
+          <div hidden={pathname?.startsWith("/movies/genre") || pathname?.startsWith("/tv/genre") } className="ml-12 lg:ml-auto relative">
             <button
               className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
               onClick={() => setDropDown(!dropDown)}
@@ -99,9 +86,16 @@ export default function CardLayouts({
                       onClick={() => {
                         onSelectChange && onSelectChange(opt.value);
                         setLabel(opt.label);
+                        if (opt.label === "Now Playing") {
+                          router.push("/movies");
+                        } else {
+                          const basePath = pathname === "/movies" ? "/movies" : "/tv";
+                          const queryParam = opt.params ? `?sort=${opt.params}` : "";
+                          router.push(`${basePath}${queryParam}`);
+                        }
                       }}
                     >
-                      {opt.label === "Now Playing"
+                      {pathname === "/movies" && opt.label === "Now Playing" || pathname === "/tv" && opt.label === "Popular"
                         ? opt.label + " : Default"
                         : opt.label}
                       {opt.label == label ? (
@@ -132,7 +126,7 @@ export default function CardLayouts({
         <div
           className={`lg:flex flex-wrap grid md:flex grid-cols-3 ${
             showNavbar ? "lg:gap-5" : "lg:gap-4"
-          } md:gap-1 mt-[18px] min-[400px]:flex max-[767px]:flex min-[400px]:gap-1 max-[767px]:gap-1 min-[400px]:ml-4 lg:ml-0 ml-1`}
+          } md:gap-1 mt-[18px] min-[400px]:flex max-[767px]:flex min-[400px]:gap-1 max-[767px]:gap-1 min-[400px]:ml-4 lg:ml-0 ml-2`}
         >
           {children}
         </div>
