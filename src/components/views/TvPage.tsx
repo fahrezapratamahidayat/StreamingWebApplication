@@ -55,7 +55,7 @@ export default function TvPageView() {
 
   return (
     <>
-      <Sidebar items={tvShowsSidebarItem} />
+      {/* <Sidebar items={tvShowsSidebarItem} />
       {data && (
         <>
           <PageLayout>
@@ -71,7 +71,7 @@ export default function TvPageView() {
           </PageLayout>
           <Footer />
         </>
-      )}
+      )} */}
     </>
   );
 }
