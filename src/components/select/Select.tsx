@@ -6,7 +6,7 @@ interface SelectProps {
     onSelectChange: (selectedValue: string) => void;
 }
 
-export default function ({options, onSelectChange}: SelectProps) {
+export default function Select({options, onSelectChange}: SelectProps) {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [label, setLabel] = useState<string>("");
   return (

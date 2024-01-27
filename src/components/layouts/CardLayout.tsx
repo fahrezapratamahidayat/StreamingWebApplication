@@ -7,7 +7,7 @@ interface CardLayoutsProps {
   children: React.ReactNode;
   title?: any;
   className?: string;
-  options?: Array<{ value: string; label: string, params: string }>;
+  options?: Array<{ value: string; label: string; params: string }>;
   selectedOption?: string;
   onSelectChange?: (selectedValue: string) => void;
 }
@@ -24,7 +24,7 @@ export default function CardLayouts({
   const { showNavbar } = navbarContext;
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [label, setLabel] = useState<string>("");
-  const router = useRouter()
+  const router = useRouter();
   const pathname = usePathname();
 
   return (
@@ -38,7 +38,14 @@ export default function CardLayouts({
           <h2 className="text-white font-semibold text-2xl lg:ml-0 ml-2">
             {title}
           </h2>
-          <div hidden={pathname?.startsWith("/movies/genre") || pathname?.startsWith("/tv/genre") } className="ml-12 lg:ml-auto relative">
+          <div
+            className={`ml-12 lg:ml-auto relativec${
+              pathname?.startsWith("/tv/genre") ||
+              pathname?.startsWith("/movie/genre")
+                ? " hidden"
+                : ""
+            }`}
+          >
             <button
               className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
               onClick={() => setDropDown(!dropDown)}
@@ -89,13 +96,18 @@ export default function CardLayouts({
                         if (opt.label === "Now Playing") {
                           router.push("/movies");
                         } else {
-                          const basePath = pathname === "/movies" ? "/movies" : "/tv";
-                          const queryParam = opt.params ? `?sort=${opt.params}` : "";
+                          const basePath =
+                            pathname === "/movies" ? "/movies" : "/tv";
+                          const queryParam = opt.params
+                            ? `?sort=${opt.params}`
+                            : "";
                           router.push(`${basePath}${queryParam}`);
                         }
                       }}
                     >
-                      {pathname === "/movies" && opt.label === "Now Playing" || pathname === "/tv" && opt.label === "Popular"
+                      {(pathname === "/movies" &&
+                        opt.label === "Now Playing") ||
+                      (pathname === "/tv" && opt.label === "Popular")
                         ? opt.label + " : Default"
                         : opt.label}
                       {opt.label == label ? (
