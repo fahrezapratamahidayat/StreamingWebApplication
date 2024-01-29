@@ -67,7 +67,8 @@
 }
 
 .overflow-video::-webkit-scrollbar {
-  width: 2px;
+  padding-top: 5px;
+  height: 5px;
 }
 
 .overflow-video::-webkit-scrollbar-track {

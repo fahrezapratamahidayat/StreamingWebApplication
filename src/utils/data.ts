@@ -250,7 +250,6 @@ export const MovieEndpoints = async (params: any) => {
     endpoints = "upcoming";
     title = "Upcoming";
   } else {
-    console.warn("Unexpected value for params:", params);
     endpoints = "now_playing";
     title = "Now Playing";
   }

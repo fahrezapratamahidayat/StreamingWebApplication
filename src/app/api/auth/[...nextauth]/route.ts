@@ -23,7 +23,6 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
         const users: any = await LoginUsers({ email, password });
-        console.log(users);
         if (users) {
           const passwordMatch = await bcrypt.compare(password, users.password);
           if (passwordMatch) {

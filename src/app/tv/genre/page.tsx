@@ -21,6 +21,7 @@ export default async function tvGenrePage({ searchParams }: any) {
         <CardLayouts title={ParamsName}>
           {TvShowGenre}
         </CardLayouts>
+        <LoadMore fetchData={fetchGenreTv} endpoint={ParamsId} />
       </PageLayout>
     </>
   );

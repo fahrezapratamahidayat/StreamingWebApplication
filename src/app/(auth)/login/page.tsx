@@ -102,9 +102,7 @@ export default function LoginPage(searchParams: any) {
       </div> */}
       <AuthLayouts title="Sign in to your account">
         <form
-          action="#"
           className="mt-8 space-y-6"
-          method="POST"
           onSubmit={handleLogin}
         >
           <input name="remember" type="hidden" value="true" />

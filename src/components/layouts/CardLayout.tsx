@@ -39,7 +39,7 @@ export default function CardLayouts({
             {title}
           </h2>
           <div
-            className={`ml-12 lg:ml-auto relativec${
+            className={`ml-[auto] lg:pr-0 pr-2 relative ${
               pathname?.startsWith("/tv/genre") ||
               pathname?.startsWith("/movie/genre")
                 ? " hidden"

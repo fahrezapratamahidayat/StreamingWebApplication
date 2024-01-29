@@ -1,4 +1,5 @@
 import { fetchGenreMovies } from "@/app/actions";
+import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import PageLayout from "@/components/layouts/PageLayout";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -28,6 +29,7 @@ export default async function GenrePage({ searchParams}: any) {
         <CardLayouts title={ParamsName} options={options} >
             {MoviesGenre}
         </CardLayouts>
+        <LoadMore fetchData={fetchGenreMovies} endpoint={ParamsId} />
       </PageLayout>
     </>
   );

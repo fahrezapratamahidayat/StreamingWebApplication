@@ -48,9 +48,7 @@ export default function RegisterPage() {
       confirm_password: "",
       agree: false,
     },
-    onSubmit: (values) => {
-      console.log(values)
-    },
+    onSubmit: RegisterUser,
     validationSchema: Yup.object({
       fullname: Yup.string().required("Fullname is required"),
       email: Yup.string()

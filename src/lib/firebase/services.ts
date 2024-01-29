@@ -14,7 +14,6 @@ import {
 } from "firebase/firestore";
 import app from "./init";
 import bcrypt from "bcrypt";
-import { update } from "firebase/database";
 
 const firestore = getFirestore(app);
 
@@ -338,10 +337,9 @@ export async function addMyList(
       };
     }
   } catch (error) {
-    console.log("Error adding item to watchlist:", error);
     return {
       status: 500,
-      message: "Internal server error",
+      message: "Failed to add watchlist item",
       results: null,
     };
   }

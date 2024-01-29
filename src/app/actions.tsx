@@ -3,6 +3,7 @@
 import CardPosterMovies from "@/components/card/CardPosterMovies";
 import CardPosterSearch from "@/components/card/CardPosterSearch";
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
+import ListDirector from "@/components/fragments/ListDirector";
 import { fetchData } from "@/services/DataApi";
 import { CardSearchProps, MovieProps, TvShowProps } from "@/types/CardProps";
 
@@ -42,3 +43,18 @@ export const fetchSearch = async (page?: number, params?: string) => {
     <CardPosterSearch key={item.id} data={item} index={index} />
   ))
 };
+
+export const fetchDetailMovie = async (slug: string) => {
+  const res = await fetchData(`movie/${slug}`);
+  return res;
+}
+
+export const fetchDetailTv = async (slug: string) => {
+  const res = await fetchData(`tv/${slug}`);
+  return res;
+}
+
+export const fetchD = async (params: string) => {
+  const res = await fetchData(params);
+  return res
+}
