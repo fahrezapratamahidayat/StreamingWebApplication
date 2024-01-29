@@ -48,8 +48,8 @@ export default function LoadMore({ fetchData, endpoint }: LoadMoreProps) {
       </CardShowMoreLayouts>
       <div
         className={`${
-          showNavbar ? "w-[78%]" : "w-full"
-        } flex items-center justify-center pb-10`}
+          showNavbar ? "lg:w-[78%] w-full" : "w-full"
+        } flex items-center justify-center pb-10 lg:mt-0 mt-5`}
       >
         <button
           type="button"

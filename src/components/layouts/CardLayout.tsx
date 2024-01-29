@@ -41,7 +41,7 @@ export default function CardLayouts({
           <div
             className={`ml-[auto] lg:pr-0 pr-2 relative ${
               pathname?.startsWith("/tv/genre") ||
-              pathname?.startsWith("/movie/genre")
+              pathname?.startsWith("/movies/genre")
                 ? " hidden"
                 : ""
             }`}

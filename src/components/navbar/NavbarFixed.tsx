@@ -549,9 +549,9 @@ export default function NavbarFixed() {
                           >
                             <Link
                               className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
-                              href={`/tv/genre/${
+                              href={`/tv/genre?id=${
                                 genre.id
-                              }?name=${genre.name.replace(/\s+/g, "+")}`}
+                              }&name=${genre.name.replace(/\s+/g, "+")}`}
                               scroll={false}
                             >
                               {genre.name}
@@ -568,9 +568,9 @@ export default function NavbarFixed() {
                           >
                             <Link
                               className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
-                              href={`/movies/genre/${
+                              href={`/movies/genre?id=${
                                 genre.id
-                              }?name=${genre.name.replace(/\s+/g, "+")}`}
+                              }&name=${genre.name.replace(/\s+/g, "+")}`}
                               scroll={false}
                             >
                               {genre.name}
