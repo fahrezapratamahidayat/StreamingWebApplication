@@ -11,10 +11,10 @@ export default function WatchListPage() {
   const fetchData = async () => {
     try {
       if (!session) {
-        return;
+        alert("Please sign in to continue");
       }
       const snapshot = await fetch(
-        `http://localhost:3000/api/user?id=${session.user.id}`,
+        `http://localhost:3000/api/user?id=${session.user.id}`
       );
       const data = await snapshot.json();
       setUserWatchList(data.user.watchlist);
@@ -33,8 +33,10 @@ export default function WatchListPage() {
     <>
       <MainLayouts>
         <div className="mt-[5rem] mx-5">
-          {userWatchList && (
+          {userWatchList && userWatchList.length > 0 ? (
             <CardPosterWatchList title="Watchlist" data={userWatchList} />
+          ) : (
+            <h1 className="text-white text-3xl font-bold">No data</h1>
           )}
         </div>
       </MainLayouts>

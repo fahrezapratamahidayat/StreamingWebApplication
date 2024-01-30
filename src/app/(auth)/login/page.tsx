@@ -3,6 +3,7 @@ import Button from "@/components/button/Button";
 import Checkbox from "@/components/input/Checkbox";
 import Input from "@/components/input/Input";
 import AuthLayouts from "@/components/layouts/AuthLayouts";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,21 +19,24 @@ export default function LoginPage(searchParams: any) {
     setIsloading(true);
     setError("");
     try {
-      const res = await signIn("credentials", {
+      const session = await signIn("credentials", {
         redirect: false,
         email: event.target.email.value,
         password: event.target.password.value,
         callbackUrl,
       });
-      if (!res?.error) {
+      const respone = await axios.post("/api/auth/login", {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      });
+      const data = await respone.data;
+      if (!session?.error) {
         push(callbackUrl);
         event.target.reset();
         setIsloading(false);
       } else {
         setIsloading(false);
-        if (res.status === 401) {
-          setError("Invalid email or password");
-        }
+        setError(data.message);
       }
     } catch (err) {
       console.log(err);
@@ -40,73 +44,10 @@ export default function LoginPage(searchParams: any) {
   };
   return (
     <>
-      {/* <div className="flex min-h-screen items-center justify-center ">
-        <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form className="space-y-6" onSubmit={(e) => handleLogin(e)}>
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Sign in to our platform
-            </h3>
-            <div>
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
-                Your email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@company.com"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
-                Your password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="••••••••"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                required
-              />
-            </div>
-            <button
-              disabled={isLoading}
-              type="submit"
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              {isLoading ? "loading..." : "Login"}
-            </button>
-            {error !== "" && (
-              <p className="text-red-500 font-normal text-center">{error}</p>
-            )}
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?{" "}
-              <Link
-                href="/register"
-                className="text-blue-700 hover:underline dark:text-blue-500"
-              >
-                Create account
-              </Link>
-            </div>
-          </form>
-        </div>
-      </div> */}
       <AuthLayouts title="Sign in to your account">
-        <form
-          className="mt-8 space-y-6"
-          onSubmit={handleLogin}
-        >
+        <form className="mt-8" onSubmit={handleLogin}>
           <input name="remember" type="hidden" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="rounded-md shadow-sm ">
             <div className="">
               <Input
                 id="email"
@@ -128,7 +69,10 @@ export default function LoginPage(searchParams: any) {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="">
+            <p className="text-red-500 font-normal text-sm text-left">{error}</p>
+          </div>
+          <div className="flex items-center justify-between my-5">
             <div className="flex items-center">
               <Checkbox
                 id="remember_me"
@@ -145,7 +89,7 @@ export default function LoginPage(searchParams: any) {
               </Link>
             </div>
           </div>
-          <Button name="Sign in" type="submit" />
+          <Button name={isLoading ? "loading..." : "Sign in"} type="submit" />
         </form>
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600 dark:text-gray-400">

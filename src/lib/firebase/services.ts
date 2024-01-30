@@ -112,22 +112,70 @@ export async function RegisterUser(data: {
 //   }
 // }
 
+// export async function LoginUsers(data: { email: string; password: string }) {
+//   const q = query(
+//     collection(firestore, "users"),
+//     where("email", "==", data.email)
+//   );
+//   const querySnapshot = await getDocs(q);
+//   const users = querySnapshot.docs.map((doc) => ({
+//     id: doc.id,
+//     ...doc.data(),
+//   }));
+//   if (users) {
+//     return users[0];
+//   } else {
+//     return null;
+//   }
+// }
+
 export async function LoginUsers(data: { email: string; password: string }) {
   const q = query(
     collection(firestore, "users"),
     where("email", "==", data.email)
   );
-  const querySnapshot = await getDocs(q);
-  const users = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  if (users) {
-    return users[0];
-  } else {
-    return null;
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return {
+        status: false,
+        statusCode: 404,
+        message: "User not found",
+      };
+    }
+
+    const user: any = querySnapshot.docs[0].data();
+    const passwordMatch = await bcrypt.compare(data.password, user.password);
+
+    if (passwordMatch) {
+      return {
+        status: true,
+        statusCode: 200,
+        message: "Login successful",
+        user: {
+          id: querySnapshot.docs[0].id,
+          ...user,
+        },
+      };
+    } else {
+      return {
+        status: false,
+        statusCode: 401,
+        message: "Invalid password",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return {
+      status: false,
+      statusCode: 500,
+      message: "Internal server error",
+    };
   }
 }
+
 
 export async function GetAllUsers() {
   const q = query(collection(firestore, "users"));

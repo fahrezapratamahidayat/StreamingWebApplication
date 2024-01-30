@@ -100,7 +100,7 @@ export default async function DetailMovie(props: DetailMoviePageProps) {
                 <ButtonWatchNow
                   to={`/movies/${
                     params.slug
-                  }/watch?=${MoviesDetail.title.replace(/\s+/g, "+")}`}
+                  }/watch?q=${MoviesDetail.title.replace(/\s+/g, "+")}`}
                 />
                 <ButtonWatchlist slug={params.slug} data={MoviesDetail} />
               </div>

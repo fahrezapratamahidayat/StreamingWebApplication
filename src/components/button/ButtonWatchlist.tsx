@@ -3,56 +3,6 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type MovieData = {
-  backdrop_path: string;
-  id: number;
-  poster_path: string;
-  title: string;
-  runtime: number;
-  vote_average: number;
-  release_date: string;
-  overview: string;
-  genres: { id: number; name: string }[];
-  directors: { id: number; name: string }[];
-  cast: { id: number; name: string; job: string; character: string }[];
-  crew: { id: number; name: string; job: string }[];
-  job: string;
-  video: string;
-  results: { id: string; name: string; key: string }[];
-};
-
-type TvShowProps = {
-  id: number;
-  original_name: string;
-  name: string;
-  backdrop_path: string;
-  poster_path: string;
-  overview: string;
-  popularity: number;
-  first_air_date: string;
-  episode_run_time: number[];
-  vote_average: number;
-  vote_count: number;
-  genre_ids: number[];
-  genres: { id: number; name: string }[];
-  number_of_seasons: number;
-  video: string;
-  results: { id: string; name: string; key: string }[];
-  cast: {
-    id: number;
-    name: string;
-    job: string;
-    character: string;
-    known_for_department: string;
-  }[];
-  crew: {
-    id: number;
-    name: string;
-    job: string;
-    known_for_department: string;
-  }[];
-};
-
 interface ButtonProps {
   slug: any;
   data: any;

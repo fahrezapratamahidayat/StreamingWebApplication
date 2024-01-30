@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth/next";
+import { use } from "react";
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -23,15 +24,19 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
         const users: any = await LoginUsers({ email, password });
-        if (users) {
-          const passwordMatch = await bcrypt.compare(password, users.password);
-          if (passwordMatch) {
-            return { ...users, id: users.id };
-          } else {
-            return null;
+        if(users.status){
+          const passwordMatch = await bcrypt.compare(password, users.user.password);
+          if(passwordMatch){
+            return users.user
           }
-        } else {
-          return null;
+        }else if(users.statusCode === 401){
+          if(users.message === "Invalid password"){
+            return null
+          }
+        }else{
+          if(users.message === "User not found"){
+            return null
+          }
         }
       },
     }),

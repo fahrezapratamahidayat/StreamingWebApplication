@@ -54,7 +54,15 @@ export const fetchDetailTv = async (slug: string) => {
   return res;
 }
 
-export const fetchD = async (params: string) => {
-  const res = await fetchData(params);
-  return res
+export async function addmylist(id: string, watchlistItem: any) {
+  const res = await fetch(`/api/user/addmylist`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },body: JSON.stringify({
+      id,
+      watchlistItem,
+    })
+  })
+  return res.json()
 }
