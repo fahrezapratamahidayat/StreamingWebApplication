@@ -24,17 +24,17 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
         const users: any = await LoginUsers({ email, password });
-        if(users.status){
+        if (users.status) {
           const passwordMatch = await bcrypt.compare(password, users.user.password);
-          if(passwordMatch){
+          if (passwordMatch) {
             return users.user
           }
-        }else if(users.statusCode === 401){
-          if(users.message === "Invalid password"){
+        } else if (users.statusCode === 401) {
+          if (users.message === "Invalid password") {
             return null
           }
-        }else{
-          if(users.message === "User not found"){
+        } else {
+          if (users.message === "User not found") {
             return null
           }
         }
@@ -42,11 +42,22 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }: any) {
+      const isAllowedToSignIn = true
+      if (isAllowedToSignIn) {
+        return true
+      } else {
+        // Return false to display a default error message
+        return false
+        // Or you can return a URL to redirect to
+      }
+    },
     async jwt({ token, account, user, profile }: any) {
       if (account?.provider === "credentials") {
         token.email = user.email;
         token.fullname = user.fullname;
         token.id = user.id;
+        token.idp = "credentials";
       }
       return token;
     },
@@ -59,6 +70,9 @@ const authOptions: NextAuthOptions = {
       }
       if ("id" in token) {
         session.user.id = token.id;
+      }
+      if ("idp" in token) {
+        session.user.idp = token.idp;
       }
       return session;
     },

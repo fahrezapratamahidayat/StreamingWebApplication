@@ -367,7 +367,12 @@ export async function addMyList(
     const isItemInWatchlist = userData.watchlist || [].some(
       (item: any) => item.id === watchlistItem.id
     );
-    if (!isItemInWatchlist) {
+    if(userData.watchlist === undefined){
+      await updateDoc(userDocRef, {
+        watchlist: arrayUnion(),
+      })
+    }
+    if (!isItemInWatchlist && userData.watchlist !== undefined) {
       return {
         status: 400,
         message: "Item already exists in the watchlist",

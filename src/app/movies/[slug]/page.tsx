@@ -1,8 +1,6 @@
-import Sidebar from "@/components/sidebar/Sidebar";
-import DetailViews from "@/components/views/MovieDetailsView";
+import Sidebar from "@/components/sidebar/Sidebar"
 import { movieSidebaritem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";
-import { fetchData } from "@/services/DataApi";
 import { fetchDetailMovie } from "@/app/actions";
 import PageLayout from "@/components/layouts/PageLayout";
 import Image from "next/image";

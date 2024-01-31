@@ -16,7 +16,7 @@ export default function NavbarFixed() {
   const overlaySidebar: any = useRef(null);
   const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
-  const { data: status }: { data: any; status: string } = useSession() || {};
+  const { data: session, status } : { data: any; status: string } = useSession() || {};
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSearchForm = (event: any) => {
@@ -206,7 +206,7 @@ export default function NavbarFixed() {
           </div>
           <div className="lg:hidden flex items-center ml-auto pr-2">
             <div className="relative">
-              <button onClick={handleSearchBar}>
+              <button onClick={handleSearchBar} type="button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -238,7 +238,7 @@ export default function NavbarFixed() {
                 <div className=" absolute w-full mt-[25%]  rounded shadow-md px-2">
                   <form onSubmit={handleSearchForm} ref={searchFormRef}>
                     <div className="bg-gray-700 rounded-lg h-[3.5rem] w-full flex items-center px-5 ">
-                      <button>
+                      <button type="submit">
                         <svg
                           className=""
                           xmlns="http://www.w3.org/2000/svg"
@@ -262,7 +262,7 @@ export default function NavbarFixed() {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <span className="sr-only">Navigation</span>
+                        <span className="sr-only">Form</span>
                       </button>
                       <input
                         type="text"
@@ -308,7 +308,7 @@ export default function NavbarFixed() {
           <div className="lg:hidden flex items-center justify-between">
             <div className="relative">
               {toggleNav ? (
-                <button className="" onClick={handleShowNav}>
+                <button className="" onClick={handleShowNav} type="button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -333,7 +333,7 @@ export default function NavbarFixed() {
                   </svg>
                 </button>
               ) : (
-                <button className="" onClick={handleShowNav}>
+                <button className="" onClick={handleShowNav} type="button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -419,6 +419,7 @@ export default function NavbarFixed() {
           <button
             className="hover:text-slate-500 text-slate-400"
             onClick={handleShowSidebar}
+            type="button"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -485,8 +486,8 @@ export default function NavbarFixed() {
           </ul>
           <div
             className={`${
-              toggleSidebar ? "block" : "hidden"
-            } fixed top-0 left-0  bg-black/50  h-[100rem] w-full `}
+              toggleSidebar ? "left-0 " : "-left-[450px]"
+            } fixed top-0 bg-black/50  h-[100rem] w-full transition-all ease-in-out`}
           >
             <aside
               className="absolute top-0 w-[80%]  bg-black rounded shadow-md"
@@ -498,14 +499,13 @@ export default function NavbarFixed() {
                     className={`text-white font-semibold text-base cursor-pointer flex items-center`}
                   >
                     Genre
-                    {DropDown ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14"
                         height="8"
                         viewBox="0 0 14 8"
                         fill="none"
-                        className="ml-[0.5rem] cursor-pointer transition-all"
+                        className={`ml-[0.5rem] cursor-pointer transition-all ${DropDown ? "rotate-0" : "rotate-180"}`}
                         onClick={() => setDropDown(!DropDown)}
                       >
                         <path
@@ -516,25 +516,6 @@ export default function NavbarFixed() {
                           strokeLinejoin="round"
                         />
                       </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="8"
-                        viewBox="0 0 14 8"
-                        fill="none"
-                        className="ml-[0.5rem] cursor-pointer transition-all"
-                        onClick={() => setDropDown(!DropDown)}
-                      >
-                        <path
-                          d="M13 7L7 1L1 7"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    )}
                   </h2>
                   <ul
                     className={`font-semibold mt-[0.8rem] text-[#828486] transition-all`}
@@ -603,7 +584,7 @@ export default function NavbarFixed() {
                     <li
                       className={`border-l border-slate-800 transition-all duration-500 ease-out`}
                     >
-                      {status && status === "authenticated" ? (
+                      {status === "authenticated" ? (
                         <button
                           className=" text-sky-500 text-semibold text-sm pl-3"
                           onClick={() => signOut()}

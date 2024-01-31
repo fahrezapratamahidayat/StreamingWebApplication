@@ -1,9 +1,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
-import TvShowDetailView from "@/components/views/TvShowDetailView";
 import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";
 import { fetchData } from "@/services/DataApi";
-import Page from "@/app/animes/page";
 import PageLayout from "@/components/layouts/PageLayout";
 import { fetchDetailTv } from "@/app/actions";
 import Image from "next/image";

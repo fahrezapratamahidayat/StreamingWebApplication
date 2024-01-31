@@ -57,8 +57,11 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
         },
       }),
     });
+    const dat = await res.json();
+    console.log(dat)
     handleGetData();
     setIsloading(false);
+    
   };
 
   const handleGetData = async () => {

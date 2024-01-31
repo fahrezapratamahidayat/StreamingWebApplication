@@ -61,15 +61,8 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
         <Link
           href={`/movies/${movie.id}`}
           scroll={false}
-          // className="cursor-pointer  transition-transform ease-in-out duration-100 hover:scale-105 w-auto h-auto"
+          className="cursor-pointer transition hover:scale-105 w-auto h-auto"
         >
-          <MotionDiv
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          >
             <Image
               width={showNavbar ? 122 : 123}
               height={170}
@@ -78,7 +71,6 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
               src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${movie.poster_path}`}
               alt={movie.title}
             />
-          </MotionDiv>
         </Link>
         <p className="text-white text-sm ">
           {movie.title && movie.title.length > 13

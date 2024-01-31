@@ -22,7 +22,7 @@ export default function PageLayout({
             : `${
                 pathname === `/tv` || pathname === `/movies`
                   ? "lg:ml-[3rem]"
-                  : "lg:ml-[1rem] "
+                  : "lg:ml-[1.2rem] "
               } transition-all ease-out`
         } pb-[5rem] pt-[4rem] lg:pt-0 lg:mr-5`}
       >

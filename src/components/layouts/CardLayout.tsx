@@ -30,16 +30,16 @@ export default function CardLayouts({
   return (
     <>
       <div
-        className={`pb-[2.rem] lg:pb-[2rem] transition-all ${className} ${
+        className={`pb-[2.rem] lg:pb-[2rem] transition-all mx-2 lg:mx-0 ${className} ${
           showNavbar ? "ease-in" : "ease-out"
         }`}
       >
         <div className="relative w-full flex items-center">
-          <h2 className="text-white font-semibold text-2xl lg:ml-0 ml-2">
+          <h2 className="text-white font-semibold text-[20px] lg:pl-0 pl-2">
             {title}
           </h2>
           <div
-            className={`ml-[auto] lg:pr-0 pr-2 relative ${
+            className={`ml-[auto] lg:pr-0 pr-1.5 relative ${
               pathname?.startsWith("/tv/genre") ||
               pathname?.startsWith("/movies/genre")
                 ? " hidden"
@@ -76,7 +76,7 @@ export default function CardLayouts({
                 label !== "" ? "scale-75 top-4 -translate-y-5" : ""
               } text-gray-500 dark:text-gray-400 duration-300 transform top-2 z-10 origin-[0] start-3 peer-focus:text-blue-500 peer-focus:dark:text-blue-500  peer-placeholder-shown:translate-y-0 rtl:peer-focus:left-auto`}
             >
-              Sort by
+              Sort Movies by
             </label>
             <div
               className={`${
@@ -136,9 +136,9 @@ export default function CardLayouts({
           </div>
         </div>
         <div
-          className={`lg:flex flex-wrap grid md:flex grid-cols-3 ${
+          className={`lg:flex flex-wrap grid md:flex sm:grid-cols-5 grid-cols-3 ${
             showNavbar ? "lg:gap-5" : "lg:gap-4"
-          } md:gap-1 mt-[18px] min-[400px]:flex max-[767px]:flex min-[400px]:gap-1 max-[767px]:gap-1 min-[400px]:ml-4 lg:ml-0 ml-2`}
+          } md:gap-1 mt-[18px] gap-2 mx-2 lg:mx-0`}
         >
           {children}
         </div>

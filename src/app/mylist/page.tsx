@@ -11,14 +11,13 @@ export default function WatchListPage() {
   const fetchData = async () => {
     try {
       if (!session) {
-        alert("Please sign in to continue");
+        return;
       }
       const snapshot = await fetch(
         `http://localhost:3000/api/user?id=${session.user.id}`
       );
       const data = await snapshot.json();
       setUserWatchList(data.user.watchlist);
-      console.log(data.user.watchlist);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -32,12 +31,13 @@ export default function WatchListPage() {
   return (
     <>
       <MainLayouts>
-        <div className="mt-[5rem] mx-5">
-          {userWatchList && userWatchList.length > 0 ? (
-            <CardPosterWatchList title="Watchlist" data={userWatchList} />
-          ) : (
-            <h1 className="text-white text-3xl font-bold">No data</h1>
-          )}
+        <div className="mt-[9rem] lg:mt-[5rem] mx-2 lg:mx-5">
+          <h2 className="text-white font-semibold text-[20px] lg:pl-0 pl-2">Watchlist</h2>
+          <div className="grid lg:grid-cols-11 grid-cols-3 lg:mx-0 mx-2 gap-2 lg:gap-[26px] mt-[18px]">
+            {userWatchList.map((data: any, index: number) => (
+              <CardPosterWatchList key={index} data={data} index={index} />
+            ))}
+          </div>
         </div>
       </MainLayouts>
     </>
