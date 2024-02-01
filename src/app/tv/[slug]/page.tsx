@@ -1,7 +1,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import { tvShowsSidebarItem } from "@/utils/data";
 import { Metadata, ResolvingMetadata } from "next";
-import { fetchData } from "@/services/DataApi";
+import { fetchData } from "@/services/DataApi";``
 import PageLayout from "@/components/layouts/PageLayout";
 import { fetchDetailTv } from "@/app/actions";
 import Image from "next/image";

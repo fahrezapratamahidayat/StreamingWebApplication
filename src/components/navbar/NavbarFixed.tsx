@@ -16,7 +16,8 @@ export default function NavbarFixed() {
   const overlaySidebar: any = useRef(null);
   const searchFormRef: any = useRef(null);
   const [DropDown, setDropDown] = useState(true);
-  const { data: session, status } : { data: any; status: string } = useSession() || {};
+  const { data: session, status }: { data: any; status: string } =
+    useSession() || {};
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSearchForm = (event: any) => {
@@ -119,9 +120,9 @@ export default function NavbarFixed() {
       <div
         className="fixed z-40 w-full backdrop-blur flex-none 
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
-        dark:border-slate-50/[0.06]  bg-transparent"
+         bg-transparent"
       >
-        <div className="flex items-center px-5 py-3 w-full">
+        <div className="flex items-center lg:px-5 px-4 py-3 w-full">
           <div className="w-full flex items-center justify-between">
             <h1 className={`font-bold text-white text-2xl`}>Santai</h1>
             <ul className="lg:flex hidden items-center gap-[1.62rem]">
@@ -499,23 +500,25 @@ export default function NavbarFixed() {
                     className={`text-white font-semibold text-base cursor-pointer flex items-center`}
                   >
                     Genre
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="8"
-                        viewBox="0 0 14 8"
-                        fill="none"
-                        className={`ml-[0.5rem] cursor-pointer transition-all ${DropDown ? "rotate-0" : "rotate-180"}`}
-                        onClick={() => setDropDown(!DropDown)}
-                      >
-                        <path
-                          d="M1 1L7 7L13 1"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="8"
+                      viewBox="0 0 14 8"
+                      fill="none"
+                      className={`ml-[0.5rem] cursor-pointer transition-all ${
+                        DropDown ? "rotate-0" : "rotate-180"
+                      }`}
+                      onClick={() => setDropDown(!DropDown)}
+                    >
+                      <path
+                        d="M1 1L7 7L13 1"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </h2>
                   <ul
                     className={`font-semibold mt-[0.8rem] text-[#828486] transition-all`}

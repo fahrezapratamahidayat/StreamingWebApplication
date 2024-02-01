@@ -320,7 +320,6 @@ export async function getUserId(id: string) {
 
     if (!snapshot.exists()) {
       return {
-        results: null,
         status: 404,
         message: "User not found",
       };
@@ -330,12 +329,11 @@ export async function getUserId(id: string) {
     return {
       status: 200,
       message: "User found successfully",
-      user: data,
+      results: data.watchlist,
     };
   } catch (error) {
     console.error("Error getting user by ID:", error);
     return {
-      results: null,
       status: 500,
       message: "Failed to get user by ID",
     };
@@ -376,7 +374,6 @@ export async function addMyList(
       return {
         status: 400,
         message: "Item already exists in the watchlist",
-        results: null,
       };
     } else {
       await updateDoc(userDocRef, {
@@ -385,15 +382,13 @@ export async function addMyList(
       });
       return {
         status: 200,
-        message: "Watchlist item added successfully",
-        results: watchlistItem,
+        message: "added successfully",
       };
     }
   } catch (error) {
     return {
       status: 500,
       message: "Failed to add watchlist item",
-      results: null,
     };
   }
 }
@@ -436,15 +431,14 @@ export async function RemoveMyList(
       });
       return {
         status: 200,
-        message: "Watchlist item removed successfully",
+        message: "removed successfully",
         results: watchlistItem,
       };
     }
   } catch (error) {
-    console.error("Error removing item from watchlist:", error);
     return {
       status: 500,
-      message: "Internal server error",
+      message: "Failed to remove",
       results: null,
     };
   }

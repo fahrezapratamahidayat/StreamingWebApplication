@@ -4,12 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
-
   if (id) {
     try {
       const result = await getUserId(id);
       return NextResponse.json(
-        { status: result.status, message: result.message, user: result.user },
+        { status: result.status, message: result.message, watchlist: result.results },
         { status: result.status }
       );
     } catch (error) {

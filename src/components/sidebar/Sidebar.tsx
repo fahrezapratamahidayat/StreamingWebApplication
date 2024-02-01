@@ -26,13 +26,14 @@ const Sidebar = ({ items }: any) => {
           showNavbar ? "left-[16rem] ease-in" : "left-3 ease-out"
         } right-0 transition-all ease-in-out`}
       >
-        <button className="" onClick={() => setShowNavbar(!showNavbar)}>
+        <button className="" onClick={() => setShowNavbar(!showNavbar)} type="button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
+            className=""
           >
             <path
               d="M12 5L19 12L12 19"
