@@ -1,6 +1,6 @@
 import MainLayouts from "@/components/layouts/MainLayouts";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 import SearchPageView from "@/components/views/SearchPage";
-
 
 export const metadata = {
   title: "Search",
@@ -9,9 +9,10 @@ export const metadata = {
 export default function Search() {
   return (
     <>
-    <MainLayouts>
+      <MainLayouts>
+        <NavbarFixed />
         <SearchPageView />
-    </MainLayouts>
+      </MainLayouts>
     </>
   );
 }

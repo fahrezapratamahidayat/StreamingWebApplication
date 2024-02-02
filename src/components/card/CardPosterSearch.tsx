@@ -75,13 +75,13 @@ export default function CardPosterSearch({ index, data }: CardProps) {
           </MotionDiv>
         </Link>
         <p className="text-sm text-white">
-          {data.title && data.title.length > 13
-            ? data.title.substr(0, 13) + "..."
+          {data.title && data.title.length > 11
+            ? data.title.substr(0, 11) + "..."
             : data.title}
         </p>
         <p className="text-sm text-white">
-          {data.name && data.name.length > 13
-            ? data.name.substr(0, 13) + "..."
+          {data.name && data.name.length > 11
+            ? data.name.substr(0, 11) + "..."
             : data.name}
         </p>
         <div className="flex items-center justify-between w-full">

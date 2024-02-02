@@ -3,15 +3,24 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { set } from "firebase/database";
 
+type DataBookmarks = {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  media_type: string;
+  release_date: string;
+  first_air_date: string;
+  name: string;
+};
 interface ButtonProps {
   slug: any;
   data: any;
 }
 
 export default function ButtonWatchlist({ slug, data }: ButtonProps) {
-  const [userWatchList, setUserWatchList] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const { data: session, status }: { data: any; status: string } = useSession();
   const [isLoading, setIsloading] = useState(false);
   const [toast, setToast] = useState(false);
@@ -21,8 +30,9 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
   const handleRemoveMylist = async (event: any) => {
     setToast(false);
     setIsloading(true);
+    event.preventDefault();
     try {
-      const res = await fetch(`/api/user/removewatchlist`, {
+      const res = await fetch(`/api/user/removebookmarks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +71,7 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
       if (!session) {
         return;
       }
-      const res = await fetch(`/api/user/addwatchlist`, {
+      const respone = await fetch(`/api/user/addbookmarks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,10 +88,9 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
           },
         }),
       });
-      const dat = await res.json();
-      setToastMessage(dat.message);
+      const result = await respone.json();
+      setToastMessage(result.message);
       await handleGetData();
-      setIsloading(false);
     } catch (error) {
       // Handle error
     } finally {
@@ -95,9 +104,11 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
 
   const handleGetData = async () => {
     if (session) {
-      const res = await fetch(`/api/user?id=${session.user.id}`, {});
-      const data = await res.json();
-      setUserWatchList(data.watchlist);
+      const respone = await fetch(`/api/user?id=${session.user.id}`, {
+        method: "GET",
+      });
+      const result = await respone.json();
+      setBookmarks(result.data);
     }
   };
 
@@ -123,7 +134,7 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
           <h2 className="text-white text-sm">{toastMessage}</h2>
         </div>
       </motion.div>
-      {userWatchList && userWatchList.some((item: any) => item.id === slug) ? (
+      {bookmarks && bookmarks.some((item: any) => item.id === slug) ? (
         <button
           disabled={isLoading}
           type="button"

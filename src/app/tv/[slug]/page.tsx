@@ -10,6 +10,7 @@ import ButtonWatchlist from "@/components/button/ButtonWatchlist";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import ListDirector from "@/components/fragments/ListDirector";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 
 type TvShowDetailPageProps = {
   params: {
@@ -42,6 +43,7 @@ export default async function TvShowDetailPage(props: TvShowDetailPageProps) {
 
   return (
     <>
+      <NavbarFixed title={TvDetails.name} />
       <Sidebar items={tvShowsSidebarItem} />
       <PageLayout>
         <div className="relative rounded-[0.65rem] lg:mx-0 w-full">

@@ -249,70 +249,70 @@ export async function AddWatchList(
   }
 }
 
-export async function RemoveWatchList(
-  email: string,
-  watchlistItem: {
-    id: string;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-    release_date: string;
-    media_type: string;
-  }
-) {
-  const userQuery = query(
-    collection(firestore, "users"),
-    where("email", "==", email)
-  );
+// export async function RemoveWatchList(
+//   email: string,
+//   watchlistItem: {
+//     id: string;
+//     title: string;
+//     poster_path: string;
+//     vote_average: number;
+//     release_date: string;
+//     media_type: string;
+//   }
+// ) {
+//   const userQuery = query(
+//     collection(firestore, "users"),
+//     where("email", "==", email)
+//   );
 
-  try {
-    const userQuerySnapshot = await getDocs(userQuery);
-    const users: any = userQuerySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+//   try {
+//     const userQuerySnapshot = await getDocs(userQuery);
+//     const users: any = userQuerySnapshot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
 
-    if (users.length === 0) {
-      return {
-        status: false,
-        statusCode: 404,
-        message: "User not found",
-      };
-    }
+//     if (users.length === 0) {
+//       return {
+//         status: false,
+//         statusCode: 404,
+//         message: "User not found",
+//       };
+//     }
 
-    const userId = users[0].id;
-    const userWatchlist = users[0].watchlist || [];
-    const itemExist = userWatchlist.some(
-      (item: any) => item.id === watchlistItem.id
-    );
+//     const userId = users[0].id;
+//     const userWatchlist = users[0].watchlist || [];
+//     const itemExist = userWatchlist.some(
+//       (item: any) => item.id === watchlistItem.id
+//     );
 
-    if (!itemExist) {
-      return {
-        status: false,
-        statusCode: 400,
-        message: "Item not found in the watchlist",
-      };
-    } else {
-      const userDocRef = doc(firestore, "users", userId);
-      await updateDoc(userDocRef, {
-        watchlist: arrayRemove(watchlistItem),
-      });
+//     if (!itemExist) {
+//       return {
+//         status: false,
+//         statusCode: 400,
+//         message: "Item not found in the watchlist",
+//       };
+//     } else {
+//       const userDocRef = doc(firestore, "users", userId);
+//       await updateDoc(userDocRef, {
+//         watchlist: arrayRemove(watchlistItem),
+//       });
 
-      return {
-        status: true,
-        message: "Watchlist item removed successfully",
-        statusCode: 200,
-      };
-    }
-  } catch (error) {
-    console.error("Error removing watchlist item:", error);
-    return {
-      status: false,
-      message: "Failed to remove watchlist item",
-      statusCode: 500,
-    };
-  }
-}
+//       return {
+//         status: true,
+//         message: "Watchlist item removed successfully",
+//         statusCode: 200,
+//       };
+//     }
+//   } catch (error) {
+//     console.error("Error removing watchlist item:", error);
+//     return {
+//       status: false,
+//       message: "Failed to remove watchlist item",
+//       statusCode: 500,
+//     };
+//   }
+// }
 
 export async function getUserId(id: string) {
   try {

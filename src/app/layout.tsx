@@ -1,7 +1,6 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavbarFixed from "@/components/navbar/NavbarFixed";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import NavbarContextProvider from "@/context/NavbarContext";
@@ -37,7 +36,6 @@ export default function RootLayout({
         />
         <SessionProvider>
           <NavbarContextProvider>
-            {!disableNavbar && <NavbarFixed />}
             {children}
           </NavbarContextProvider>
         </SessionProvider>

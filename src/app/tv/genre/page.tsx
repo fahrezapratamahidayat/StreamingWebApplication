@@ -2,8 +2,9 @@ import { fetchGenreTv } from "@/app/actions";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import PageLayout from "@/components/layouts/PageLayout";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { tvShowsSidebarItem, } from "@/utils/data";
+import { tvShowsSidebarItem } from "@/utils/data";
 
 export const metadata = {
   title: "TV Genre",
@@ -16,11 +17,10 @@ export default async function tvGenrePage({ searchParams }: any) {
   const TvShowGenre = await fetchGenreTv(1, ParamsId);
   return (
     <>
+      <NavbarFixed />
       <Sidebar items={tvShowsSidebarItem} />
       <PageLayout>
-        <CardLayouts title={ParamsName}>
-          {TvShowGenre}
-        </CardLayouts>
+        <CardLayouts title={ParamsName}>{TvShowGenre}</CardLayouts>
         <LoadMore fetchData={fetchGenreTv} endpoint={ParamsId} />
       </PageLayout>
     </>

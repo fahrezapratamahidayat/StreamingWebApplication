@@ -8,6 +8,7 @@ import PageLayout from "@/components/layouts/PageLayout";
 import CardLayouts from "@/components/layouts/CardLayout";
 import LoadMore from "@/components/button/LoadMore";
 import Loading from "./loading";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 
 export const metadata: Metadata = {
   title: "Movies",
@@ -27,6 +28,7 @@ export default async function Home({ searchParams }: { searchParams: any }) {
   const Movies = await fetchMovies(1, endpoints);
   return (
     <>
+      <NavbarFixed title={title}/>
       <Sidebar items={movieSidebaritem} />
       <PageLayout>
         <CardLayouts title={title} options={endpoint}>

@@ -4,8 +4,7 @@ import { useContext } from "react";
 
 export default function CardShowMoreLayouts({
   children,
-  title,
-  className = "",
+  className,
 }: {
   children: any;
   title?: any;
@@ -21,7 +20,9 @@ export default function CardShowMoreLayouts({
         }`}
       >
         <div
-          className={`lg:flex flex-wrap grid md:flex grid-cols-3  ${showNavbar ? "lg:gap-5" : "lg:gap-4"} md:gap-1 mt-[18px] min-[400px]:flex max-[767px]:flex min-[400px]:gap-1 max-[767px]:gap-1 min-[400px]:ml-4 lg:ml-0 `}
+          className={`lg:flex flex-wrap grid md:flex sm:grid-cols-5 grid-cols-3 ${
+            showNavbar ? "lg:gap-5" : "lg:gap-4"
+          } md:gap-1 mt-[18px] gap-2 mx-2 lg:mx-0`}
         >
           {children}
         </div>

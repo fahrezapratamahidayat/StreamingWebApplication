@@ -39,7 +39,7 @@ export default function CardLayouts({
             {title}
           </h2>
           <div
-            className={`ml-[auto] lg:pr-0 pr-1.5 relative ${
+            className={`ml-[auto] lg:pr-0 pr-1.5 rounded-lg relative${
               pathname?.startsWith("/tv/genre") ||
               pathname?.startsWith("/movies/genre")
                 ? " hidden"
@@ -49,6 +49,7 @@ export default function CardLayouts({
             <button
               className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
               onClick={() => setDropDown(!dropDown)}
+              id="test"
             >
               <span className="pt-1">{label}</span>
               <svg
@@ -71,14 +72,16 @@ export default function CardLayouts({
               </svg>
             </button>
             <label
-              htmlFor=""
-              className={`absolute text-sm mt-1 ${
+              htmlFor="dropdown"
+              onClick={() => setDropDown(!dropDown)}
+              className={`absolute text-sm mt-1 cursor-pointer ${
                 label !== "" ? "scale-75 top-4 -translate-y-5" : ""
               } text-gray-500 dark:text-gray-400 duration-300 transform top-2 z-10 origin-[0] start-3 peer-focus:text-blue-500 peer-focus:dark:text-blue-500  peer-placeholder-shown:translate-y-0 rtl:peer-focus:left-auto`}
             >
-              Sort Movies by
+              Sort {pathname === "/movies" ? "Movies" : "TV Shows"} by
             </label>
             <div
+              id="dropdown"
               className={`${
                 dropDown ? "" : "hidden"
               } duration-75 absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg`}
@@ -89,6 +92,7 @@ export default function CardLayouts({
                     <li
                       key={opt.value}
                       role="option"
+                      aria-selected
                       className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
                       onClick={() => {
                         onSelectChange && onSelectChange(opt.value);

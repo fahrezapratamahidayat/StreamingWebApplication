@@ -9,6 +9,7 @@ import ListDirector from "@/components/fragments/ListDirector";
 import ListStaring from "@/components/fragments/ListStaring";
 import CardVideo from "@/components/card/cardVideo";
 import ButtonWatchNow from "@/components/button/ButtonWatchNow";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 
 type DetailMoviePageProps = {
   params: {
@@ -44,6 +45,7 @@ export default async function DetailMovie(props: DetailMoviePageProps) {
   const Similar = await fetchDetailMovie(`${params.slug}/similar`);
   return (
     <>
+     <NavbarFixed title={MoviesDetail.title} />
       <Sidebar items={movieSidebaritem} />
       <PageLayout>
         <div className="relative rounded-[0.65rem] lg:mx-0 w-full ">

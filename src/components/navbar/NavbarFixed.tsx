@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-export default function NavbarFixed() {
+export default function NavbarFixed({ title }: { title?: string }) {
   const pathname = usePathname();
   const [searchValue, setSearchValue] = useState("");
   const [toggleNav, setToggleNav] = useState(false);
@@ -462,27 +462,66 @@ export default function NavbarFixed() {
           </button>
           <ul className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
             <li
-              className={`${
-                pathname === "/" ? "text-white inline-block" : "hidden "
-              }`}
+              className={`${pathname === "/" ? "text-white flex" : "hidden "}`}
             >
               Home
             </li>
             <li
               className={`${
                 pathname?.includes("/movies")
-                  ? "text-white inline-block"
+                  ? "text-white flex items-center"
                   : "hidden "
               }`}
             >
               Movies
+              <div className="flex items-center ml-2 justify-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-chevron-right"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span className="">{title}</span>
+              </div>
             </li>
             <li
               className={`${
-                pathname?.includes("/tv") ? "text-white inline-block" : "hidden"
+                pathname?.includes("/tv") ? "text-white flex items-center" : "hidden"
               }`}
             >
               Tv Shows
+              <div className="flex items-center ml-2 justify-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-chevron-right"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span className="">{title}</span>
+              </div>
+            </li>
+            <li
+              className={`${
+                pathname?.includes("/mylist") ? "text-white inline-block" : "hidden"
+              }`}
+            >
+              My List
             </li>
           </ul>
           <div

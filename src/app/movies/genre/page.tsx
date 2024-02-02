@@ -2,6 +2,7 @@ import { fetchGenreMovies } from "@/app/actions";
 import LoadMore from "@/components/button/LoadMore";
 import CardLayouts from "@/components/layouts/CardLayout";
 import PageLayout from "@/components/layouts/PageLayout";
+import NavbarFixed from "@/components/navbar/NavbarFixed";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { movieSidebaritem } from "@/utils/data";
 
@@ -24,6 +25,7 @@ export default async function GenrePage({ searchParams}: any) {
   const MoviesGenre = await fetchGenreMovies(1, ParamsId);
   return (
     <>
+    <NavbarFixed />
       <Sidebar items={movieSidebaritem} />
       <PageLayout>
         <CardLayouts title={ParamsName} options={options} >

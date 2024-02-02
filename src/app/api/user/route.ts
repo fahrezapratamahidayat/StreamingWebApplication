@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     try {
       const result = await getUserId(id);
       return NextResponse.json(
-        { status: result.status, message: result.message, watchlist: result.results },
+        { status: result.status, message: result.message, data : result.results },
         { status: result.status }
       );
     } catch (error) {
