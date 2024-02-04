@@ -9,7 +9,7 @@ export default function SkeletonCard({dummyArray}: {dummyArray: number}) {
     <>
       <div className={`animate-pulse`}>
         <div className={`mt-2 w-[130px] h-5 bg-slate-800 lg:ml-0 ml-2`}></div>
-        <div className={`lg:flex flex-wrap grid md:flex grid-cols-3 ${showNavbar ? "lg:gap-5" : "lg:gap-4"} md:gap-1 mt-[18px] mx-2 lg:mx-0 gap-2`}>
+        <div className={`lg:flex flex-wrap grid md:flex grid-cols-3 ${showNavbar ? "lg:gap-5" : "lg:gap-4"} md:gap-1 mt-[30px] mx-2 lg:mx-0 gap-2`}>
           {Array.from({ length: dummyArray }).map((movie: any, index: number) => (
             <div
               className="flex flex-col justify-center items-start gap-[5px] w-fit"

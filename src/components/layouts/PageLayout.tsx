@@ -24,7 +24,7 @@ export default function PageLayout({
                   ? "lg:ml-[3rem]"
                   : "lg:ml-[1.2rem] "
               } transition-all ease-out`
-        } pb-[5rem] pt-[4rem] lg:pt-0 lg:mr-5 `}
+        } pb-[5rem] pt-[3rem] lg:pt-0 lg:mr-5`}
       >
         <div className="mt-[5rem]">{children}</div>
       </div>

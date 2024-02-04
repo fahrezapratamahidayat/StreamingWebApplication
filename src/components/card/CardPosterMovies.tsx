@@ -47,9 +47,7 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
   //     window.removeEventListener("resize", handleResize);
   //   };
   // }, []);
-  // const sizeWindow = {
-    
-  // }
+
   // console.log(windowSize);
   return (
     <>

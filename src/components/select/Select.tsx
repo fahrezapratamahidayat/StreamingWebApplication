@@ -103,7 +103,7 @@ export default function Select({
       animate={dropDown ? "open" : "closed"}
       className={`lg:pr-0 pr-1.5 rounded-lg relative ${className}`}>
         <button
-          className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
+          className="relative bg-[#3F3F46] flex items-center lg:w-60 sm:w-52 w-full h-[40px] justify-between p-3 rounded-lg text-sm text-white"
           onClick={() => setDropDown(!dropDown)}
           id="test"
         >
