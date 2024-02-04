@@ -3,7 +3,7 @@ import { NavbarContext } from "@/context/NavbarContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Sidebar = ({ items }: any) => {
   const [DropDown, setDropDown] = useState(true);
@@ -18,15 +18,32 @@ const Sidebar = ({ items }: any) => {
       behavior: "smooth",
     });
   };
-  
+
+  useEffect(() => {
+    const handleResize = () => {
+      window.innerWidth > 2000 ? setShowNavbar(true) : "";
+    };
+
+    // Mengatur event listener untuk mendeteksi perubahan ukuran layar
+    window.addEventListener("resize", handleResize);
+
+    // Membersihkan event listener saat komponen tidak lagi digunakan
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <div
         className={`lg:block hidden fixed z-50 top-1/2 ${
           showNavbar ? "left-[16rem] ease-in" : "left-3 ease-out"
-        } right-0 transition-all ease-in-out`}
+        } right-0 transition-all ease-in-out 90-zoom:px-[2rem] 80-zoom:hidden 75-zoom:hidden 67-zoom:hidden 50-zoom:hidden 33-zoom:hidden 25-zoom:hidden`}
       >
-        <button className="" onClick={() => setShowNavbar(!showNavbar)} type="button">
+        <button
+          className=""
+          onClick={() => setShowNavbar(!showNavbar)}
+          type="button"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -51,7 +68,7 @@ const Sidebar = ({ items }: any) => {
         } pt-[5rem] fixed h-full lg:block transition-all ease-in-out z-50`}
       >
         <div
-          className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out bg-black`}
+          className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out bg-black 80-zoom:bg-transparent`}
         >
           <h2
             className={`text-white font-semibold text-base cursor-pointer flex items-center`}

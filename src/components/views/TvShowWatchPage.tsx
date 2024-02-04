@@ -117,13 +117,11 @@ export default function TvWatchPageView({ slug }: { slug: string }) {
   }, [slug, selectedSeason]);
 
   const openModal = () => {
-    // Add the CSS class to the body when the modal is open
     document.body.classList.add("modal-open");
     setShowModal(true);
   };
 
   const closeModal = () => {
-    // Remove the CSS class when the modal is closed
     document.body.classList.remove("modal-open");
     setShowModal(false);
   };

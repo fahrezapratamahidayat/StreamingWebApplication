@@ -120,7 +120,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
       <div
         className="fixed z-40 w-full backdrop-blur flex-none 
           transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
-         bg-transparent"
+         bg-transparent 90-zoom:px-[2rem] 80-zoom:px-[3rem] 75-zoom:px-[4rem] 67-zoom:px-[7rem] 50-zoom:px-[32rem] 33-zoom:px-[82rem] 25-zoom:px-[134rem]"
       >
         <div className="flex items-center lg:px-5 px-4 py-3 w-full">
           <div className="w-full flex items-center justify-between">
@@ -526,8 +526,8 @@ export default function NavbarFixed({ title }: { title?: string }) {
           </ul>
           <div
             className={`${
-              toggleSidebar ? "left-0 " : "-left-[450px]"
-            } fixed top-0 bg-black/50  h-[100rem] w-full transition-all ease-in-out`}
+              toggleSidebar ? "left-0 " : "-left-[450px] opacity-0"
+            } fixed top-0 bg-black/50  h-[100rem] w-full transition-all ease-in-out lg:hidden sm:hidden`}
           >
             <aside
               className="absolute top-0 w-[80%]  bg-black rounded shadow-md"

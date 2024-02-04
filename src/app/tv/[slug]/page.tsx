@@ -102,10 +102,10 @@ export default async function TvShowDetailPage(props: TvShowDetailPageProps) {
               </p>
               <div className="flex items-center lg:mt-[2.25rem] mt-[1.25rem]">
                 <ButtonWatchNow
-                  to={`/tv/${params.slug}/watch?=${TvDetails.name.replace(
+                  to={`/tv/${params.slug}/watch?q=${TvDetails.name.replace(
                     /\s+/g,
                     "+"
-                  )}/season/1`}
+                  )}&season=1`}
                 />
                 <ButtonWatchlist slug={params.slug} data={TvDetails} />
               </div>

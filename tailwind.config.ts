@@ -22,8 +22,21 @@ const config: Config = {
       transitionProperty: {
         'height': 'height',
       },
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        '13': 'repeat(13, minmax(0, 1fr))',
+
+        // Complex site-specific column configuration
+        'footer': '200px minmax(900px, 1fr) 100px',
+      },
       screens: {
-        'macbox-air' : "1280px",
+        '90-zoom' : "1777px",
+        "80-zoom" : "2000px",
+        "75-zoom" : "2133px",
+        "67-zoom" : "2400px",
+        "50-zoom" : "3200px",
+        "33-zoom" : "4800px",
+        "25-zoom" : "6400px",
       },
     },
   },

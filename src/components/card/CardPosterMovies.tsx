@@ -31,22 +31,26 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowSize({
+  //       width: window.innerWidth,
+  //       height: window.innerHeight,
+  //     });
+  //   };
 
-    // Mengatur event listener untuk mendeteksi perubahan ukuran layar
-    window.addEventListener("resize", handleResize);
+  //   // Mengatur event listener untuk mendeteksi perubahan ukuran layar
+  //   window.addEventListener("resize", handleResize);
 
-    // Membersihkan event listener saat komponen tidak lagi digunakan
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   // Membersihkan event listener saat komponen tidak lagi digunakan
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
+  // const sizeWindow = {
+    
+  // }
+  // console.log(windowSize);
   return (
     <>
       <MotionDiv

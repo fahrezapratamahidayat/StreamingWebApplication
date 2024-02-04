@@ -2,6 +2,7 @@
 import { NavbarContext } from "@/context/NavbarContext";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
+import { motion } from "framer-motion";
 
 interface CardLayoutsProps {
   children: React.ReactNode;
@@ -27,6 +28,26 @@ export default function CardLayouts({
   const router = useRouter();
   const pathname = usePathname();
 
+  const variant = {
+    open: {
+      clipPath: "inset(0% 0% 0% 0% round 10px)",
+      transition: {
+        type: "spring",
+        bounce: 0,
+        duration: 0.7,
+        delayChildren: 0.3,
+        staggerChildren: 0.05,
+      },
+    },
+    closed: {
+      clipPath: "inset(10% 50% 90% 50% round 10px)",
+      transition: {
+        type: "spring",
+        bounce: 0,
+        duration: 0.3,
+      },
+    },
+  };
   return (
     <>
       <div
@@ -80,72 +101,87 @@ export default function CardLayouts({
             >
               Sort {pathname === "/movies" ? "Movies" : "TV Shows"} by
             </label>
-            <div
+            <motion.ul
+              animate={dropDown ? "open" : "closed"}
+              variants={variant}
               id="dropdown"
-              className={`${
-                dropDown ? "" : "hidden"
-              } duration-75 absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg`}
+              className={`duration-75 absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg p-2`}
             >
-              <ul className="p-2">
-                {options &&
-                  options.map((opt) => (
-                    <li
-                      key={opt.value}
-                      role="option"
-                      aria-selected
-                      className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
-                      onClick={() => {
-                        onSelectChange && onSelectChange(opt.value);
-                        setLabel(opt.label);
-                        if (opt.label === "Now Playing") {
-                          router.push("/movies");
-                        } else {
-                          const basePath =
-                            pathname === "/movies" ? "/movies" : "/tv";
-                          const queryParam = opt.params
-                            ? `?sort=${opt.params}`
-                            : "";
-                          router.push(`${basePath}${queryParam}`);
-                        }
-                      }}
-                    >
-                      {(pathname === "/movies" &&
-                        opt.label === "Now Playing") ||
-                      (pathname === "/tv" && opt.label === "Popular")
-                        ? opt.label + " : Default"
-                        : opt.label}
-                      {opt.label == label ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M20 6L9 17L4 12"
-                            stroke="white"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
-                      ) : (
-                        ""
-                      )}
-                    </li>
-                  ))}
-              </ul>
-            </div>
+              {options &&
+                options.map((opt, index) => (
+                  <motion.li
+                    animate={dropDown ? "open" : "closed"}
+                    variants={{
+                      open: {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 24,
+                          delay: index * 0.1,
+                        },
+                      },
+                      closed: {
+                        opacity: 0,
+                        y: 20,
+                        transition: { duration: 0.2 },
+                      },
+                    }}
+                    key={opt.value}
+                    role="option"
+                    aria-selected
+                    className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
+                    onClick={() => {
+                      onSelectChange && onSelectChange(opt.value);
+                      setLabel(opt.label);
+                      if (opt.label === "Now Playing") {
+                        router.push("/movies");
+                      } else {
+                        const basePath =
+                          pathname === "/movies" ? "/movies" : "/tv";
+                        const queryParam = opt.params
+                          ? `?sort=${opt.params}`
+                          : "";
+                        router.push(`${basePath}${queryParam}`);
+                      }
+                    }}
+                  >
+                    {(pathname === "/movies" && opt.label === "Now Playing") ||
+                    (pathname === "/tv" && opt.label === "Popular")
+                      ? opt.label + " : Default"
+                      : opt.label}
+                    {opt.label == label ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M20 6L9 17L4 12"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    ) : (
+                      ""
+                    )}
+                  </motion.li>
+                ))}
+            </motion.ul>
           </div>
         </div>
-        <div
-          className={`lg:flex flex-wrap grid md:flex sm:grid-cols-5 grid-cols-3 ${
-            showNavbar ? "lg:gap-5" : "lg:gap-4"
-          } md:gap-1 mt-[18px] gap-2 mx-2 lg:mx-0`}
-        >
-          {children}
-        </div>
+      </div>
+      <div
+        className={`lg:flex flex-wrap grid md:flex sm:grid-cols-5 grid-cols-3 ${
+          showNavbar ? "lg:gap-5" : "lg:gap-4"
+        } md:gap-1 mt-[18px] gap-2 mx-2 lg:mx-0`}
+      >
+        {children}
       </div>
     </>
   );

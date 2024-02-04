@@ -28,15 +28,17 @@ export default async function Home({ searchParams }: { searchParams: any }) {
   const Movies = await fetchMovies(1, endpoints);
   return (
     <>
-      <NavbarFixed title={title}/>
-      <Sidebar items={movieSidebaritem} />
-      <PageLayout>
-        <CardLayouts title={title} options={endpoint}>
-          {Movies}
-        </CardLayouts>
-        <LoadMore fetchData={fetchMovies} endpoint={endpoints} />
-      </PageLayout>
-      <Footer />
+      <NavbarFixed title={title} />
+      <div className="90-zoom:px-[2rem] 80-zoom:px-[3rem] 75-zoom:px-[4rem] 67-zoom:px-[7rem] 50-zoom:px-[32rem] 33-zoom:px-[82rem] 25-zoom:px-[134rem]">
+        <Sidebar items={movieSidebaritem} />
+        <PageLayout>
+          <CardLayouts title={title} options={endpoint}>
+            {Movies}
+          </CardLayouts>
+          <LoadMore fetchData={fetchMovies} endpoint={endpoints} />
+        </PageLayout>
+        <Footer />
+      </div>
     </>
   );
 }

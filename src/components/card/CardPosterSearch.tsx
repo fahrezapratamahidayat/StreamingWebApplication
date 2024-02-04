@@ -50,7 +50,7 @@ export default function CardPosterSearch({ index, data }: CardProps) {
       >
         <Link
           href={
-            data.media_type === "tv" ? `/tv/${data.id}` : `/movie/${data.id}`
+            data.media_type === "tv" ? `/tv/${data.id}` : `/movies/${data.id}`
           }
           scroll={false}
         >

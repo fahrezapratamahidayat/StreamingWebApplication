@@ -1,7 +1,10 @@
+import NavbarFixed from "../navbar/NavbarFixed";
+
 export default function HomePageView() {
 
   return (
     <>
+    <NavbarFixed />
       <div className="min-w-full min-h-screen ">
         <div className="absolute top-0 left-0 h-full w-full flex items-center justify-center">
           <h1
