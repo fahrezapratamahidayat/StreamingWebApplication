@@ -89,7 +89,7 @@ export default async function WatchTvPage(props: dataPageProps) {
       <MainLayouts>
         {/* <TvWatchPageView slug={params.slug} /> */}
         <div className="mx-5 mt-[4rem] pt-[4rem] lg:pt-0 w-full">
-          <div className="flex flex-col lg:flex-row justify-between lg:my-5 gap-2 w-full">
+          <div className="flex flex-col lg:flex-row sm:flex-row justify-between lg:my-5 gap-2 w-full">
             <h1 className="text-white text-[20px] font-semibold">
               {tvSeasonsData.name} - Season {searchParams.season}
             </h1>
