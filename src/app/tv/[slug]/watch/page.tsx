@@ -9,6 +9,8 @@ import Image from "next/image";
 import { MotionDiv } from "@/components/motion/FramerMotion";
 import { Variants } from "framer-motion";
 import useZoomPadding from "@/hooks/WindowSize";
+import CardTvEpisodes from "@/components/card/CardTvEpisodes";
+import Modal from "@/components/Modal";
 
 type dataPageProps = {
   params: {
@@ -56,6 +58,13 @@ export default async function WatchTvPage(props: dataPageProps) {
   const DetailTvSeason = await fetchDetailTv(
     `${params.slug}/season/${searchParams.season}`
   );
+
+  const detailEpisode =
+    searchParams.episode &&
+    (await fetchData(
+      `tv/${params.slug}/season/${searchParams.season}/episode/${searchParams.episode}`
+    ));
+  console.log(detailEpisode);
   const TvDetails = await fetchDetailTv(params.slug);
   const tvSeasonsData: TvShowSubset = {
     name: TvDetails.name,
@@ -83,7 +92,7 @@ export default async function WatchTvPage(props: dataPageProps) {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
-  console.log(DetailTvSeason);
+  const searchParamsEpisode = searchParams.episode ? true : false;
   return (
     <>
       <NavbarFixed title={TvDetails.name} />
@@ -92,7 +101,8 @@ export default async function WatchTvPage(props: dataPageProps) {
         <div className="mx-4 mt-[4rem] pt-[4rem] lg:pt-0 w-full">
           <div className="flex flex-col lg:flex-row sm:flex-row justify-between lg:my-5 gap-2 w-full">
             <h1 className="text-white text-[20px] font-semibold">
-              {tvSeasonsData.name} - Season {searchParams.season}
+              {tvSeasonsData.name} - Season {searchParams.season}{" "}
+              {searchParams.episode ? `- Episode ${searchParams.episode}` : ""}
             </h1>
             <Select
               className="mb-2 lg:mb-0"
@@ -103,43 +113,31 @@ export default async function WatchTvPage(props: dataPageProps) {
           </div>
           {DetailTvSeason.episodes.length > 0 ? (
             <>
-              <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-3 gap-5 w-fit">
-                {DetailTvSeason.episodes.map((episode: any, index: any) => (
-                  <MotionDiv
-                    key={episode.name}
-                    className="relative flex flex-col "
-                    variants={variants}
-                    initial="hidden"
-                    animate="visible"
-                    transition={{
-                      delay: index * 0.1,
-                      duration: 0.5,
-                      type: "tween",
-                    }}
-                  >
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${episode.still_path}`}
-                      alt={episode.name}
-                      width={500}
-                      height={500}
-                      priority
-                      className="rounded-md"
-                    />
-                    <div className="flex gap-2 mt-1">
-                      <p className="text-white text-base">
-                        {episode.episode_number}.
-                      </p>
-                      <p className="text-white text-base">{episode.name}</p>
-                      <p className="text-gray-400 text-base ml-auto">
-                        {episode.runtime}m
-                      </p>
-                    </div>
-                    <p className="text-gray-400 text-sm flex-shrink-0">
-                      {episode.overview}
-                    </p>
-                  </MotionDiv>
-                ))}
-              </div>
+              {searchParamsEpisode ? (
+                <div className="">
+                  
+                </div>
+              ) : (
+                <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-3 gap-5 w-fit">
+                  {DetailTvSeason.episodes.map((episode: any, index: any) => (
+                    <>
+                      <CardTvEpisodes
+                        key={episode.name}
+                        episode={episode}
+                        index={index}
+                        linkUrlModal={`/tv/${
+                          params.slug
+                        }/watch?q=${tvSeasonsData.name.replace(
+                          /\s+/g,
+                          "+"
+                        )}&season=${searchParams.season}&episode=${
+                          episode.episode_number
+                        }`}
+                      />
+                    </>
+                  ))}
+                </div>
+              )}
             </>
           ) : (
             <p className="text-white text-lg">No episodes available</p>

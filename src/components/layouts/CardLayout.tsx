@@ -1,7 +1,7 @@
 "use client";
 import { NavbarContext } from "@/context/NavbarContext";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 interface CardLayoutsProps {
@@ -27,6 +27,7 @@ export default function CardLayouts({
   const [label, setLabel] = useState<string>("");
   const router = useRouter();
   const pathname = usePathname();
+  const selectRef : any = useRef(null);
 
   const variant = {
     open: {
@@ -48,6 +49,20 @@ export default function CardLayouts({
       },
     },
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setDropDown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dropDown]);
   return (
     <>
       <div
@@ -110,6 +125,7 @@ export default function CardLayouts({
               {options &&
                 options.map((opt, index) => (
                   <motion.li
+                    ref={selectRef}
                     animate={dropDown ? "open" : "closed"}
                     variants={{
                       open: {

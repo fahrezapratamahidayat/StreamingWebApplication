@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Variants, motion } from "framer-motion";
 
 interface SelectProps {
@@ -16,20 +16,27 @@ export default function Select({
   onSelectChange,
   nameTv,
   slug,
-  className
+  className,
 }: SelectProps) {
   const [dropDown, setDropDown] = useState<boolean>(false);
   const [label, setLabel] = useState<string>("");
   const router = useRouter();
+  const selectRef: any = useRef(null);
 
-  const itemVariants: Variants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: { type: "spring", stiffness: 300, damping: 24 },
-    },
-    closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
-  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setDropDown(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dropDown]);
+
   const variant = {
     open: {
       clipPath: "inset(0% 0% 0% 0% round 10px)",
@@ -52,56 +59,11 @@ export default function Select({
   };
   return (
     <>
-      {/* <div className={`ml-[auto] lg:pr-0 pr-1.5 rounded-lg relative`}>
-        <button
-          className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
-          onClick={() => setDropDown(!dropDown)}
-          id="test"
-        >
-          <span className="pt-1">{valueParams}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 25"
-            fill="none"
-            className={`${
-              dropDown ? "rotate-180" : "rotate-0"
-            } transition-all absolute right-2`}
-          >
-            <path
-              d="M6 9.5L12 15.5L18 9.5"
-              stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <label
-          htmlFor="dropdown"
-          onClick={() => setDropDown(!dropDown)}
-          className={`absolute text-sm mt-1 cursor-pointer ${
-            label !== "" ? "scale-75 top-4 -translate-y-5" : ""
-          } text-gray-500 dark:text-gray-400 duration-300 transform top-2 z-10 origin-[0] start-3 peer-focus:text-blue-500 peer-focus:dark:text-blue-500  peer-placeholder-shown:translate-y-0 rtl:peer-focus:left-auto`}
-        >
-          Select Season
-        </label>
-        <div
-          id="dropdown"
-          className={`${
-            dropDown ? "" : "hidden"
-          } duration-75 absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg`}
-        >
-          <ul className="p-2">
-            {children}
-          </ul>
-        </div>
-      </div> */}
-      <motion.div 
-      initial={false}
-      animate={dropDown ? "open" : "closed"}
-      className={`lg:pr-0 pr-1.5 rounded-lg relative ${className}`}>
+      <motion.div
+        initial={false}
+        animate={dropDown ? "open" : "closed"}
+        className={`lg:pr-0 pr-1.5 rounded-lg relative ${className}`}
+      >
         <button
           className="relative bg-[#3F3F46] flex items-center lg:w-60 sm:w-52 w-full h-[40px] justify-between p-3 rounded-lg text-sm text-white"
           onClick={() => setDropDown(!dropDown)}
@@ -141,14 +103,20 @@ export default function Select({
           variants={variant}
           className={`absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg p-2`}
         >
-          {options.map((opt,index: number) => (
+          {options.map((opt, index: number) => (
             <motion.li
+              ref={selectRef}
               animate={dropDown ? "open" : "closed"}
               variants={{
                 open: {
                   opacity: 1,
                   y: 0,
-                  transition: { type: "spring", stiffness: 300, damping: 24, delay: index * 0.1 },
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 24,
+                    delay: index * 0.1,
+                  },
                 },
                 closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
               }}
@@ -179,9 +147,9 @@ export default function Select({
                   <path
                     d="M20 6L9 17L4 12"
                     stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               ) : (
