@@ -56,11 +56,11 @@ export default function CardLayouts({
         }`}
       >
         <div className="relative w-full flex items-center">
-          <h2 className="text-white font-semibold text-[20px] lg:pl-0 pl-2">
+          <h2 className="text-white font-semibold text-[20px] mx-2.5 lg:mx-0">
             {title}
           </h2>
           <div
-            className={`ml-[auto] lg:pr-0 pr-1.5 rounded-lg relative${
+            className={`ml-[auto] lg:pr-0 pr-1.5 rounded-lg relative ${
               pathname?.startsWith("/tv/genre") ||
               pathname?.startsWith("/movies/genre")
                 ? " hidden"
@@ -179,7 +179,7 @@ export default function CardLayouts({
       <div
         className={`lg:flex flex-wrap grid md:flex sm:grid-cols-5 grid-cols-3 ${
           showNavbar ? "lg:gap-5" : "lg:gap-4"
-        } md:gap-1 mt-[18px] gap-2 mx-3 lg:mx-0`}
+        } md:gap-1 mt-[18px] gap-2 mx-4 lg:mx-0`}
       >
         {children}
       </div>

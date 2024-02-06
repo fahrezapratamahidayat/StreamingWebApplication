@@ -83,12 +83,13 @@ export default async function WatchTvPage(props: dataPageProps) {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
+  console.log(DetailTvSeason);
   return (
     <>
       <NavbarFixed title={TvDetails.name} />
       <MainLayouts>
         {/* <TvWatchPageView slug={params.slug} /> */}
-        <div className="mx-5 mt-[4rem] pt-[4rem] lg:pt-0 w-full">
+        <div className="mx-4 mt-[4rem] pt-[4rem] lg:pt-0 w-full">
           <div className="flex flex-col lg:flex-row sm:flex-row justify-between lg:my-5 gap-2 w-full">
             <h1 className="text-white text-[20px] font-semibold">
               {tvSeasonsData.name} - Season {searchParams.season}
@@ -102,7 +103,7 @@ export default async function WatchTvPage(props: dataPageProps) {
           </div>
           {DetailTvSeason.episodes.length > 0 ? (
             <>
-              <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-3 gap-5 ">
+              <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-3 gap-5 w-fit">
                 {DetailTvSeason.episodes.map((episode: any, index: any) => (
                   <MotionDiv
                     key={episode.name}
@@ -129,6 +130,9 @@ export default async function WatchTvPage(props: dataPageProps) {
                         {episode.episode_number}.
                       </p>
                       <p className="text-white text-base">{episode.name}</p>
+                      <p className="text-gray-400 text-base ml-auto">
+                        {episode.runtime}m
+                      </p>
                     </div>
                     <p className="text-gray-400 text-sm flex-shrink-0">
                       {episode.overview}
