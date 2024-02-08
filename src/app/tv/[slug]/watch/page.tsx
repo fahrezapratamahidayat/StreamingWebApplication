@@ -2,15 +2,12 @@ import { fetchDetailTv } from "@/app/actions";
 import MainLayouts from "@/components/layouts/MainLayouts";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
 import Select from "@/components/select/Select";
-import TvWatchPageView from "@/components/views/TvShowWatchPage";
 import { FetchingData, fetchData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
-import Image from "next/image";
-import { MotionDiv } from "@/components/motion/FramerMotion";
 import { Variants } from "framer-motion";
-import useZoomPadding from "@/hooks/WindowSize";
 import CardTvEpisodes from "@/components/card/CardTvEpisodes";
-import Modal from "@/components/Modal";
+import TvEpisode from "@/components/fragments/TvEpisode";
+import { headers } from "next/headers";
 
 type dataPageProps = {
   params: {
@@ -55,17 +52,25 @@ type TvShowSubset = {
 export default async function WatchTvPage(props: dataPageProps) {
   const { params } = props;
   const { searchParams } = props;
+
   const DetailTvSeason = await fetchDetailTv(
     `${params.slug}/season/${searchParams.season}`
   );
 
   const detailEpisode =
     searchParams.episode &&
-    (await fetchData(
-      `tv/${params.slug}/season/${searchParams.season}/episode/${searchParams.episode}`
+    (await fetchDetailTv(
+      `${params.slug}/season/${searchParams.season}/episode/${searchParams.episode}`
     ));
-  console.log(detailEpisode);
+
+  const tvEpisodeImages =
+    searchParams.episode &&
+    (await fetchDetailTv(
+      `${params.slug}/season/${searchParams.season}/episode/${searchParams.episode}/images`
+    ));
+
   const TvDetails = await fetchDetailTv(params.slug);
+
   const tvSeasonsData: TvShowSubset = {
     name: TvDetails.name,
     number_of_seasons: TvDetails.number_of_seasons,
@@ -86,18 +91,13 @@ export default async function WatchTvPage(props: dataPageProps) {
       return [];
     }
   };
+
   const seasons = seasonNumber();
 
-  const variants: Variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
-  const searchParamsEpisode = searchParams.episode ? true : false;
   return (
     <>
       <NavbarFixed title={TvDetails.name} />
       <MainLayouts>
-        {/* <TvWatchPageView slug={params.slug} /> */}
         <div className="mx-4 mt-[4rem] pt-[4rem] lg:pt-0 w-full">
           <div className="flex flex-col lg:flex-row sm:flex-row justify-between lg:my-5 gap-2 w-full">
             <h1 className="text-white text-[20px] font-semibold">
@@ -113,10 +113,17 @@ export default async function WatchTvPage(props: dataPageProps) {
           </div>
           {DetailTvSeason.episodes.length > 0 ? (
             <>
-              {searchParamsEpisode ? (
-                <div className="">
-                  
-                </div>
+              {searchParams.episode ? (
+                <TvEpisode
+                  iframeSrc={`https://multiembed.mov/?video_id=${params.slug}&tmdb=1&s=${searchParams.season}&e=${searchParams.episode}`}
+                  air_date={detailEpisode.air_date}
+                  runtime={detailEpisode.runtime}
+                  name={detailEpisode.name}
+                  still_path={`${detailEpisode.still_path}`}
+                  overview={detailEpisode.overview}
+                  vote={detailEpisode.vote_average}
+                  language={TvDetails.original_language}
+                />
               ) : (
                 <div className="grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-3 gap-5 w-fit">
                   {DetailTvSeason.episodes.map((episode: any, index: any) => (
