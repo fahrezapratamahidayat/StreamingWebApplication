@@ -1,5 +1,4 @@
 "use server";
-
 import CardPosteranimes from "@/components/card/CardPosterAnimes";
 import CardPosterMovies from "@/components/card/CardPosterMovies";
 import CardPosterSearch from "@/components/card/CardPosterSearch";
