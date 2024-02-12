@@ -1,5 +1,9 @@
 "use client";
-import { movieSidebaritem, tvShowsSidebarItem } from "@/utils/data";
+import {
+  animeSidebarItem,
+  movieSidebaritem,
+  tvShowsSidebarItem,
+} from "@/utils/data";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -401,7 +405,9 @@ export default function NavbarFixed({ title }: { title?: string }) {
                     </li>
                     <li
                       className={`${
-                        pathname === "/animes" ? "text-white" : "text-[#939393]"
+                        pathname?.startsWith("/animes")
+                          ? "text-white"
+                          : "text-[#939393]"
                       } font-bold text-base hover:text-white cursor-pointer`}
                     >
                       <Link href="/animes">Animes</Link>
@@ -628,6 +634,25 @@ export default function NavbarFixed({ title }: { title?: string }) {
                             <Link
                               className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
                               href={`/movies/genre?id=${
+                                genre.id
+                              }&name=${genre.name.replace(/\s+/g, "+")}`}
+                              scroll={false}
+                            >
+                              {genre.name}
+                            </Link>
+                          </li>
+                        ))
+                      : pathname?.startsWith(`/animes`)
+                      ? animeSidebarItem.map((genre: any, index: number) => (
+                          <li
+                            key={index}
+                            className={`border-l border-slate-800 ${
+                              DropDown ? "" : "hidden"
+                            } transition-all duration-500 ease-out`}
+                          >
+                            <Link
+                              className={`hover:text-white mt-[0.75rem] text-sm pl-3`}
+                              href={`/animes/genre?id=${
                                 genre.id
                               }&name=${genre.name.replace(/\s+/g, "+")}`}
                               scroll={false}

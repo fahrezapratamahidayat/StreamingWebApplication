@@ -34,7 +34,6 @@ const Sidebar = ({ items, params, idParams }: any) => {
   }, []);
   const GenreId = idParams; // asumsikan idParams adalah nilai yang diberikan sebelumnya
   const GenreIdInteger = parseInt(GenreId); // mengubah nilai GenreId menjadi integer
-  console.log(GenreIdInteger)
   return (
     <>
       <div
@@ -129,7 +128,7 @@ const Sidebar = ({ items, params, idParams }: any) => {
               >
                 <Link
                   className={`hover:text-white mt-[0.75rem] text-sm pl-3 ${
-                    params === genre.name  && GenreIdInteger === genre.id
+                    params === genre.name || GenreIdInteger === genre.id
                       ? "text-white"
                       : ""
                   }

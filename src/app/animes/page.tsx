@@ -6,6 +6,12 @@ import CardLayouts from "@/components/layouts/CardLayout";
 import { animeSidebarItem } from "@/utils/data";
 import Footer from "@/components/footer/Footer";
 import LoadMore from "@/components/button/LoadMore";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Animes",
+  description: "...",
+};
 
 export default async function Page() {
   const animes = await fetchAnimes(1);

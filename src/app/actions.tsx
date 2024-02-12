@@ -70,14 +70,6 @@ export const fetchAnimes = async (page: number) => {
   ));
 };
 
-export const fetchAnimesGenre = async (page: number, genre: string) => {
-  const res = await fetch(`https://api.jikan.moe/v4/top/anime?limit=100`);
-  const data = await res.json();
-  const filter = data.data.filter((item: any) =>
-    item.genres.some((g: any) => g.name === genre)
-  );
-  return filter
-};
 
 export const fetchDetailAnime = async (url: string) => {
   const res = await fetch(url);
