@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-const Sidebar = ({ items }: any) => {
+const Sidebar = ({ items, params, idParams }: any) => {
   const [DropDown, setDropDown] = useState(true);
   const { data: session, status }: { data: any; status: string } =
     useSession() || {};
@@ -32,6 +32,9 @@ const Sidebar = ({ items }: any) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const GenreId = idParams; // asumsikan idParams adalah nilai yang diberikan sebelumnya
+  const GenreIdInteger = parseInt(GenreId); // mengubah nilai GenreId menjadi integer
+  console.log(GenreIdInteger)
   return (
     <>
       <div
@@ -125,7 +128,11 @@ const Sidebar = ({ items }: any) => {
                 } transition-all ease-in-out`}
               >
                 <Link
-                  className={`hover:text-white mt-[0.75rem] text-sm pl-3
+                  className={`hover:text-white mt-[0.75rem] text-sm pl-3 ${
+                    params === genre.name  && GenreIdInteger === genre.id
+                      ? "text-white"
+                      : ""
+                  }
                   }`}
                   href={
                     pathname?.includes("/tv")
@@ -133,10 +140,17 @@ const Sidebar = ({ items }: any) => {
                           /\s+/g,
                           "+"
                         )}`
-                      : `/movies/genre?id=${genre.id}&name=${genre.name.replace(
+                      : pathname?.includes("/movies")
+                      ? `/movies/genre?id=${genre.id}&name=${genre.name.replace(
                           /\s+/g,
                           "+"
                         )}`
+                      : pathname?.includes("/animes")
+                      ? `/animes/genre?id=${genre.id}&name=${genre.name.replace(
+                          /\s+/g,
+                          "+"
+                        )}`
+                      : "#"
                   }
                   onClick={handleClick}
                   scroll={false}

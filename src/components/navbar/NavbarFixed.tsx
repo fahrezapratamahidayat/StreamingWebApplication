@@ -473,7 +473,9 @@ export default function NavbarFixed({ title }: { title?: string }) {
                   : "hidden "
               }`}
             >
-              Movies
+              <Link href={"/movies"} scroll={false}>
+                Movies
+              </Link>
               <div className="flex items-center ml-2 justify-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -494,10 +496,14 @@ export default function NavbarFixed({ title }: { title?: string }) {
             </li>
             <li
               className={`${
-                pathname?.includes("/tv") ? "text-white flex items-center" : "hidden"
+                pathname?.includes("/tv")
+                  ? "text-white flex items-center"
+                  : "hidden"
               }`}
             >
-              Tv Shows
+              <Link href={"/tv"} scroll={false}>
+                Tv Shows
+              </Link>
               <div className="flex items-center ml-2 justify-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -518,7 +524,37 @@ export default function NavbarFixed({ title }: { title?: string }) {
             </li>
             <li
               className={`${
-                pathname?.includes("/mylist") ? "text-white inline-block" : "hidden"
+                pathname?.includes("/animes")
+                  ? "text-white flex items-center"
+                  : "hidden"
+              }`}
+            >
+              <Link href="/animes" scroll={false}>
+                Animes
+              </Link>
+              <div className="flex items-center ml-2 justify-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-chevron-right"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span className="">{title}</span>
+              </div>
+            </li>
+            <li
+              className={`${
+                pathname?.includes("/mylist")
+                  ? "text-white inline-block"
+                  : "hidden"
               }`}
             >
               My List

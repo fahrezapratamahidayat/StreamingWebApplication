@@ -20,7 +20,7 @@ export default async function tvGenrePage({ searchParams }: any) {
     <>
       <NavbarFixed />
       <div className="90-zoom:px-[2rem] 80-zoom:px-[3rem] 75-zoom:px-[4rem] 67-zoom:px-[7rem] 50-zoom:px-[32rem] 33-zoom:px-[82rem] 25-zoom:px-[134rem]">
-        <Sidebar items={tvShowsSidebarItem} />
+        <Sidebar items={tvShowsSidebarItem} params={ParamsName} idParams={ParamsId}/>
         <PageLayout>
           <CardLayouts title={ParamsName}>{TvShowGenre}</CardLayouts>
           <LoadMore fetchData={fetchGenreTv} endpoint={ParamsId} />

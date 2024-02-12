@@ -1,12 +1,16 @@
 "use server";
 
+import CardPosteranimes from "@/components/card/CardPosterAnimes";
 import CardPosterMovies from "@/components/card/CardPosterMovies";
 import CardPosterSearch from "@/components/card/CardPosterSearch";
 import CardPosterTvShows from "@/components/card/CardPosterTvShows";
-import ListDirector from "@/components/fragments/ListDirector";
 import { fetchData } from "@/services/DataApi";
-import { CardSearchProps, MovieProps, TvShowProps } from "@/types/CardProps";
-import axios from "axios";
+import {
+  CardAnimeProps,
+  CardSearchProps,
+  MovieProps,
+  TvShowProps,
+} from "@/types/CardProps";
 
 export const fetchMovies = async (page: number, endpoint: string) => {
   const res = await fetchData(`movie/${endpoint}?page=${page}&limit=10`);
@@ -59,4 +63,37 @@ export const fetchDetailTv = async (slug: string) => {
   return res;
 };
 
+export const fetchAnimes = async (page: number) => {
+  const res = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`);
+  const data = await res.json();
+  return data.data.map((item: CardAnimeProps, index: number) => (
+    <CardPosteranimes key={item.mal_id} anime={item} index={index} />
+  ));
+};
 
+export const fetchAnimesGenre = async (page: number, genre: string) => {
+  const res = await fetch(`https://api.jikan.moe/v4/top/anime?limit=100`);
+  const data = await res.json();
+  const filter = data.data.filter((item: any) =>
+    item.genres.some((g: any) => g.name === genre)
+  );
+  return filter
+};
+
+export const fetchDetailAnime = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.data;
+};
+
+export const fetchDetailAnimeCharacters = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.data;
+};
+
+export const fetchDetailAnimeVideos = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  return data;
+};

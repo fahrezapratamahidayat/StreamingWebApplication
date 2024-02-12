@@ -83,3 +83,21 @@
 .overflow-video::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+.synopsis-container {
+  max-height: 22rem; /* Atur ketinggian maksimum */
+  overflow: hidden; /* Sembunyikan konten yang melebihi ketinggian maksimum */
+  position: relative; /* Diperlukan untuk konten overflow */
+}
+
+.synopsis-content {
+  overflow: hidden; /* Sembunyikan konten yang melebihi ketinggian maksimum */
+  position: relative; /* Diperlukan untuk konten overflow */
+}
+
+.synopsis-fade {
+  position: absolute; /* Diperlukan untuk lapisan efek fade */
+  bottom: 0; /* Efek fade akan muncul di bagian bawah kontainer */
+  width: 100%; /* Lebar efek fade sesuai dengan kontainer */
+  height: 2rem; /* Tinggi efek fade *//* Efek fade gradient */
+}
