@@ -3,7 +3,7 @@ import { NavbarContext } from "@/context/NavbarContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 const Sidebar = ({ items, params, idParams }: any) => {
   const [DropDown, setDropDown] = useState(true);
@@ -19,21 +19,13 @@ const Sidebar = ({ items, params, idParams }: any) => {
     });
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      window.innerWidth > 2000 ? setShowNavbar(true) : "";
-    };
+  const GenreId = idParams;
+  const GenreIdInteger = parseInt(GenreId);
 
-    // Mengatur event listener untuk mendeteksi perubahan ukuran layar
-    window.addEventListener("resize", handleResize);
-
-    // Membersihkan event listener saat komponen tidak lagi digunakan
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  const GenreId = idParams; // asumsikan idParams adalah nilai yang diberikan sebelumnya
-  const GenreIdInteger = parseInt(GenreId); // mengubah nilai GenreId menjadi integer
+  const handleShowSidebar = () => {
+    setShowNavbar(!showNavbar);
+    localStorage.setItem("sidebar", String(!showNavbar));
+  }
   return (
     <>
       <div
@@ -43,7 +35,7 @@ const Sidebar = ({ items, params, idParams }: any) => {
       >
         <button
           className=""
-          onClick={() => setShowNavbar(!showNavbar)}
+          onClick={handleShowSidebar}
           type="button"
         >
           <svg
