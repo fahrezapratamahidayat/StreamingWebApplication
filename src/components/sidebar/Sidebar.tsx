@@ -24,7 +24,7 @@ const Sidebar = ({ items, params, idParams }: any) => {
 
   const handleShowSidebar = () => {
     setShowNavbar(!showNavbar);
-    localStorage.setItem("sidebar", String(!showNavbar));
+    localStorage.setItem("UiSidebar.State", String(!showNavbar));
   }
   return (
     <>

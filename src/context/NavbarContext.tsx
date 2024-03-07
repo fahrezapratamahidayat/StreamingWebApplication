@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 
 interface NavbarContextProps {
   showNavbar: boolean;
@@ -6,19 +6,26 @@ interface NavbarContextProps {
 }
 
 export const NavbarContext = createContext<NavbarContextProps>({
-  showNavbar: false,
+  showNavbar: true,
   setShowNavbar: () => {},
 });
 
 const NavbarContextProvider = ({ children }: { children: ReactNode }) => {
-  const [showNavbar, setShowNavbar] = useState(false);
+  const [showNavbar, setShowNavbar] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      const storedShowNavbar = window.localStorage.getItem("UiSidebar.State");
+      return storedShowNavbar ? JSON.parse(storedShowNavbar) : true;
+    }
+  });
 
   useEffect(() => {
-    const storedShowNavbar = localStorage.getItem("sidebar");
-    if (storedShowNavbar) {
-      setShowNavbar(JSON.parse(storedShowNavbar));
+    if (typeof window !== "undefined") {
+      const localState = localStorage.getItem("UiSidebar.State");
+      if (localState) {
+        setShowNavbar(JSON.parse(localState));
+      }
     }
-  }, []);
+  }, [showNavbar]);
 
   return (
     <NavbarContext.Provider value={{ showNavbar, setShowNavbar }}>
