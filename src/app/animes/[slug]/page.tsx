@@ -115,16 +115,20 @@ export default async function DetailAnime(props: DetailAnimePageProps) {
               <p className="text-white text-sm font-semibold mt-[1.75rem]">
                 Studios :{" "}
                 {anime.studios.map((producer: any) => (
-                  <Link key={producer.name} className="hover:text-gray-400" href={producer.url}>
+                  <Link
+                    key={producer.name}
+                    className="hover:text-gray-400"
+                    href={producer.url}
+                  >
                     {producer.name},{" "}
                   </Link>
                 ))}
               </p>
               <p className="text-white text-sm font-semibold">
                 Genres :{" "}
-                {anime.genres.map((genre: any) => (
-                  <span key={genre.name}>{genre.name}</span>
-                ))}
+                <span>
+                  {anime.genres.map((genre: any) => genre.name).join(", ")}
+                </span>
               </p>
               <p className="text-white text-sm font-semibold">
                 Producers :{" "}
