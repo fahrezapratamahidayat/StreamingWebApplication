@@ -159,7 +159,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
               </li>
               <li
                 className={`${
-                  pathname === "/animes"
+                  pathname.startsWith("/animes")
                     ? "text-white border-b border-blue-500"
                     : "text-[#939393]"
                 } font-bold text-base hover:text-white hover:border-b border-blue-500 cursor-pointer`}
