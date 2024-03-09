@@ -7,7 +7,7 @@ export const metadata : Metadata = {
   description: "SantaiWir",
 }
 
-export default function HomePage(){
+export default async function HomePage(){
   return (
     <>
       <HomePageView />
