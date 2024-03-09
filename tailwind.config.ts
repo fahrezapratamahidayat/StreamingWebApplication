@@ -29,6 +29,17 @@ const config: Config = {
         // Complex site-specific column configuration
         'footer': '200px minmax(900px, 1fr) 100px',
       },
+      animation: {
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+      },
+      keyframes: {
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        }
+      },
       screens: {
         '90-zoom' : "1777px",
         "80-zoom" : "2000px",
