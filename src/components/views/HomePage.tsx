@@ -1,12 +1,16 @@
+import {fetchTrendingAll } from "@/app/actions";
 import NavbarFixed from "../navbar/NavbarFixed";
-import { WavyBackground } from "../ui/wavy-background";
+import { HeroParallax } from "../ui/hero-parallax";
 
-export default function HomePageView() {
+export default async function HomePageView() {
+  const movies = await fetchTrendingAll(`movie/upcoming`);
+  const tv = await fetchTrendingAll(`tv/top_rated`);
+
   return (
     <>
       <NavbarFixed />
-      <WavyBackground>
-        <div className="">
+      <HeroParallax movies={movies} tv={tv} speed="slow" direction="left" />
+        {/* <div className="">
           <div className="flex items-center justify-center">
             <h1
               className={`font-bold lg:text-7xl text-5xl text-white tracking-widest relative z-10`}
@@ -14,8 +18,7 @@ export default function HomePageView() {
               Santai Movies
             </h1>
           </div>
-        </div>
-      </WavyBackground>
+        </div> */}
     </>
   );
 }
