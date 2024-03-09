@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   motion,
   useScroll,
@@ -9,20 +9,50 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/utils/cn";
+import { CardAnimeProps } from "@/types/CardProps";
 
-export const HeroParallax = ({
-  products,
-}: {
-  products: {
+interface parallaxProps {
+  movies: {
+    id: number;
     title: string;
     link: string;
-    thumbnail: string;
+    backdrop_path: string;
+    media_type: string;
+    original_name: string;
   }[];
-}) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+  tv: {
+    id: number;
+    title: string;
+    link: string;
+    backdrop_path: string;
+    media_type: string;
+    original_name: string;
+  }[];
+  direction?: "left" | "right";
+  speed?: "fast" | "normal" | "slow";
+  pauseOnHover?: boolean;
+  className?: string;
+}
+
+export const HeroParallax = ({
+  movies,
+  tv,
+  direction = "left",
+  speed = "fast",
+  pauseOnHover = true,
+  className,
+}: parallaxProps) => {
+  const firstRow = movies;
+  const secondRow = tv;
+
   const ref = React.useRef(null);
+  const containerRefMovie = React.useRef<HTMLDivElement>(null);
+  const containerRefTv = React.useRef<HTMLDivElement>(null);
+  const scrollerRefMovie = React.useRef<HTMLUListElement>(null);
+  const scrollerRefTv = React.useRef<HTMLUListElement>(null);
+  const [start, setStart] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -54,10 +84,91 @@ export const HeroParallax = ({
     useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
     springConfig
   );
+
+  useEffect(() => {
+    addAnimation();
+  }, []);
+
+  function addAnimation() {
+    if (
+      containerRefMovie.current &&
+      scrollerRefMovie.current &&
+      containerRefTv.current &&
+      scrollerRefTv.current
+    ) {
+      const scrollerContent = Array.from(scrollerRefMovie.current.children);
+      const scrollerContentTv = Array.from(scrollerRefTv.current.children);
+
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRefMovie.current) {
+          scrollerRefMovie.current.appendChild(duplicatedItem);
+        }
+      });
+
+      scrollerContentTv.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true);
+        if (scrollerRefTv.current) {
+          scrollerRefTv.current.appendChild(duplicatedItem);
+        }
+      });
+
+      getDirection();
+      getSpeed();
+      setStart(true);
+    }
+  }
+
+  const getDirection = () => {
+    if (containerRefMovie.current && containerRefTv.current) {
+      if (direction === "left") {
+        containerRefMovie.current.style.setProperty(
+          "--animation-direction",
+          "forwards"
+        );
+        containerRefTv.current.style.setProperty(
+          "--animation-direction",
+          "forwards"
+        );
+      } else {
+        containerRefMovie.current.style.setProperty(
+          "--animation-direction",
+          "reverse"
+        );
+        containerRefTv.current.style.setProperty(
+          "--animation-direction",
+          "reverse"
+        );
+      }
+    }
+  };
+  const getSpeed = () => {
+    if (containerRefMovie.current && containerRefTv.current) {
+      if (speed === "fast") {
+        containerRefMovie.current.style.setProperty(
+          "--animation-duration",
+          "20s"
+        );
+        containerRefTv.current.style.setProperty("--animation-duration", "20s");
+      } else if (speed === "normal") {
+        containerRefMovie.current.style.setProperty(
+          "--animation-duration",
+          "40s"
+        );
+        containerRefTv.current.style.setProperty("--animation-duration", "40s");
+      } else {
+        containerRefMovie.current.style.setProperty(
+          "--animation-duration",
+          "80s"
+        );
+        containerRefTv.current.style.setProperty("--animation-duration", "80s");
+      }
+    }
+  };
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-40 overflow-hidden w-full antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -69,32 +180,55 @@ export const HeroParallax = ({
         }}
         className=""
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
-          ))}
+        <motion.div
+          ref={containerRefMovie}
+          className={cn(
+            "scroller relative z-20 w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+            className
+          )}
+        >
+          <ul
+            ref={scrollerRefMovie}
+            className={cn(
+              " flex flex-row-reverse space-x-reverse space-x-20 mb-20",
+              start && "animate-scroll ",
+              pauseOnHover && "hover:[animation-play-state:paused]"
+            )}
+          >
+            {firstRow.map((product) => (
+              <ProductCard
+                datas={product}
+                translate={translateX}
+                key={product.id}
+                link={`/movie/${product.id}`}
+              />
+            ))}
+          </ul>
         </motion.div>
-        <motion.div className="flex flex-row  mb-20 space-x-20 ">
-          {secondRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateXReverse}
-              key={product.title}
-            />
-          ))}
-        </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
-          ))}
+        <motion.div
+          ref={containerRefTv}
+          className={cn(
+            "scroller relative z-20 w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+            className
+          )}
+        >
+          <ul
+            ref={scrollerRefTv}
+            className={cn(
+              "flex flex-row mb-20 space-x-20 ",
+              start && "animate-scroll ",
+              pauseOnHover && "hover:[animation-play-state:paused]"
+            )}
+          >
+            {secondRow.map((product) => (
+              <ProductCard
+                datas={product}
+                translate={translateXReverse}
+                key={product.id}
+                link={`/tv/${product.id}`}
+              />
+            ))}
+          </ul>
         </motion.div>
       </motion.div>
     </div>
@@ -103,29 +237,34 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 -top-20">
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-        The Ultimate <br /> development studio
+        Santai Wir
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, ipsam?
+        Nam veritatis, eligendi deserunt repellendus dolor a. Distinctio, est.
+        Aliquam molestias architecto eligendi vero rem, dignissimos possimus.
+        Doloremque, eos quae!
       </p>
     </div>
   );
 };
 
 export const ProductCard = ({
-  product,
+  datas,
   translate,
+  link,
 }: {
-  product: {
+  datas: {
+    id: number;
     title: string;
-    link: string;
-    thumbnail: string;
+    media_type: string;
+    backdrop_path: string;
+    original_name: string;
   };
   translate: MotionValue<number>;
+  link: string;
 }) => {
   return (
     <motion.div
@@ -135,24 +274,21 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title}
-      className="group/product h-96 w-[30rem] relative flex-shrink-0"
+      key={datas.original_name || datas.title}
+      className="group/product h-72 w-[30rem] relative flex-shrink-0 rounded-lg"
     >
-      <Link
-        href={product.link}
-        className="block group-hover/product:shadow-2xl "
-      >
+      <Link href={link} className="block group-hover/product:shadow-2xl ">
         <Image
-          src={product.thumbnail}
+          src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${datas.backdrop_path}`}
           height="600"
           width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0"
-          alt={product.title}
+          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-lg"
+          alt={datas.original_name || datas.title}
         />
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-        {product.title}
+        {datas.original_name || datas.title}
       </h2>
     </motion.div>
   );
