@@ -88,3 +88,8 @@ export const fetchDetailAnimeVideos = async (url: string) => {
   const data = await res.json();
   return data;
 };
+
+export const fetchTrendingAll = async (url: string) => {
+  const res = await fetchData(url);
+  return res.results;
+}
