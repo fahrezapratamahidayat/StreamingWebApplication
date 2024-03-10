@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as Yup from "yup";
 import AuthLayouts from "@/components/layouts/AuthLayouts";
-import Input from "@/components/input/Input";
+import Input from "@/components/input/InputLabel";
 import Checkbox from "@/components/input/Checkbox";
 import Button from "@/components/button/Button";
 
