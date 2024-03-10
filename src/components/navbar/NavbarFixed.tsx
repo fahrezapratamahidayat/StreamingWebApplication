@@ -7,22 +7,24 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Input } from "../input/Input";
 
 export default function NavbarFixed({ title }: { title?: string }) {
   const pathname = usePathname();
   const [searchValue, setSearchValue] = useState("");
   const [toggleNav, setToggleNav] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [toggleSearch, setToggleSearch] = useState(false);
   const router = useRouter();
   const overlay: any = useRef(null);
   const overlaySidebar: any = useRef(null);
   const searchFormRef: any = useRef(null);
+  const inputRef: React.RefObject<HTMLInputElement> =
+    useRef<HTMLInputElement>(null);
   const [DropDown, setDropDown] = useState(true);
   const { data: session, status }: { data: any; status: string } =
     useSession() || {};
-  const [isFocused, setIsFocused] = useState(false);
+  const [dataState, setDataState] = useState("false");
 
   const handleSearchForm = (event: any) => {
     event.preventDefault();
@@ -32,8 +34,8 @@ export default function NavbarFixed({ title }: { title?: string }) {
       router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`, {
         scroll: false,
       });
-      setToggleSearch(false);
       setSearchValue("");
+      setDataState("close");
     } else {
       alert("Please enter at least 2 characters");
       setSearchValue("");
@@ -61,13 +63,14 @@ export default function NavbarFixed({ title }: { title?: string }) {
   };
 
   const handleSearchBar = () => {
-    if (toggleSearch === false) {
-      document.body.classList.add("modal-open");
-      setToggleSearch(true);
-    } else {
-      document.body.classList.remove("modal-open");
-      setToggleSearch(false);
-    }
+    setDataState("open");
+    if (inputRef.current) inputRef.current.focus();
+    document.body.classList.add("overflow-scroll");
+  };
+
+  const handleCloseSearchBar = () => {
+    setDataState("close");
+    document.body.classList.remove("overflow-scroll");
   };
 
   useEffect(() => {
@@ -92,6 +95,23 @@ export default function NavbarFixed({ title }: { title?: string }) {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [toggleNav]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchFormRef.current &&
+        !searchFormRef.current.contains(event.target)
+      ) {
+        setDataState("close");
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dataState]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -121,9 +141,101 @@ export default function NavbarFixed({ title }: { title?: string }) {
 
   return (
     <>
-      <div
+      {dataState === "open" ? (
+        <div
+          data-state={dataState}
+          className={`fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 w-full h-full`}
+        >
+          <div
+            ref={searchFormRef}
+            className="fixed lg:w-1/4 left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 shadow-lg duration-200 sm:rounded-lg overflow-hidden p-0"
+          >
+            <div className="flex flex-col bg-zinc-900 rounded-lg">
+              <div className="flex items-center w-full px-3 py-3 border-b">
+                <button className="mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    className="w-4 h-4 shrink-0"
+                  >
+                    <path
+                      d="M11 19.5C15.4183 19.5 19 15.9183 19 11.5C19 7.08172 15.4183 3.5 11 3.5C6.58172 3.5 3 7.08172 3 11.5C3 15.9183 6.58172 19.5 11 19.5Z"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M21 21.4999L16.65 17.1499"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="sr-only">Form</span>
+                </button>
+                <form onSubmit={handleSearchForm} className="w-full">
+                  <input
+                    ref={inputRef}
+                    className="flex items-center bg-zinc-900 w-full outline-none text-white placeholder:text-zinc-500 placeholder:text-sm text-sm"
+                    type="text"
+                    name="search"
+                    placeholder="Search Movies and TV Shows"
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    required
+                    autoFocus
+                  />
+                </form>
+                <button
+                  type="button"
+                  onClick={handleCloseSearchBar}
+                  className="ml-auto"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    className="w-4 h-4 shrink-0"
+                  >
+                    <path
+                      d="M18 6.5L6 18.5"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M6 6.5L18 18.5"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="sr-only">close</span>
+                </button>
+              </div>
+              <div className="max-h-[250px] overflow-y-auto overflow-x-hidden">
+                <div className="overflow-hidden p-1 px-3 py-3">
+                  <p className="text-white text-sm ">History</p>
+                  <div className=""></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      <nav
         className="fixed z-40 w-full backdrop-blur flex-none 
-          transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10
+          transition-colors duration-500 lg:z-40 lg:border-b lg:border-slate-900/10
          bg-transparent 90-zoom:px-[2rem] 80-zoom:px-[3rem] 75-zoom:px-[4rem] 67-zoom:px-[7rem] 50-zoom:px-[32rem] 33-zoom:px-[82rem] 25-zoom:px-[134rem]"
       >
         <div className="flex items-center lg:px-5 px-4 py-3 w-full">
@@ -167,46 +279,29 @@ export default function NavbarFixed({ title }: { title?: string }) {
                 <Link href="/animes">Animes</Link>
               </li>
             </ul>
-            <div className="lg:flex hidden relative items-center">
-              <form onSubmit={handleSearchForm}>
-                <div className="relative w-full">
-                  <button
-                    type="submit"
-                    className="absolute top-0 left-0 end-0 h-full p-2.5  text-sm font-medium text-white peer"
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                    <span className="sr-only">Search</span>
-                  </button>
-                  <input
-                    className={`${
-                      searchValue || isFocused
-                        ? "bg-gray-700"
-                        : "bg-transparent"
-                    } block text-white p-2 pl-[2rem] rounded-md placeholder-shown:w-0 peer-hover:bg-gray-700 peer-hover:w-[13rem] transition-all text-sm placeholder:text-sm focus:w-[13rem] focus:text-white w-[13rem] peer-focus:bg-gray-700`}
-                    placeholder="Search Movie and tv "
-                    value={searchValue}
-                    type="text"
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    onChange={(event) => setSearchValue(event.target.value)}
-                    required
+            <div className="lg:flex hidden">
+              <button
+                type="submit"
+                className="h-full p-2.5  text-sm font-medium text-white"
+                onClick={handleSearchBar}
+              >
+                <svg
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
-                </div>
-              </form>
+                </svg>
+                <span className="sr-only">Search</span>
+              </button>
             </div>
           </div>
           <div className="lg:hidden flex items-center ml-auto pr-2">
@@ -234,80 +329,8 @@ export default function NavbarFixed({ title }: { title?: string }) {
                     strokeLinejoin="round"
                   />
                 </svg>
+                <span className="sr-only">search</span>
               </button>
-              <div
-                className={`${
-                  toggleSearch ? "block" : "hidden"
-                } fixed top-0 left-0 backdrop-blur-sm bg-black/80 h-[99rem] w-full z-[99]`}
-              >
-                <div className=" absolute w-full mt-[25%]  rounded shadow-md px-2">
-                  <form onSubmit={handleSearchForm} ref={searchFormRef}>
-                    <div className="bg-gray-700 rounded-lg h-[3.5rem] w-full flex items-center px-5 ">
-                      <button type="submit">
-                        <svg
-                          className=""
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="25"
-                          height="25"
-                          viewBox="0 0 25 25"
-                          fill="none"
-                        >
-                          <path
-                            d="M11 19.5C15.4183 19.5 19 15.9183 19 11.5C19 7.08172 15.4183 3.5 11 3.5C6.58172 3.5 3 7.08172 3 11.5C3 15.9183 6.58172 19.5 11 19.5Z"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M21 21.4999L16.65 17.1499"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <span className="sr-only">Form</span>
-                      </button>
-                      <input
-                        type="text"
-                        value={searchValue}
-                        className="ml-3 bg-transparent w-full mr-5 text-white focus:outline-none text-sm"
-                        placeholder="Search Movie and tv"
-                        onChange={(e) => setSearchValue(e.target.value)}
-                      />
-                    </div>
-                  </form>
-                  <button
-                    onClick={() => setToggleSearch(false)}
-                    className="absolute top-4 right-5"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M18 6.5L6 18.5"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M6 6.5L18 18.5"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <span className="sr-only">close</span>
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
           <div className="lg:hidden flex items-center justify-between">
@@ -709,7 +732,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
             </aside>
           </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 }
