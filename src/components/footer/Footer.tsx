@@ -6,17 +6,15 @@ export default function Footer() {
       <footer className="lg:p-10 p-5 mt-[50px]">
         <div className="flex flex-col items-center justify-center w-full">
           <h1 className="text-white font-bold text-3xl">
-            Seasoned. Nimble. Remote.
+            Santai Streaming
           </h1>
         </div>
         <div className="mt-5 flex items-center justify-center flex-col w-full">
           <p className="text-slate-400 text-sm font-normal text-justify lg:text-center lg:w-[659px] w-full">
-            Selamat datang di tempat seru kami! Nih, kita punya koleksi film,
+            Selamat datang di website ini!. Website ini punya koleksi film,
             acara TV, dan konten seru lainnya yang bisa kamu nikmatin kapan aja.
-            Streaming-nya jernih, ada mode offline-nya juga loh! Biar makin
-            asyik, kita juga punya rekomendasi yang oke banget. Makasih udah
-            pilih kita buat jadi temen hiburanmu. Selamat menikmati, dan semoga
-            kita bisa bikin waktu luangmu makin kece.
+            Streaming-nya jernih dan kualitasnya bagus. website ini juga punya rekomendasi yang oke banget. Makasih udah
+            mampir ke website ini.
           </p>
           <div className="mt-10 flex items-center justify-center gap-6">
             <button className="text-black bg-white h-9  w-28 rounded-[20px]">
@@ -95,7 +93,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="lg:mx-32 mx-5 border-t border-white opacity-30 mt-32 -z-20"></div>
-        <div className="w-full flex lg:flex-wrap `gap-5 lg:gap-0 justify-between lg:items-center lg:px-32 mt-10 pb-10">
+        <div className="w-full flex lg:flex-wrap flex-col sm:flex-row md:flex-row gap-5 lg:gap-0 justify-between lg:items-center lg:px-32 mt-10 pb-10">
           <h1 className="text-white text-5xl text-bold ">Santai</h1>
           <p className="text-slate-400 text-sm font-normal">
             © 2023 Lift Media. All Rights Reserved.{" "}
