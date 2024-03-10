@@ -1,38 +1,25 @@
-export default function Input({
-  id,
-  name,
-  placeholder,
-  type,
-  onChange,
-  title,
-  className,
-}: {
-  id: string;
-  name: string;
-  placeholder: string;
-  type: string;
-  onChange?: any;
-  title: string;
-  className?: string;
-}) {
-  return (
-    <div className="relative py-1">
+import { cn } from "@/utils/cn"
+import * as React from "react"
+
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
+    return (
       <input
         type={type}
-        id={id}
-        name={name}
-        className={`${className} block rounded-md px-2.5 pb-2.5 pt-5 w-full text-sm bg-gray-700 border appearance-none text-white border-gray-600 dark:focus:border-blue-800 focus:outline-none focus:ring-0 focus:border-blue-600 peer disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-        invalid:border-red-500 invalid:text-red-500
-        focus:invalid:border-red-500 focus:invalid:ring-red-500`}
-        placeholder={placeholder}
-        onChange={onChange}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        ref={ref}
+        {...props}
       />
-      <label
-        htmlFor={id}
-        className="absolute text-sm mt-1 text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-500 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-      >
-        {title}
-      </label>
-    </div>
-  );
-}
+    )
+  }
+)
+Input.displayName = "Input"
+
+export { Input }
