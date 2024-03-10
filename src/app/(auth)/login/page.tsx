@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/button/Button";
 import Checkbox from "@/components/input/Checkbox";
-import Input from "@/components/input/Input";
+import Input from "@/components/input/InputLabel";
 import AuthLayouts from "@/components/layouts/AuthLayouts";
 import axios from "axios";
 import { signIn } from "next-auth/react";
