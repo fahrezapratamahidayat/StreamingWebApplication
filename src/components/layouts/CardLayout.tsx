@@ -84,7 +84,7 @@ export default function CardLayouts({
             }`}
           >
             <button
-              className="relative bg-[#3F3F46] flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
+              className="relative bg-zinc-800 flex items-center lg:w-60 w-52 h-[40px] justify-between p-3 rounded-lg text-sm text-white"
               onClick={() => setDropDown(!dropDown)}
               id="test"
             >
@@ -121,7 +121,7 @@ export default function CardLayouts({
               animate={dropDown ? "open" : "closed"}
               variants={variant}
               id="dropdown"
-              className={`duration-75 absolute bg-[#18181B] top-14 bg- w-full z-50 rounded-lg p-2`}
+              className={`duration-75 absolute bg-zinc-800 top-14 bg- w-full z-50 rounded-lg p-2`}
             >
               {options &&
                 options.map((opt, index) => (
@@ -148,7 +148,7 @@ export default function CardLayouts({
                     key={opt.value}
                     role="option"
                     aria-selected
-                    className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
+                    className={`hover:bg-zinc-700 cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
                     onClick={() => {
                       onSelectChange && onSelectChange(opt.value);
                       setLabel(opt.label);
