@@ -29,7 +29,7 @@ const Sidebar = ({ items, params, idParams }: any) => {
   return (
     <>
       <div
-        className={`lg:block hidden fixed z-50 top-1/2 ${
+        className={`lg:block hidden fixed z-40 top-1/2 ${
           showNavbar ? "left-[16rem] ease-in" : "left-3 ease-out"
         } right-0 transition-all ease-in-out 90-zoom:px-[2rem] 80-zoom:hidden 75-zoom:hidden 67-zoom:hidden 50-zoom:hidden 33-zoom:hidden 25-zoom:hidden`}
       >
@@ -59,7 +59,7 @@ const Sidebar = ({ items, params, idParams }: any) => {
       <aside
         className={`lg:block hidden ${
           showNavbar ? "w-[250px]" : "fixed top-0 -left-[13rem]"
-        } pt-[5rem] fixed h-full lg:block transition-all ease-in-out z-50`}
+        } pt-[5rem] fixed h-full lg:block transition-all ease-in-out z-40`}
       >
         <div
           className={`sidebar pb-[1rem] flex flex-col items px-5 overflow-y-auto overflow-sidebar h-[calc(100vh-5rem)] scrollbar-rounded-lg scrollbar scrollbar-track-gray-700 scrollbar-thumb-gray-900 transition-all ease-in-out bg-black 80-zoom:bg-transparent`}
