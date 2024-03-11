@@ -69,6 +69,7 @@ export default function ButtonWatchlist({ slug, data }: ButtonProps) {
     event.preventDefault();
     try {
       if (!session) {
+        setToastMessage("Please login to add to watchlist");
         return;
       }
       const respone = await fetch(`/api/user/addbookmarks`, {
