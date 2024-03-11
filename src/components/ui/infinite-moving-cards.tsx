@@ -20,7 +20,7 @@ export const InfiniteMovingCards = ({
     title: string;
     media_type: string;
     backdrop_path: string;
-    original_name: string;
+    name: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -102,7 +102,7 @@ export const InfiniteMovingCards = ({
             whileHover={{
               y: -20,
             }}
-            key={item.original_name || item.title}
+            key={item.name || item.title}
             className="group/product lg:h-60 h-52 w-[28rem] lg:w-[30rem] relative flex-shrink-0 rounded-lg"
           >
             <Link href={`${linkFormat}/${item.id}`} className="block group-hover/product:shadow-2xl ">
@@ -111,12 +111,12 @@ export const InfiniteMovingCards = ({
                 height="600"
                 width="600"
                 className="object-cover object-left-top absolute h-full w-full inset-0 rounded-lg"
-                alt={item.original_name || item.title}
+                alt={item.name || item.title}
               />
             </Link>
             <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
             <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-              {item.original_name || item.title}
+              {item.name || item.title}
             </h2>
           </motion.div>
         ))}
