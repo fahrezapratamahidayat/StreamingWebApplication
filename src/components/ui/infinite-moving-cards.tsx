@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "@/utils/cn";
 import React, { useEffect, useState } from "react";
 import { motion, MotionValue } from "framer-motion";
@@ -95,7 +94,7 @@ export const InfiniteMovingCards = ({
         )}
       >
         {items.map((item, idx) => (
-          <motion.div
+          <motion.ul
           style={{
             x: translate
           }}
@@ -108,8 +107,8 @@ export const InfiniteMovingCards = ({
             <Link href={`${linkFormat}/${item.id}`} className="block group-hover/product:shadow-2xl ">
               <Image
                 src={`${process.env.NEXT_PUBLIC_MOVIE_API_BASEIMG}/${item.backdrop_path}`}
-                height="600"
-                width="600"
+                height="400"
+                width="400"
                 className="object-cover object-left-top absolute h-full w-full inset-0 rounded-lg"
                 alt={item.name || item.title}
               />
@@ -118,7 +117,7 @@ export const InfiniteMovingCards = ({
             <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
               {item.name || item.title}
             </h2>
-          </motion.div>
+          </motion.ul>
         ))}
       </ul>
     </div>
