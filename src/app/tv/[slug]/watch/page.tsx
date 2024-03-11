@@ -2,12 +2,10 @@ import { fetchDetailTv } from "@/app/actions";
 import MainLayouts from "@/components/layouts/MainLayouts";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
 import Select from "@/components/select/Select";
-import { FetchingData, fetchData } from "@/services/DataApi";
+import { FetchingData } from "@/services/DataApi";
 import { Metadata, ResolvingMetadata } from "next";
-import { Variants } from "framer-motion";
 import CardTvEpisodes from "@/components/card/CardTvEpisodes";
 import TvEpisode from "@/components/fragments/TvEpisode";
-import { headers } from "next/headers";
 
 type dataPageProps = {
   params: {
