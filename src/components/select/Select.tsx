@@ -83,9 +83,9 @@ export default function Select({
             <path
               d="M6 9.5L12 15.5L18 9.5"
               stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -121,8 +121,6 @@ export default function Select({
                 closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
               }}
               key={opt.value}
-              role="option"
-              aria-selected
               className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
               onClick={() => {
                 onSelectChange && onSelectChange(opt.value);

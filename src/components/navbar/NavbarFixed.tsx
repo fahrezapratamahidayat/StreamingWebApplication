@@ -343,7 +343,6 @@ export default function NavbarFixed({ title }: { title?: string }) {
               >
                 <svg
                   className="w-4 h-4"
-                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 20 20"

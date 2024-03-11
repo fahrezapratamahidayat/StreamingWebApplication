@@ -19,8 +19,6 @@ export default function SelectOption({
   return (
     <>
       <li
-        role="option"
-        aria-selected
         onClick={handleClick}
         className={`hover:bg-[#3F3F46] cursor-pointer text-white text-sm p-2 rounded-lg flex items-center justify-between`}
       >
