@@ -16,7 +16,7 @@ interface parallaxProps {
     link: string;
     backdrop_path: string;
     media_type: string;
-    original_name: string;
+    name: string;
   }[];
   tv: {
     id: number;
@@ -24,7 +24,7 @@ interface parallaxProps {
     link: string;
     backdrop_path: string;
     media_type: string;
-    original_name: string;
+    name: string;
   }[];
 }
 
