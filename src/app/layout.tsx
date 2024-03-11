@@ -5,7 +5,6 @@ import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import NavbarContextProvider from "@/context/NavbarContext";
 import NextTopLoader from "nextjs-toploader";
-import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({

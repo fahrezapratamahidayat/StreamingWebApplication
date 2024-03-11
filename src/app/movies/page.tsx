@@ -1,13 +1,11 @@
 import { Metadata } from "next";
 import { fetchMovies } from "../actions";
-import MoviesPageView from "@/components/views/MoviesPage";
 import Footer from "@/components/footer/Footer";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { MovieEndpoints, movieSidebaritem } from "@/utils/data";
 import PageLayout from "@/components/layouts/PageLayout";
 import CardLayouts from "@/components/layouts/CardLayout";
 import LoadMore from "@/components/button/LoadMore";
-import Loading from "./loading";
 import NavbarFixed from "@/components/navbar/NavbarFixed";
 
 export const metadata: Metadata = {

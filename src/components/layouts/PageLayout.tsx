@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 export default function PageLayout({
   children,
-  slug,
 }: {
   children: React.ReactNode;
   slug?: string;
