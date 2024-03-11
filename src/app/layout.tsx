@@ -19,6 +19,14 @@ export default function RootLayout({
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta httpEquiv="refresh" />
+      <meta
+        name="description"
+        content="Selamat datang di Santai!. disini kami menyediakan berbagai Film dan Tv
+        Series yang berkualitas dan seru-seru pokonya!. Santai ini dibuat oleh
+        seorang develover yang awalnya cuma iseng belajar tentang dunia web
+        develover dan belajar Api. karena dari ke isenganya tersebut develover
+        dapat membuat website ini."
+      />
       <title>Santai</title>
       <body className={`${inter.className} overflow-main bg-black`}>
         <NextTopLoader
@@ -34,9 +42,7 @@ export default function RootLayout({
           showAtBottom={false}
         />
         <SessionProvider>
-          <NavbarContextProvider>
-            {children}
-          </NavbarContextProvider>
+          <NavbarContextProvider>{children}</NavbarContextProvider>
         </SessionProvider>
       </body>
     </html>
