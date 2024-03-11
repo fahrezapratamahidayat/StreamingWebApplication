@@ -26,7 +26,7 @@ export const InfiniteMovingCards = ({
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
   className?: string;
-  linkFormat: "movie" | "tv";
+  linkFormat: "movies" | "tv";
   translate?: MotionValue<number>;
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
