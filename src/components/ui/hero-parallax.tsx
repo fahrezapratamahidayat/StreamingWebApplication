@@ -81,7 +81,7 @@ export const HeroParallax = ({ movies, tv }: parallaxProps) => {
           items={movies}
           direction="left"
           speed="normal"
-          linkFormat="movie"
+          linkFormat="movies"
         />
         <InfiniteMovingCards
           items={tv}
