@@ -39,7 +39,6 @@ export default function LoginPage(searchParams: any) {
         setError(data.message);
       }
     } catch (err) {
-      console.log(err);
     }
   };
   return (

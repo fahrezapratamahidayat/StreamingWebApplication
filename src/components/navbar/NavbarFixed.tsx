@@ -55,7 +55,6 @@ export default function NavbarFixed({ title }: { title?: string }) {
         setSearchValue("");
       }
     } catch (error) {
-      console.log(error);
     } finally {
       document.body.classList.remove("overflow-scroll");
     }
@@ -67,7 +66,6 @@ export default function NavbarFixed({ title }: { title?: string }) {
       const searchHistory = localStorage.getItem("searchHistory");
       setHistory(searchHistory ? JSON.parse(searchHistory) : []);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -77,7 +75,6 @@ export default function NavbarFixed({ title }: { title?: string }) {
         scroll: false,
       });
     } catch (error) {
-      console.log(error);
     }
   };
 

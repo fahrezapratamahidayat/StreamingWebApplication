@@ -30,25 +30,6 @@ export default function CardPosterMovies({ movie, index }: CardProps) {
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
   });
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowSize({
-  //       width: window.innerWidth,
-  //       height: window.innerHeight,
-  //     });
-  //   };
-
-  //   // Mengatur event listener untuk mendeteksi perubahan ukuran layar
-  //   window.addEventListener("resize", handleResize);
-
-  //   // Membersihkan event listener saat komponen tidak lagi digunakan
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  // console.log(windowSize);
   return (
     <>
       <MotionDiv
