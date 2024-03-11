@@ -8,7 +8,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import { Input } from "../input/Input";
 
 export default function NavbarFixed({ title }: { title?: string }) {
   const pathname = usePathname();
@@ -22,23 +21,63 @@ export default function NavbarFixed({ title }: { title?: string }) {
   const inputRef: React.RefObject<HTMLInputElement> =
     useRef<HTMLInputElement>(null);
   const [DropDown, setDropDown] = useState(true);
+  const [history, setHistory] = useState([]);
   const { data: session, status }: { data: any; status: string } =
     useSession() || {};
   const [dataState, setDataState] = useState("false");
+  const selectedRef: React.RefObject<HTMLDivElement> = useRef(null);
 
-  const handleSearchForm = (event: any) => {
+  const handleSearchForm = async (event: any) => {
     event.preventDefault();
-    setSearchValue(event.target.value);
+    try {
+      setSearchValue(event.target.value);
 
-    if (searchValue.length > 1) {
-      router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`, {
+      if (searchValue.length > 1) {
+        const searchHistory = localStorage.getItem("searchHistory");
+        const searchItems = searchHistory ? JSON.parse(searchHistory) : [];
+        const newSearchItem = {
+          id: Date.now(),
+          content: searchValue,
+        };
+        const updatedSearchItems = [newSearchItem, ...searchItems];
+        localStorage.setItem(
+          "searchHistory",
+          JSON.stringify(updatedSearchItems)
+        );
+
+        router.push(`/search?query=${searchValue.replace(/\s+/g, "+")}`, {
+          scroll: false,
+        });
+        setSearchValue("");
+        setDataState("close");
+      } else {
+        alert("Please enter at least 2 characters");
+        setSearchValue("");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      document.body.classList.remove("overflow-scroll");
+    }
+    getSearchHistory();
+  };
+
+  const getSearchHistory = () => {
+    try {
+      const searchHistory = localStorage.getItem("searchHistory");
+      setHistory(searchHistory ? JSON.parse(searchHistory) : []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearchHistory = async (content: string) => {
+    try {
+      router.push(`/search?query=${content.replace(/\s+/g, "+")}`, {
         scroll: false,
       });
-      setSearchValue("");
-      setDataState("close");
-    } else {
-      alert("Please enter at least 2 characters");
-      setSearchValue("");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -139,6 +178,10 @@ export default function NavbarFixed({ title }: { title?: string }) {
     };
   }, [toggleSidebar]);
 
+  useEffect(() => {
+    getSearchHistory();
+  }, []);
+
   return (
     <>
       {dataState === "open" ? (
@@ -181,13 +224,12 @@ export default function NavbarFixed({ title }: { title?: string }) {
                 <form onSubmit={handleSearchForm} className="w-full">
                   <input
                     ref={inputRef}
-                    className="flex items-center bg-zinc-900 w-full outline-none text-white placeholder:text-zinc-500 placeholder:text-sm text-sm"
+                    className="flex items-center bg-zinc-900 w-full outline-none text-white placeholder:text-zinc-500 placeholder:font-semibold placeholder:text-sm text-sm"
                     type="text"
                     name="search"
-                    placeholder="Search Movies and TV Shows"
+                    placeholder="Search movies and tv"
                     onChange={(e) => setSearchValue(e.target.value)}
                     required
-                    autoFocus
                   />
                 </form>
                 <button
@@ -223,8 +265,22 @@ export default function NavbarFixed({ title }: { title?: string }) {
               </div>
               <div className="max-h-[250px] overflow-y-auto overflow-x-hidden">
                 <div className="overflow-hidden p-1 px-3 py-3">
-                  <p className="text-white text-sm ">History</p>
-                  <div className=""></div>
+                  <p className="text-sm text-zinc-500 font-medium">History</p>
+                  <div className="mt-3 space-3">
+                    {history &&
+                      history.map((item: { content: string; id: number }) => (
+                        <div
+                          ref={selectedRef}
+                          onClick={() => handleSearchHistory(item.content)}
+                          key={item.id}
+                          className="relative flex cursor-default select-none p-2 items-center rounded-md text-sm outline-none hover:bg-zinc-600"
+                        >
+                          <h1 className="text-white text-base">
+                            {item.content}
+                          </h1>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -359,6 +415,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
                       strokeLinejoin="round"
                     />
                   </svg>
+                  <span className="sr-only">Navigation</span>
                 </button>
               ) : (
                 <button className="" onClick={handleShowNav} type="button">
@@ -391,6 +448,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
                       strokeLinejoin="round"
                     />
                   </svg>
+                  <span className="sr-only">NavClose</span>
                 </button>
               )}
               <div
