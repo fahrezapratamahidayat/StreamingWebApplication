@@ -14,8 +14,6 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
 
-  const disableNavbar = pathname === "/login" || pathname === "/register";
-
   return (
     <html lang="en" className="">
       <meta charSet="utf-8" />
