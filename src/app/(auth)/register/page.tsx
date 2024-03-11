@@ -9,16 +9,18 @@ import AuthLayouts from "@/components/layouts/AuthLayouts";
 import Input from "@/components/input/InputLabel";
 import Checkbox from "@/components/input/Checkbox";
 import Button from "@/components/button/Button";
+import { motion } from "framer-motion";
 
 export default function RegisterPage() {
   const { push } = useRouter();
-  const [error, setError] = useState("");
   const [isLoading, setIsloading] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const RegisterUser = async (event: any) => {
     const { fullname, email, password, confirm_password, agree } =
       formik.values;
     setIsloading(true);
-    setError("");
+    setToastMessage("");
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
@@ -30,13 +32,22 @@ export default function RegisterPage() {
         password: password,
       }),
     });
+    const result = await res.json();
     if (res.status === 200) {
       formik.resetForm();
       push("/login");
       setIsloading(false);
+      setToastMessage(result.message);
+      setTimeout(() => {
+        setToast(false);
+      }, 6000);
     } else {
       setIsloading(false);
-      setError("email already exist");
+      setToast(true);
+      setToastMessage(result.message);
+      setTimeout(() => {
+        setToast(false);
+      }, 6000);
     }
   };
 
@@ -56,11 +67,13 @@ export default function RegisterPage() {
         .required("Email is required")
         .email(),
       password: Yup.string()
-        .required("Password is required")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Passwords must include uppercase, lowercase, numbers, and special characters."
+        .required("Password is required").matches(
+          /^(?=.{8,})/,"Password must be 8 characters long",
         ),
+        // .matches(
+        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        //   "Passwords must include uppercase, lowercase, numbers, and special characters."
+        // )
       confirm_password: Yup.string().oneOf(
         [Yup.ref("password")],
         "Passwords must match"
@@ -71,8 +84,25 @@ export default function RegisterPage() {
     const { target } = event;
     formik.setFieldValue(target.name, target.value);
   };
+
+  const variants = {
+    open: { opacity: 1, y: [200, 100, 0] },
+    closed: { opacity: 0, y: 200 },
+  };
+
   return (
     <>
+      <motion.div
+        animate={toast ? "open" : "closed"}
+        variants={variants}
+        initial="closed"
+        className="fixed flex items-center w-full  lg:justify-end justify-center bottom-5 lg:right-10 right-0 z-50"
+        role="alert"
+      >
+        <div className="flex items-center justify-center p-3 border border-gray-300 rounded-md">
+          <h2 className="text-white text-sm">{toastMessage}</h2>
+        </div>
+      </motion.div>
       <AuthLayouts title="Create Your account">
         <form
           action="#"
