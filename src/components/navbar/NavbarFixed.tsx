@@ -65,8 +65,7 @@ export default function NavbarFixed({ title }: { title?: string }) {
     try {
       const searchHistory = localStorage.getItem("searchHistory");
       setHistory(searchHistory ? JSON.parse(searchHistory) : []);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleSearchHistory = async (content: string) => {
@@ -75,6 +74,8 @@ export default function NavbarFixed({ title }: { title?: string }) {
         scroll: false,
       });
     } catch (error) {
+    } finally {
+      document.body.classList.remove("overflow-scroll");
     }
   };
 
